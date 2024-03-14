@@ -1,0 +1,101 @@
+import React, { useEffect, useState } from 'react'
+import { IoIosArrowForward } from "react-icons/io";
+
+
+const Homepage = () => {
+
+  return (
+    <>
+        <section className="hero-section">
+            <div className="hero-content">
+                <h1>
+                    Ofera-ti sprijinul
+                    <br/>
+                    oriunde este nevoie de el
+                </h1>
+                <button className='hero-button'>
+                    Gaseste strigatul de ajutor
+                </button>
+            </div>
+        </section>
+        <section className="project-idea-section">
+            <div className="container project-idea-content">
+                <div className="left-inside-container">
+                    <h2>Ideea care sta la baza acestui proiect</h2>
+                    <p>
+                        Prin aceasta platforma, facem cunoscute toate cazurile care apeleaza la noi, pe care le verificam, pentru a putea ajunge ajutorul la orice om care il cere.
+                    </p>
+                    <p>
+                        Poti sa te ocupi chiar tu de livrarea celor necesare, unde este nevoie, chiar si acolo unde oamenii sunt deconectati de reteaua existenta de donatii.
+                    </p>
+                    <p>
+                        Punem accent, de asemenea, pe nevoile specifice fiecarui om sau chiar, pe dorintele lui pe care nu ar indrazni in mod normal sa le exprime.
+                    </p>
+                </div>
+                <div className="right-inside-container">
+                    <img src="/images/map.jpg" alt="harta Romaniei" />
+                </div>
+
+            </div>
+        </section>
+        <section className="urgent-needs-section container">
+            <div className="urgent-needs-content">
+                <h2>Nevoi urgente</h2>
+                <div className="urgent-main">
+                    <div className="left-inside-container">
+                        <img src="/images/img-placeholder.jpg" alt="" />
+                    </div>
+                    <div className="right-inside-container">
+                        <h3>Ajuta un caz critic in timp util</h3>
+                        <p>
+                            Toti care apeleaza la noi au mare nevoie de ajutor si fiecare caz este important, dar unele neajunsuri pun in pericol in mod critic sanatatea
+                        </p>
+                        <button className="basic-button">
+                            <span>
+                                Vezi toate cazurile urgente
+                            </span>
+                            <IoIosArrowForward/>
+                        </button>
+                    </div>
+                </div>
+                {[1, 2, 3].map((num, index) => (
+                    <div key={index} className="single-post-container">
+                        <div className="img-post-container">
+                            <img src="/images/img-placeholder.jpg" alt="" />
+                            <button className="tag">Urgenta</button>
+                        </div>
+                        <div className="post-info-snippet">
+                            <span className="location">
+                                Locatie
+                            </span>
+                            <p>
+                                Lista scurta cu nevoi urgente
+                            </p>
+                            <button className="basic-button">
+                                <span>
+                                    Ocupa-te de caz
+                                </span>
+                                <IoIosArrowForward/>
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        <section className="motivational-section">
+            <div className="container">
+                <h3 className="motivational-subtitle">
+                    Fii un erou
+                </h3>
+                <p>
+                Praesent dignissim odio nisl, vel aliquet lacus vehicula vel.<br/>
+                Fusce faucibus mi commodo leo consequat, non imperdiet ante tempor.<br/>
+                Nam augue metus, blandit ut lorem sit amet
+                </p>
+            </div>
+        </section>
+    </>
+  )
+}
+
+export default Homepage

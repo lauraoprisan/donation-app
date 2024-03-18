@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import PostModal from '../../components/modal/PostModal';
 
 
 const Homepage = () => {
+    const [openModal, setOpenModal] = useState(false)  /**i should use this in the single post component */
 
   return (
     <>
@@ -14,9 +16,11 @@ const Homepage = () => {
                     <br/>
                     oriunde este nevoie de el
                 </h1>
-                <button className='hero-button'>
-                    Gaseste strigatul de ajutor
-                </button>
+                <Link to="/cazuri" className="buttnon hero-button">
+                    <button>
+                        Gaseste strigatul de ajutor
+                    </button>
+                </Link>
             </div>
         </section>
         <section className="project-idea-section">
@@ -74,7 +78,7 @@ const Homepage = () => {
                             </p>
                             <button className="basic-button">
                                 <span>
-                                    Ocupa-te de caz
+                                    Vezi detalii
                                 </span>
                                 <IoIosArrowForward/>
                             </button>
@@ -95,6 +99,7 @@ const Homepage = () => {
                 </p>
             </div>
         </section>
+        <PostModal isOpen={openModal} onClose={() => setOpenModal(false)} post={"the post here"}/> {/*i have to set the post in the single post component" and actually call this postmodal from there*/}
     </>
   )
 }

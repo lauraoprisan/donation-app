@@ -8,18 +8,23 @@ const Navbar = () => {
   const {pathname} = useLocation()
 
   return (
-
     <>
-      {pathname== "/" && (
-          <nav className={`navbar-container homepage-nav ${scrolled ? 'scrolled-navbar' : ""}`}>
+          <nav className={`navbar-container ${pathname== "/" ? "homepage-nav" : "" } ${scrolled ? 'scrolled-navbar' : ""}`}>
             <div className="left-items">
               <a href="">Cum poti actiona</a>
             </div>
-            <img className="navbar-logo" src="/images/logo.png" alt="logo" />
+            <Link to="/" className="logo-link">
+              <img className="navbar-logo" src="/images/logo.png" alt="logo" />
+            </Link>
+
             <div className="right-items">
                 {true? (
 
-                  <img className="avatar" src="/images/img-placeholder.jpg" alt="avatar" />
+                  <Link to="/profil" className="user-snippet">
+                    <img className="avatar" src="/images/img-placeholder.jpg" alt="avatar" />
+                    <span>username</span>
+                  </Link>
+
 
                   ):(
                   <a href="">Autentificate</a>
@@ -30,30 +35,6 @@ const Navbar = () => {
               </Link>
             </div>
           </nav>
-      )}
-
-      {pathname== "/cazuri" && (
-         <nav className={`navbar-container ${scrolled ? 'scrolled-navbar': ""}`}>
-         <div className="left-items">
-           <a href="">Cum poti actiona</a>
-           <a href="">Salvate</a>
-           <a href="">In asteptare</a>
-         </div>
-         <img className="navbar-logo" src="/images/logo.png" alt="logo" />
-         <div className="right-items">
-          {true? (
-            <img className="avatar" src="/images/img-placeholder.jpg" alt="avatar" />
-          ):(
-            <a href="">Autentificate</a>
-          )
-          }
-           <Link className="button action-button" to="/cazuri">
-                Vezi toate cazurile
-           </Link>
-         </div>
-       </nav>
-      )}
-
     </>
 
   )

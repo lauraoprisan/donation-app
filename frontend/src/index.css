@@ -166,8 +166,17 @@ h2{
   width:40px;
   height:40px;
   border-radius: 50px;
+}
 
+.user-snippet{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
 
+.logo-link:hover{
+  background-color: transparent;
 }
 
 /* /navbar*/
@@ -178,6 +187,7 @@ h2{
   display:flex;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   gap:40px;
 }
 
@@ -451,7 +461,7 @@ h2{
 }
 
 .sidebar-content svg{
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 #regions-options{
@@ -500,11 +510,26 @@ h2{
   background-color: #5a5a5a;
   color:white;
 }
+
+.sidebar-button{
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap:10px;
+  padding:10px;
+  border-radius:10px;
+  min-width:140px;
+}
+
+.sidebar-button:hover{
+  padding:10px;
+  border-radius:10px;
+}
 /* /sidebar*/
 
-/* ^cases-section ^posts*/
+/* ^cases-section ^posts ^profile-section*/
 
-.cases-section{
+.cases-section, .profile-section{
   width:100%;
 }
 
@@ -646,8 +671,11 @@ h2{
     flex-basis: calc(50% - 20px);
   }
 }
-@media (max-width:825px){
 
+@media (max-width:868px){
+  .copyright{
+    margin-left:0;
+  }
 }
 
 
@@ -656,6 +684,14 @@ h2{
   /* .container{
     padding: 20px 10%;
   } */
+  .sidebar-button{
+    min-width:0px;
+  }
+
+  .sidebar-container{
+    width:inherit;
+  }
+
   .project-idea-content{
     flex-direction: column;
     gap:20px;
@@ -693,6 +729,12 @@ h2{
 
 }
 
+
+@media(max-width:641px){
+  .footer{
+    gap:20px;
+  }
+}
 @media (max-width:480px){
 
 }

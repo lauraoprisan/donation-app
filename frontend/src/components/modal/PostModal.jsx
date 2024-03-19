@@ -31,7 +31,7 @@ const PostModal = ({isOpen, onClose, post}) => {
                 <BsLightningCharge/>
                 <div className="">
                     <h4>Nevoi</h4>
-                    <p>ringilla leo dapibus. Nunc ipsum lorem, feugiat id sem et, dignissim maximus urna. In quis felis sed dolor rutrum vestibulum. Sed malesuada, ex id ullamcorper vehicula, odio libero condimentum lorem, ut pretium elit est et lacus. Donec commodo id ex ut varius. Quisque urna elit, posuere et fringilla non, ultrices in arcu.</p>
+                    <p>ringilla leo dapibus. Nunc ipsum lorem, feugiat id sem et, dignissim maximus urna. In quis felis sed dolor rutrum vestibulum. Sed malesuada, ex id ullamcorper vehicula, odio libero condimentum lorem, ut pretium elit est et lacus. Donec commodo id ex ut varius. Quisque urna elit,mus urna. In quis felis sed dolor rutrum vestibulum. Sed malesuada, ex id ullamcorper vehicula, odio libero condimentum lorem, ut pretium elit est et lacus. Dmus urna. In quis felis sed dolor rutrum vestibulum. Sed malesuada, ex id ullamcorper vehicula, odio libero condimentum lorem, ut pretium elit est et lacus. D posuere et fringilla non, ultrices in arcu.</p>
                 </div>
             </div>
             <div className="description-section">

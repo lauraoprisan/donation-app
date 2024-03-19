@@ -2,7 +2,8 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { BiLogOut } from "react-icons/bi";
 import AllCasesSidebar from './AllCasesSidebar';
-import ProfileSideBar from './ProfileSideBar';
+import ProfileSidebar from './ProfileSidebar';
+import AdminSidebar from './AdminSidebar';
 
 
 
@@ -17,7 +18,8 @@ const Sidebar = () => {
             <div className="sidebar-container">
                 <div className="sidebar-content">
                     {pathname=="/cazuri" && <AllCasesSidebar/>}
-                    {pathname=="/profil" && <ProfileSideBar/>}
+                    {pathname=="/profil" && <ProfileSidebar/>}
+                    {pathname=="/admin" && <AdminSidebar/>}
                     <Link to="/" className="sidebar-subtitle log-out-container">
                         <BiLogOut color="black" size="22px" />
                         <button className="on-desktop logout-btn">Log out</button>

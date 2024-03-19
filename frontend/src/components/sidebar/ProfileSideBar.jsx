@@ -2,8 +2,13 @@ import React from 'react'
 import { FaRegHeart } from 'react-icons/fa6'
 import { GiCheckMark } from 'react-icons/gi'
 import { ImHourGlass } from 'react-icons/im'
+import { FaExclamation } from "react-icons/fa6";
+import { PiPersonSimpleRunBold } from "react-icons/pi";
 
-const ProfileSideBar = () => {
+
+
+
+const ProfileSidebar = () => {
   return (
     <>
         <button className="sidebar-button">
@@ -19,6 +24,18 @@ const ProfileSideBar = () => {
             </span>
         </button>
         <button className="sidebar-button">
+            <FaExclamation/>
+            <span className="on-desktop">
+                Reconfirma
+            </span>
+        </button>
+        <button className="sidebar-button">
+            <PiPersonSimpleRunBold/>
+            <span className="on-desktop">
+                In actiune
+            </span>
+        </button>
+        <button className="sidebar-button">
             <GiCheckMark/>
             <span className="on-desktop">
                 Completate
@@ -28,4 +45,4 @@ const ProfileSideBar = () => {
   )
 }
 
-export default ProfileSideBar
+export default ProfileSidebar

@@ -8,7 +8,7 @@ import Footer from '../components/Footer'
 const PageLayout = ({children}) => {
     const {pathname} = useLocation()
     // const [user, loading] = useAuthState(auth)
-    const canRedenderSidebar = pathname!== "/"
+    const canRedenderSidebar = pathname!== "/" && pathname !== "/autentificare"
 
     // if(!user && loading){
     //     return <PageLayoutSpiner/>

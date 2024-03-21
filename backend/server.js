@@ -4,7 +4,8 @@ const express = require('express')
 const port = process.env.PORT
 const mongoose = require('mongoose')
 
-const caseRoutes = require('./routes/cases')
+const caseRoutes = require('./routes/casesRouter')
+const userCaseStatusRoutes = require('./routes/userCaseStatusRoutes')
 
 //express app
 const app = express()
@@ -21,7 +22,7 @@ app.use(express.urlencoded({extended:false}))   //for urlencoded
 
 //routes
 app.use("/api/cases", caseRoutes)
-app.use("/api/cases/:id",caseRoutes)
+app.use("api/status", userCaseStatusRoutes)
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

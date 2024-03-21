@@ -838,6 +838,60 @@ h2{
 }
 
 /* /scroll customization*/
+
+/* ^auth-page */
+.auth-section{
+  background-image: url('../public/images/hero-bg.jpg');
+  background-size: cover;
+  width:100%;
+  height:100vh;
+  position: relative;
+}
+
+.auth-container{
+  background-color: rgba(255, 255, 255, 0.914);
+  max-width:900px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  position:absolute;
+  padding:50px 100px;
+  border-radius: 10px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+}
+
+.auth-form{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction: column;
+}
+
+.form-group label{
+  font-size: 1.6rem;
+}
+
+.form-group input{
+  background-color: transparent;
+  border:1px solid black;
+  padding:10px;
+  border-radius: 5px;
+}
+
+.change-login-signup{
+  font-weight: bold;
+}
+/* /auth-page*/
 /* next */
 
 

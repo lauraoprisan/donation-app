@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.schema
 
-const caseSchema = new Schema({
+const caseSchema = new mongoose.Schema({
     title: {
         type: String,
         required:true
@@ -19,7 +19,7 @@ const caseSchema = new Schema({
         type: String,
         required:true
     },
-    inOneTimeNeed: {
+    isOneTimeNeed: {
         type: Boolean,
         required:true
     },
@@ -27,12 +27,18 @@ const caseSchema = new Schema({
         type: String,
         required:true
     },
-    tags: {
+    tag: {
         type: String,
         required:false
     },
+    image: {
+        type: String,
+        require: false,
+      },
     cloudinaryId: {
         type: String,
-        required:true
+        required:false
     }
 }, {timestamps: true})  //timestamps adds createdAt and lastUpdate
+
+module.exports = mongoose.model('Case', caseSchema)

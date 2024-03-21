@@ -18,7 +18,7 @@ const Navbar = () => {
             </Link>
 
             <div className="right-items">
-                {true? (
+                {false? (
 
                   <Link to="/profil" className="user-snippet">
                     <img className="avatar" src="/images/img-placeholder.jpg" alt="avatar" />

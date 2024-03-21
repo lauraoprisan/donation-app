@@ -4,6 +4,7 @@ import PageLayout from './Layout/PageLayout';
 import Cases from './pages/Cases/Cases';
 import ProfilePage from './pages/profile/ProfilePage';
 import AdminPage from './pages/admin/AdminPage';
+import AuthPage from './pages/auth/AuthPage';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Route path="/cazuri" element={<Cases/>}/>
             <Route path="/profil" element={<ProfilePage/>}/>
             <Route path="/admin" element={<AdminPage/>}/>
+            <Route path="/autentificare" element={<AuthPage/>}/>
             {/* <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/> */}
 

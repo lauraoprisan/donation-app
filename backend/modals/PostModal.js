@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.schema
 
-const caseSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required:true
@@ -41,4 +41,4 @@ const caseSchema = new mongoose.Schema({
     }
 }, {timestamps: true})  //timestamps adds createdAt and lastUpdate
 
-module.exports = mongoose.model('Case', caseSchema)
+module.exports = mongoose.model('Post', postSchema)

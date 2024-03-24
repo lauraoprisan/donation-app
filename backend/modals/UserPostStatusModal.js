@@ -2,14 +2,14 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.schema
 
-const userCaseStatusSchema = new mongoose.Schema({
+const userPostStatusSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    caseId: {
+    postId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Case",
+        ref: "Post",
     },
     isWaitingAdminResponse: {
         type: Boolean,
@@ -33,4 +33,4 @@ const userCaseStatusSchema = new mongoose.Schema({
     },
 }, {timestamps: true})  //timestamps adds createdAt and lastUpdate
 
-module.exports = mongoose.model('UserCaseStatus', userCaseStatusSchema)
+module.exports = mongoose.model('UserPostStatus', userPostStatusSchema)

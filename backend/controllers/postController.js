@@ -1,23 +1,23 @@
 const cloudinary = require("../middleware/cloudinary");
 const mongoose = require('mongoose');
-const Case = require("../modals/CaseModal");
-const UserCaseStatus = require("../modals/UserCaseStatusModal")
+const Post = require("../modals/PostModal");
+const UserPostStatus = require("../modals/UserPostStatusModal")
 
 
 
 
-const getCases = async (req, res) => {
+const getPosts = async (req, res) => {
     try {
 
-      const cases = await Case.find({}).sort({createdAt: -1});
-      res.status(200).json(cases)
+      const posts = await Post.find({}).sort({createdAt: -1});
+      res.status(200).json(posts)
 
     } catch (err) {
       console.log(err);
     }
 }
 
-const addCase = async (req, res) => {
+const addPost = async (req, res) => {
   try {
 
 
@@ -26,7 +26,7 @@ const addCase = async (req, res) => {
 
     //media is stored on cloudinary - the above request responds with url to media and the media id that you will need when deleting content
 
-    const casePost = await Case.create({
+    const post = await Post.create({
       title: req.body.title,
       location: req.body.location,
       needs: req.body.needs,
@@ -44,29 +44,34 @@ const addCase = async (req, res) => {
       //   test: "Test"
       // });
 
-      res.status(200).json(casePost);
+      res.status(200).json(post);
   } catch (err) {
       res.status(400).json({err:err.message})
   }
 }
-const deleteCase = async (req, res) => {
+const deletePost = async (req, res) => {
   try {
 
-    const caseId = req.body.id
+    const postId = req.body.id
+    console.log(postId)
 
-    if(!mongoose.Types.ObjectId.isValid(caseId)){
-      return res.status(404).json({error: "Nu such case"})
+    if(!mongoose.Types.ObjectId.isValid(postId)){
+      return res.status(404).json({error: "No such post"})
     }
 
-    const casePost = await Case.findOneAndDelete({ _id: caseId });
+    const post = await Post.findOneAndDelete({ _id: postId });
 
-    if(!casePost){
-      return res.status(404).json({error: "Nu such case"})
-    } else{
-      await cloudinary.uploader.destroy(casePost.cloudinaryId);
+    if(!post){
+      return res.status(404).json({error: "No such post"})
     }
 
-    res.status(200).json(workout)
+    /*
+else{
+      // await cloudinary.uploader.destroy(casePost.cloudinaryId);
+    }
+    */
+
+    res.status(200).json(post)
   } catch (err) {
       res.status(400).json({err:err.message})
   }
@@ -74,7 +79,7 @@ const deleteCase = async (req, res) => {
 
 
 module.exports ={
-  getCases,
-  addCase,
-  deleteCase
+  getPosts,
+  addPost,
+  deletePost
 }

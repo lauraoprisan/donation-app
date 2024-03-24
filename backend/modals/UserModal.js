@@ -21,11 +21,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         required:true
     },
-    savedCases: [
+    savedPosts: [
         {
-            case:{
+            post:{
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Case",
+                ref: "Post",
               }
         }
     ],

@@ -563,8 +563,8 @@ h2{
 
 .post-modal-container{
   display:flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   width:80vw;
   max-width:800px;
   border-top-right-radius: 10px;
@@ -573,7 +573,6 @@ h2{
 
 .modal{
   min-width:300px;
-  min-height:200px;
   height:90vh;
   max-height:600px;
   position:fixed;
@@ -606,6 +605,7 @@ h2{
   display:flex;
   flex-direction: column;
   gap:20px;
+  position: relative;;
 }
 
 .post-modal-header{
@@ -621,6 +621,7 @@ h2{
   min-height:50px;
 }
 
+
 .post-modal-header h2{
   margin:0;
   font-size: 1.8rem;
@@ -633,13 +634,13 @@ h2{
   font-size: 1.6rem;
 }
 
-.description-section{
+.form-single-section{
   padding:0 20px;
   display:flex;
   gap:20px;
   justify-content: flex-start;
-  align-items: center;;
-
+  align-items: center;
+  width:100%;
 }
 
 .description-section svg{
@@ -764,9 +765,31 @@ h2{
 }
 
 
+
 /* /admin post modal*/
 
 /* ^create post modal*/
+.create-post-modal{
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height:100%;
+}
+
+.create-post-modal form{
+  height:100%;
+}
+
+.form-main-content{
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top:20px;
+  height:calc(100% - 50px);
+  gap:10px;
+}
+
 .create-post-modal input, .create-post-modal textarea{
   background-color: transparent;
   border:none;
@@ -774,6 +797,74 @@ h2{
   width:100%;
   resize: none;
 }
+
+.create-post-modal .post-modal-header input{
+  border-bottom:1px solid rgba(255, 255, 255, 0.542);
+  width:80%;
+}
+.post-modal-header input{
+  color:white;
+}
+
+.create-post-btn{
+  align-self: flex-end;
+  margin-top:auto;
+}
+
+.check-box-container{
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  width:100%;
+  gap:20px;
+}
+
+.check-box-container input{
+  width:20px;
+}
+
+
+.input-container{
+  width: 90%;
+}
+
+.input-container input, .input-container textarea{
+  margin:10px 0;
+  font-size: 1.8rem;
+  font-family: 'Times New Roman', Times, serif;
+  height:22px;
+}
+
+.post-modal-header input{
+  font-size: 1.8rem;
+}
+
+
+.create-post-modal input:focus, .create-post-modal textarea:focus{
+  outline: none;
+}
+
+.modal-tag-options{
+  position:absolute;
+  top:0;
+  right:0;
+}
+
+.tags-options-container{
+  padding:10px;
+  border-radius: 20px;
+  margin-left:10px;
+  font-size: 1.6rem;
+}
+
+
+
+/* /create-post-modal*/
+
+.post-modal-content{
+  font-size:1.8rem;
+}
+
 /* /modal*/
 
 /* ^admin page*/
@@ -792,6 +883,10 @@ h2{
 
 .modal-tag-container{
   position:relative;
+  height:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-tag-container svg{

@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Homepage from './pages/homepage/Homepage';
 import PageLayout from './Layout/PageLayout';
-import Cases from './pages/Cases/Cases';
+import Posts from './pages/posts/Posts';
 import ProfilePage from './pages/profile/ProfilePage';
 import AdminPage from './pages/admin/AdminPage';
 import AuthPage from './pages/auth/AuthPage';
@@ -13,7 +13,7 @@ function App() {
       <PageLayout>
         <Routes>
             <Route path="/" element={<Homepage/>}/>
-            <Route path="/cazuri" element={<Cases/>}/>
+            <Route path="/cazuri" element={<Posts/>}/>
             <Route path="/profil" element={<ProfilePage/>}/>
             <Route path="/admin" element={<AdminPage/>}/>
             <Route path="/autentificare" element={<AuthPage/>}/>

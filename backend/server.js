@@ -3,12 +3,19 @@ require('dotenv').config()
 const express = require('express')
 const port = process.env.PORT
 const mongoose = require('mongoose')
+const cors = require("cors");
 
-const caseRoutes = require('./routes/casesRouter')
-const userCaseStatusRoutes = require('./routes/userCaseStatusRoutes')
+const postRoutes = require('./routes/postsRouter')
+const userPostStatusRoutes = require('./routes/userPostStatusRoutes')
 
 //express app
 const app = express()
+
+//for cors error
+// app.use(cors({
+//     credentials:true
+//   }))
+
 
 //middleware
 app.use((req,res,next)=>{
@@ -16,13 +23,12 @@ app.use((req,res,next)=>{
     next()
 })
 
-//middleware
 app.use(express.json())     //body-parser for raw json, and attaches data to the req object, to req.body
 app.use(express.urlencoded({extended:false}))   //for urlencoded
 
 //routes
-app.use("/api/cases", caseRoutes)
-app.use("api/status", userCaseStatusRoutes)
+app.use("/api/posts", postRoutes)
+app.use("api/status", userPostStatusRoutes)
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

@@ -6,11 +6,18 @@ import { ImHourGlass } from 'react-icons/im';
 import { RiImageEditLine } from 'react-icons/ri';
 
 
+
 const SinglePost = ({post}) => {
     const [openModal, setOpenModal] = useState(false)
     const [openAdminModal, setOpenAdminModal] = useState(false)
 
-
+const handleOpenModal = () => {
+    if(true){ //auth
+        setOpenAdminModal(true)
+    } else{
+        setOpenModal(true)
+    }
+}
   return (
     <>
         <div className="single-post-container">
@@ -31,7 +38,7 @@ const SinglePost = ({post}) => {
             <div className="post-info-snippet">
                 <span className="location">{post.location}</span>
                 <p>{post.needs}</p>
-                <button className="basic-button" onClick={()=>setOpenModal(true)}>
+                <button className="basic-button" onClick={handleOpenModal}>
                     <span>Vezi detalii</span>
                     <IoIosArrowForward />
                 </button>

@@ -643,6 +643,11 @@ h2{
   width:100%;
 }
 
+.form-single-section svg{
+  min-width:1.8rem;
+  min-height:1.8rem;
+}
+
 .description-section svg{
   font-size:2.5rem;
   min-width:40px;
@@ -691,11 +696,11 @@ h2{
   display:flex;
   justify-content: center;
   align-items: flex-start;
-  height:100%;
   gap:10px;
+  height: calc(100% - 50px);
 }
 
-.main-modal-content > *{
+.left-column-content, .right-column-content{
   flex-basis: calc(50% - 10px);
 }
 
@@ -707,6 +712,7 @@ h2{
   gap:10px;
   height:100%;
 }
+
 
 .left-column-content .action-button{
   margin-top:20px;
@@ -729,7 +735,8 @@ h2{
   justify-content: flex-start;
   align-items: flex-start;
   gap:10px;
-  height:100%;
+  padding-top:20px;
+  height: 100%;
 }
 
 .user-request{
@@ -766,6 +773,7 @@ h2{
 
 
 
+
 /* /admin post modal*/
 
 /* ^create post modal*/
@@ -786,8 +794,9 @@ h2{
   justify-content: flex-start;
   align-items: flex-start;
   padding-top:20px;
-  height:calc(100% - 50px);
+  height:100%;
   gap:10px;
+  width:100%;
 }
 
 .create-post-modal input, .create-post-modal textarea{
@@ -999,7 +1008,7 @@ h2{
 @media(min-width:1000px){
   .left-column-content{
     overflow-y:auto;
-    max-height:520px;
+    max-height:530px;
   }
   .left-column-content::-webkit-scrollbar{
     width:2px;
@@ -1021,9 +1030,9 @@ h2{
     width:100%;
   }
 
-  .main-modal-content > * {
+  /* .main-modal-content > * {
    flex-basis:content;
-}
+} */
 
 }
 

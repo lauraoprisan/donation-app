@@ -77,9 +77,40 @@ else{
   }
 }
 
+const updatePost = async (req, res) => {
+  try {
+    const postId = req.body.id
+    const post = await Post.findOneAndUpdate(
+      {
+          _id: postId
+      },
+      {
+        $set: {
+          title: req.body.title,
+          location: req.body.location,
+          needs: req.body.needs,
+          personDescription: req.body.personDescription,
+          isOneTimeNeed: req.body.isOneTimeNeed,
+          timeLimit: req.body.timeLimit,
+          tag:req.body.tag || null
+        },
+
+      },
+      {
+        new:true,
+      });
+
+      res.status(200).json(post)
+
+  } catch (err) {
+     console.log(err);
+  }
+}
+
 
 module.exports ={
   getPosts,
   addPost,
-  deletePost
+  deletePost,
+  updatePost
 }

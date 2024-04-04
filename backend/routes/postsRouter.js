@@ -9,7 +9,7 @@ const {
 } = require('../controllers/postController')
 
 router.get("/", getPosts);
-router.post("/addPost", addPost);
+router.post("/addPost",  upload.single("file"),  addPost);
 router.delete("/deletePost/", deletePost);
 router.put("/updatePost/", updatePost);
 

@@ -4,7 +4,7 @@ import { GiCheckMark } from 'react-icons/gi'
 import { ImHourGlass } from 'react-icons/im'
 import { PiPersonSimpleRunBold } from 'react-icons/pi'
 import { TiDeleteOutline } from "react-icons/ti";
-import AdminPostModal from '../modal/AdminPostModal'
+import CreatePostModal from '../modal/CreatePostModal'
 
 
 const AdminSidebar = () => {
@@ -48,7 +48,7 @@ const AdminSidebar = () => {
                 Rezolvate
             </span>
         </button>
-        <AdminPostModal isOpen={openCreatePostModal} onClose={() => setOpenCreatePostModal(false)}/>
+        <CreatePostModal isOpen={openCreatePostModal} onClose={() => setOpenCreatePostModal(false)}/>
 
     </>
   )

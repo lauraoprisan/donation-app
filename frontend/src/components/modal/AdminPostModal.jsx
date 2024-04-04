@@ -5,16 +5,13 @@ import { FaCalendarDay, FaLocationDot } from 'react-icons/fa6'
 import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
-import TagOptions from './TagOptions'
 
 const AdminPostModal = ({isOpen, onClose, post}) => {
 
-    const [selectedTag, setSelectedTag] = useState(null)
     const [error, setError] = useState(null)
     const formRef = useRef(null);
-    const renderRequests = false
+    const renderRequests = true //false if case is resolved
     const postIsAvailable =  post
-    const creatingPost = false
     const [activeButton, setActiveButton] = useState(false)
 
 
@@ -28,21 +25,8 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
         tag:postIsAvailable ? post.tag : null,
         image:''
     })
-    if(post){
-        console.log("post",post)
-        console.log("form",formData.title)
-    }
-
 
     const {title, location, needs, personDescription, isOneTimeNeed, timeLimit, tag, image} = formData
-
-    useEffect(()=>{
-        setFormData((prevState) => ({
-            ...prevState,
-            tag: selectedTag,
-        }) )
-    }, [selectedTag])
-
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -51,46 +35,11 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
         }) )
 
         setActiveButton(true)
-
-
     }
 
     const handleIsOneTimeNeedChange = (e) => {
         setFormData({ ...formData, isOneTimeNeed: !isOneTimeNeed});
     };
-
-    const handleCreatePost = async(e) => {
-        e.preventDefault()
-        console.log(formData)
-        console.log("creating post")
-        const response = await fetch('api/posts/addPost', {
-            method: 'POST',
-            body:JSON.stringify(formData),
-            headers: {
-                'Content-Type':'application/json'
-            }
-        })
-        const json = await response.json()
-        if(!response.ok){
-            setError(json.error)
-            console.log( json)
-        } else {
-            setError(null)
-            onClose()
-            setFormData({
-                title: '',
-                location:'',
-                needs:'',
-                personDescription:'',
-                isOneTimeNeed:true,
-                timeLimit:'',
-                tag:null,
-                image:''
-            })
-            setActiveButton(false)
-            console.log("New post added", json)
-        }
-    }
 
     const handleUpdatePost = async (e) => {
         e.preventDefault();
@@ -155,7 +104,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
   return (
     <Modal isOpen={isOpen} onClose={handleOnClose}>
         <section className="post-modal-content create-post-modal">
-            <form onSubmit={creatingPost? handleCreatePost: handleUpdatePost} ref={formRef} onChange={handleAutoGrowTextarea}>
+            <form onSubmit={handleUpdatePost} ref={formRef} onChange={handleAutoGrowTextarea}>
                 <div className="post-modal-header">
                     <input
                         type="text"
@@ -166,7 +115,13 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
                         value={title}
                     />
                     <div className="modal-tag-container">
-                        <TagOptions setSelectedTag={setSelectedTag}/>
+                        <select className="tags-options-container" name="tag" onChange={onChange} value={tag}>
+                            {/* existing tags. map trhough them */}
+                            <option> </option>
+                            <option value="Urgenta">Urgenta</option>
+                            <option value="Dorinta">Dorinta</option>
+                            {/* add position relative to */}
+                        </select>
                     </div>
                 </div>
                 {/* <img className="img-fluid img-preview" src={image ? URL.createObjectURL(image) : story.image} />
@@ -248,7 +203,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
                     {true ? ( //do not show if case is solved
                         <div className="modal-buttons">
                         <button className={`action-button ${activeButton? "highlight-button" : "disabled-button"}`} disabled={!activeButton}>
-                            {creatingPost ? "Adauga cazul" : "Salveaza modificarile"}
+                             Salveaza modificarile
                         </button>
                     </div>
                     ):(

@@ -22,7 +22,7 @@ const handleOpenModal = () => {
     <>
         <div className="single-post-container">
             <div className="img-post-container">
-                <img src="/images/img-placeholder.jpg" alt="" />
+                <img src={post.image} alt="" />
                 {post.tag && <button className="tag">{post.tag}</button> }
                 {true && ( //if case in waiting for user / admin
                             <button className="case-in-waiting">

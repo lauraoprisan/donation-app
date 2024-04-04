@@ -866,6 +866,19 @@ h2{
   font-size: 1.6rem;
 }
 
+.img-input{
+  display:flex;
+  flex-direction: column;
+  gap:10px;
+}
+
+.img-input img{
+  max-width:500px;
+}
+
+.img-input .action-button{
+  width:fit-content;
+}
 
 
 /* /create-post-modal*/
@@ -1008,7 +1021,8 @@ h2{
 @media(min-width:1000px){
   .left-column-content{
     overflow-y:auto;
-    max-height:530px;
+    /* max-height:530px; */
+
   }
   .left-column-content::-webkit-scrollbar{
     width:2px;

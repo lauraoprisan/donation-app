@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import useGetAllPosts from '../../hooks/useGetAllPosts';
 import PostModal from '../../components/modal/PostModal';
+import SinglePost from '../../components/posts/SinglePost';
 
 
 const Homepage = () => {
     const [openModal, setOpenModal] = useState(false)  /**i should use this in the single post component */
+    const {posts, isLoading} = useGetAllPosts();
+    const [postsToShow, setPostsToShow] = useState([]);
 
+    useEffect(() => {
+        console.log(posts);
+        if (posts) {
+            console.log("posts inside if", posts);
+            const filteredPosts = posts.filter(post => post.tag === "Urgenta");
+            const sortedPosts = filteredPosts.sort((a, b) => a.createdAt - b.createdAt);
+            const firstThreePosts = sortedPosts.slice(0,4)
+            setPostsToShow(firstThreePosts);
+            console.log("poststoshow", postsToShow);
+        }
+    }, [isLoading]);
+
+    console.log("poststoshow",postsToShow)
   return (
     <>
         <section className="hero-section">
@@ -16,7 +33,7 @@ const Homepage = () => {
                     <br/>
                     oriunde este nevoie de el
                 </h1>
-                <Link to="/cazuri" className="buttnon hero-button">
+                <Link to="/cazuri" className="button hero-button">
                     <button>
                         Gaseste strigatul de ajutor
                     </button>
@@ -63,28 +80,16 @@ const Homepage = () => {
                         </button>
                     </div>
                 </div>
-                {[1, 2, 3].map((num, index) => (
-                    <div key={index} className="single-post-container">
-                        <div className="img-post-container">
-                            <img src="/images/clothes4.jpg" alt="" />
-                            <button className="tag">Urgenta</button>
-                        </div>
-                        <div className="post-info-snippet">
-                            <span className="location">
-                                Locatie
-                            </span>
-                            <p>
-                                Lista scurta cu nevoi urgente
-                            </p>
-                            <button className="basic-button">
-                                <span>
-                                    Vezi detalii
-                                </span>
-                                <IoIosArrowForward/>
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                <div className="posts-container">
+                    {isLoading && <span>Loading..</span>}
+                    {!isLoading && postsToShow && (
+                        postsToShow.map(post => (
+                            <SinglePost key={post.id} post={post}/>
+                        ))
+                    )}
+                    {!isLoading && posts && posts.length==0 && <span>Nu sunt urgente.</span>}
+                </div>
+
             </div>
         </section>
         <section className="motivational-section">

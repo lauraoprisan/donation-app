@@ -15,20 +15,22 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
     const postIsAvailable =  post
     const [activeButton, setActiveButton] = useState(false)
     const [selectedImage, setSelectedImage] = useState(null)
+    const [imageSizeError, setImageSizeError] = useState(false)
 
 
-    const [formData, setFormData] = useState({
+    const [formDataEvidence, setFormDataEvidence] = useState({
         title:'',
         location: '',
         needs: '',
         personDescription:'',
         isOneTimeNeed:true,
         timeLimit:'',
-        tag:null,
-        image:selectedImage
+        tag:'',
     })
 
-    const {title, location, needs, personDescription, isOneTimeNeed, timeLimit, tag, image} = formData
+
+    const {title, location, needs, personDescription, isOneTimeNeed, timeLimit, tag} = formDataEvidence
+
 
     // useEffect(()=>{
     //     setFormData((prevState) => ({
@@ -39,7 +41,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
 
 
     const onChange = (e) => {
-        setFormData((prevState) => ({
+        setFormDataEvidence((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,
         }) )
@@ -47,74 +49,77 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
         setActiveButton(true)
     }
 
-    const handleImage = (e)=>{
-		const file = e.target.files[0];
-        if (file && file.type.startsWith("image/")) {
+    const handleImage = (e) => {
+        const maxSize = 10 * 1024 * 1024; // 10 MB in bytes
 
-            const reader = new FileReader();
-
-            reader.onloadend = () => {
-                setFormData(prevState => ({
-                    ...prevState,
-                    image: reader.result
-                }));
-                setSelectedImage(reader.result);
-            };
-
-            reader.readAsDataURL(file);
-
+        if (e.target.files[0] && e.target.files[0].size > maxSize) {
+            setImageSizeError(true);
+            alert("Imaginea are dimensiunea prea mare");
         } else {
-            setSelectedImage(null)
+            setImageSizeError(false);
+            setSelectedImage(e.target.files[0]);
         }
-    }
-    const handleIsOneTimeNeedChange = (e) => {
-        setFormData({ ...formData, isOneTimeNeed: !isOneTimeNeed});
     };
 
-    const handleCreatePost = async(e) => {
-        e.preventDefault()
+    const handleIsOneTimeNeedChange = (e) => {
+        setFormDataEvidence({ ...formDataEvidence, isOneTimeNeed: !isOneTimeNeed});
+    };
 
+    const handleCreatePost = async (e) => {
+        e.preventDefault();
 
-        const response = await fetch('api/posts/addPost', {
-            method: 'POST',
-            body:JSON.stringify(formData),
-            headers: {
-                'Content-Type':'application/json'
+        console.log("image", selectedImage)
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('location', location);
+        formData.append('needs', needs);
+        formData.append('personDescription', personDescription);
+        formData.append('isOneTimeNeed', isOneTimeNeed);
+        formData.append('timeLimit', timeLimit);
+        formData.append('tag', tag);
+        formData.append('file', selectedImage);
+
+        console.log('formData', formData.title)
+        try {
+            const response = await fetch('api/posts/addPost', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const json = await response.json();
+            if (!response.ok) {
+                setError(json.error);
+            } else {
+                setError(null);
+                onClose();
+                setFormDataEvidence({
+                    title: '',
+                    location: '',
+                    needs: '',
+                    personDescription: '',
+                    isOneTimeNeed: true,
+                    timeLimit: '',
+                    tag: '',
+                    image: ''
+                });
+                setActiveButton(false);
             }
-        })
-        const json = await response.json()
-        if(!response.ok){
-            setError(json.error)
-
-        } else {
-            setError(null)
-            onClose()
-            setFormData({
-                title: '',
-                location:'',
-                needs:'',
-                personDescription:'',
-                isOneTimeNeed:true,
-                timeLimit:'',
-                tag:null,
-                image:null
-            })
-            setActiveButton(false)
-    
+        } catch (error) {
+            console.error('Error:', error);
         }
-    }
+    };
 
     const handleOnClose = ()=>{
         onClose()
-        setFormData({
+        setFormDataEvidence({
             title: postIsAvailable ? post.title : '',
             location:postIsAvailable ? post.location : '',
             needs:postIsAvailable ? post.needs : '',
             personDescription:postIsAvailable ? post.personDescription : '',
             isOneTimeNeed:postIsAvailable ? post.isOneTimeNeed : true,
             timeLimit:postIsAvailable ? post.timeLimit : '',
-            tag:postIsAvailable ? post.tag : null,
-            image:null
+            tag:postIsAvailable ? post.tag : '',
+            image:''
         })
         setActiveButton(false)
     }
@@ -175,7 +180,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
                                     ref={imageRef}
                                     required
                                 />
-                                <img src={selectedImage} alt="" />
+                                <img src={selectedImage ? URL.createObjectURL(selectedImage) : ""} alt="" />
                                 <button type="button" className="action-button" onClick={()=>imageRef.current.click()}>Selecteaza o imagine</button>
                             </div>
                         </div>

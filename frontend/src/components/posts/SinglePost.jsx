@@ -6,10 +6,6 @@ import { ImHourGlass } from 'react-icons/im';
 import { RiImageEditLine } from 'react-icons/ri';
 import { IoMdSave } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
-import axios from 'axios';
-
-
-
 
 
 const SinglePost = ({post}) => {
@@ -19,8 +15,7 @@ const SinglePost = ({post}) => {
     const [error, setError] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
-    console.log("selectedImage", selectedImage)
-
+ 
     const handleOpenModal = () => {
         if(true){ //auth
             setOpenAdminModal(true)
@@ -28,36 +23,6 @@ const SinglePost = ({post}) => {
             setOpenModal(true)
         }
     }
-    // const handleImage = async (e) => {
-    //     // const maxSize = 10 * 1024 * 1024; // 10 MB in bytes
-
-    //     // if (e.target.files[0] && e.target.files[0].size > maxSize) {
-    //     //   setImageSizeError(true)
-    //     // } else {
-    //     //   setImageSizeError(false)
-    //     //   setSelectedImage(e.target.files[0]);
-    //     //   console.log(selectedImage)
-    //     // }
-
-    //     const file = e.target.files[0];
-    //         if (file && file.type.startsWith("image/")) {
-
-    //             const reader = new FileReader();
-
-    //             reader.onloadend = () => {
-    //                 setSelectedImage(reader.result);
-    //             };
-
-    //             reader.readAsDataURL(file);
-    // }
-    // };
-
-    // const handleImage = async (e) => {
-    //     const maxSize = 10 * 1024 * 1024; // 10 MB in bytes
-
-    //     setSelectedImage(URL.createObjectURL(e.target.files[0]))
-    //     console.log("selectedImage",selectedImage)
-    // };
 
     const handleImage = (e) => {
         const maxSize = 10 * 1024 * 1024; // 10 MB in bytes
@@ -71,43 +36,8 @@ const SinglePost = ({post}) => {
         }
     };
 
-    // const handleUpdateImage = async (e) => {
-    //     e.preventDefault();
-
-    //     const reader = new FileReader();
-    //     reader.onload = async () => {
-    //         const blob = await fetch(reader.result).then((res) => res.blob()); // Convert data URL to Blob
-    //         const data = new FormData();
-    //         data.append('id', post._id);
-    //         data.append('file', blob);
-
-    //         try {
-    //             const response = await fetch('api/posts/updateImage', {
-    //                 method: 'PUT',
-    //                 body: data, // Use FormData for sending binary data
-    //             });
-
-    //             const json = await response.json();
-    //             if (!response.ok) {
-    //                 setError(json.error);
-    //             } else {
-    //                 setError(null);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error:', error);
-    //         }
-    //     };
-
-    //     reader.readAsDataURL(selectedImage); // Convert the file to data URL
-    // };
-
     const handleUpdateImage = async(e) =>{
         e.preventDefault()
-
-        // if (!storyId) {
-        //   console.error('Invalid storyId');
-        //   return;
-        // }
 
         const formData = new FormData();
         formData.append('file', selectedImage);
@@ -117,28 +47,22 @@ const SinglePost = ({post}) => {
           return
         }
 
-        // axios
-        //   .put(`api/posts/updateImage/`, formData)
-        //   .catch(err=>{
-        //     console.log(err)
-        //   })
+        try {
+            const response = await fetch('api/posts/updateImage', {
+                method: 'PUT',
+                body: formData, // Use FormData for sending binary data
+            });
 
-          try {
-                const response = await fetch('api/posts/updateImage', {
-                    method: 'PUT',
-                    body: formData, // Use FormData for sending binary data
-                });
-
-                const json = await response.json();
-                if (!response.ok) {
-                    setError(json.error);
-                } else {
-                    setError(null);
-                }
-            } catch (error) {
-                console.error('Error:', error);
+            const json = await response.json();
+            if (!response.ok) {
+                setError(json.error);
+            } else {
+                setError(null);
             }
-        };
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
 
   return (

@@ -19,10 +19,12 @@ const getPosts = async (req, res) => {
 
 const addPost = async (req, res) => {
   try {
-
+console.log("adding post")
 
     // Upload image to cloudinary
-    const result = await cloudinary.uploader.upload(req.body.image);
+    console.log("req body",req.body)
+    console.log("req file",req.file)
+    const result = await cloudinary.uploader.upload(req.file.path);
 
     //media is stored on cloudinary - the above request responds with url to media and the media id that you will need when deleting content
 
@@ -35,7 +37,7 @@ const addPost = async (req, res) => {
       cloudinaryId: result.public_id,
       isOneTimeNeed: req.body.isOneTimeNeed,
       timeLimit: req.body.timeLimit,
-      tag:req.body.tag || null
+      tag:req.body.tag || ''
     });
 
     //i'll actually handle this when the user applies for a case

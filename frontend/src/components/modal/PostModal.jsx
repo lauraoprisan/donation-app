@@ -7,7 +7,6 @@ import { GiBoomerang } from 'react-icons/gi'
 
 const PostModal = ({isOpen, onClose, post}) => {
 
-    console.log("postmodal called")
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
         <section className="post-modal-content">

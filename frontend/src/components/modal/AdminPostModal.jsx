@@ -43,8 +43,6 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
 
     const handleUpdatePost = async (e) => {
         e.preventDefault();
-        console.log(formData);
-
         const data = {
             ...formData,
             id: post._id
@@ -60,13 +58,11 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
 
             if (!response.ok) {
                 setError(json.error);
-                console.log(json);
-                console.log("did not update")
+
             } else {
                 setError(null);
                 onClose();
                 setActiveButton(false)
-                console.log("Updated post", json);
             }
         } catch (error) {
             console.error('Error:', error);

@@ -38,7 +38,7 @@ const Homepage = () => {
                     </p>
                 </div>
                 <div className="right-inside-container">
-                    <img src="/images/map.jpg" alt="harta Romaniei" />
+                    <img src="/images/romania-map.png" alt="harta Romaniei" />
                 </div>
 
             </div>
@@ -48,7 +48,7 @@ const Homepage = () => {
                 <h2>Nevoi urgente</h2>
                 <div className="urgent-main">
                     <div className="left-inside-container">
-                        <img src="/images/img-placeholder.jpg" alt="" />
+                        <img src="/images/donate2.png" alt="" />
                     </div>
                     <div className="right-inside-container">
                         <h3>Ajuta un caz critic in timp util</h3>
@@ -66,7 +66,7 @@ const Homepage = () => {
                 {[1, 2, 3].map((num, index) => (
                     <div key={index} className="single-post-container">
                         <div className="img-post-container">
-                            <img src="/images/img-placeholder.jpg" alt="" />
+                            <img src="/images/clothes4.jpg" alt="" />
                             <button className="tag">Urgenta</button>
                         </div>
                         <div className="post-info-snippet">

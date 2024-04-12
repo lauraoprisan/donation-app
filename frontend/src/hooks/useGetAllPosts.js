@@ -26,7 +26,6 @@ const useGetAllPosts = () => {
 
     },[])
 
-    console.log(posts)
     return {posts, isLoading}
 }
 

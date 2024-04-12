@@ -49,9 +49,8 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
 
     const handleImage = (e)=>{
 		const file = e.target.files[0];
-        console.log(e.target.files[0])
         if (file && file.type.startsWith("image/")) {
-            console.log("inside if")
+
             const reader = new FileReader();
 
             reader.onloadend = () => {
@@ -74,8 +73,8 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
 
     const handleCreatePost = async(e) => {
         e.preventDefault()
-        console.log(formData)
-        console.log("creating post")
+
+
         const response = await fetch('api/posts/addPost', {
             method: 'POST',
             body:JSON.stringify(formData),
@@ -86,7 +85,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
         const json = await response.json()
         if(!response.ok){
             setError(json.error)
-            console.log( json)
+
         } else {
             setError(null)
             onClose()
@@ -101,7 +100,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
                 image:null
             })
             setActiveButton(false)
-            console.log("New post added", json)
+    
         }
     }
 

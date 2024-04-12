@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from 'react'
+import usePostStore from '../store/postStore';
 
 const useGetAllPosts = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [posts, setPosts] = useState(null);
+	const { savedPosts } = usePostStore();
 
-    useEffect(()=>{
-        const getPosts = async () =>{
-            setIsLoading(true)
+    useEffect(() => {
+        const getPosts = async () => {
+            setIsLoading(true);
 
-        try {
-            const response = await fetch('/api/posts/')
-            const json = await response.json()
+            try {
+                const response = await fetch('/api/posts/');
+                const json = await response.json();
 
-            if(response.ok){
-                setPosts(json)
+                if (response.ok) {
+                    setPosts(json);
+                }
+            } catch (error) {
+                // Handle error
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
+        };
 
-        } finally{
-            setIsLoading(false)
-        }
-    }
+        getPosts();
+    }, [savedPosts]);
 
-        getPosts()
+    return { posts, isLoading };
+};
 
-    },[])
-
-    return {posts, isLoading}
-}
-
-export default useGetAllPosts
+export default useGetAllPosts;

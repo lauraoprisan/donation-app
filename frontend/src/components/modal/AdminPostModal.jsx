@@ -14,7 +14,6 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     const postIsAvailable =  post
     const [activeButton, setActiveButton] = useState(false)
 
-
     const [formData, setFormData] = useState({
         title: postIsAvailable ? post.title : '',
         location:postIsAvailable ? post.location : '',

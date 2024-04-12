@@ -104,7 +104,6 @@ const Homepage = () => {
                 </p>
             </div>
         </section>
-        <PostModal isOpen={openModal} onClose={() => setOpenModal(false)} post={"the post here"}/> {/*i have to set the post in the single post component" and actually call this postmodal from there*/}
     </>
   )
 }

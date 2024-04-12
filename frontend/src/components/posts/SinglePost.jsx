@@ -6,6 +6,7 @@ import { ImHourGlass } from 'react-icons/im';
 import { RiImageEditLine } from 'react-icons/ri';
 import { IoMdSave } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
+import { FaBullseye } from 'react-icons/fa6';
 
 
 const SinglePost = ({post}) => {
@@ -15,7 +16,7 @@ const SinglePost = ({post}) => {
     const [error, setError] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
- 
+
     const handleOpenModal = () => {
         if(true){ //auth
             setOpenAdminModal(true)

@@ -6,6 +6,7 @@ import { FaImage } from "react-icons/fa";
 import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
+import usePostStore from '../../store/postStore';
 
 const CreatePostModal = ({isOpen, onClose, post}) => {
 
@@ -16,6 +17,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
     const [activeButton, setActiveButton] = useState(false)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
+    const createPost = usePostStore((state) => state.createPost);
 
 
     const [formDataEvidence, setFormDataEvidence] = useState({
@@ -80,6 +82,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
         formData.append('file', selectedImage);
 
         console.log('formData', formData.title)
+
         try {
             const response = await fetch('api/posts/addPost', {
                 method: 'POST',
@@ -91,6 +94,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
                 setError(json.error);
             } else {
                 setError(null);
+                createPost({ ...formData});
                 onClose();
                 setFormDataEvidence({
                     title: '',

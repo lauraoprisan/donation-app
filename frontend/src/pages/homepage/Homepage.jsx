@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import useGetAllPosts from '../../hooks/useGetAllPosts';
-import PostModal from '../../components/modal/PostModal';
 import SinglePost from '../../components/posts/SinglePost';
+import FilterContext from '../../context/FilterContext';
 
 
 const Homepage = () => {
     const [openModal, setOpenModal] = useState(false)  /**i should use this in the single post component */
     const {posts, isLoading} = useGetAllPosts();
     const [postsToShow, setPostsToShow] = useState([]);
+    const {setSelectedTag } = useContext(FilterContext);
 
     useEffect(() => {
         console.log(posts);
@@ -72,12 +73,14 @@ const Homepage = () => {
                         <p>
                             Toti care apeleaza la noi au mare nevoie de ajutor si fiecare caz este important, dar unele neajunsuri pun in pericol in mod critic sanatatea
                         </p>
-                        <button className="basic-button">
-                            <span>
-                                Vezi toate cazurile urgente
-                            </span>
-                            <IoIosArrowForward/>
-                        </button>
+                        <Link to="/cazuri" >
+                            <button className="basic-button" onClick={()=>setSelectedTag("Urgenta")}>
+                                <span>
+                                    Vezi toate cazurile urgente
+                                </span>
+                                <IoIosArrowForward/>
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 <div className="posts-container">

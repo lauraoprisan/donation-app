@@ -534,6 +534,11 @@ h2{
   padding:10px;
   border-radius:10px;
 }
+
+.active-btn{
+  background-color: #073c24;
+  color:white;
+}
 /* /sidebar*/
 
 /* ^cases-section ^posts ^profile-section*/

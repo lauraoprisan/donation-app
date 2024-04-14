@@ -5,24 +5,25 @@ import Posts from './pages/posts/Posts';
 import ProfilePage from './pages/profile/ProfilePage';
 import AdminPage from './pages/admin/AdminPage';
 import AuthPage from './pages/auth/AuthPage';
-
+import { FilterProvider } from './context/FilterContext';
 
 function App() {
   return (
     <div className="main-container">
-      <PageLayout>
-        <Routes>
-            <Route path="/" element={<Homepage/>}/>
-            <Route path="/cazuri" element={<Posts/>}/>
-            <Route path="/profil" element={<ProfilePage/>}/>
-            <Route path="/admin" element={<AdminPage/>}/>
-            <Route path="/autentificare" element={<AuthPage/>}/>
-            {/* <Route path="/login" element={<Login/>}/>
-            <Route path="/register" element={<Register/>}/> */}
+      <FilterProvider>
+        <PageLayout>
+          <Routes>
+              <Route path="/" element={<Homepage/>}/>
+              <Route path="/cazuri" element={<Posts/>}/>
+              <Route path="/profil" element={<ProfilePage/>}/>
+              <Route path="/admin" element={<AdminPage/>}/>
+              <Route path="/autentificare" element={<AuthPage/>}/>
+              {/* <Route path="/login" element={<Login/>}/>
+              <Route path="/register" element={<Register/>}/> */}
 
-        </Routes>
-      </PageLayout>
-
+          </Routes>
+        </PageLayout>
+      </FilterProvider>
     </div>
   );
 }

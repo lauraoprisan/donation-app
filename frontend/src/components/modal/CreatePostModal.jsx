@@ -71,7 +71,6 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
     const handleCreatePost = async (e) => {
         e.preventDefault();
 
-        console.log("image", selectedImage)
         const formData = new FormData();
         formData.append('title', title);
         formData.append('location', location);
@@ -81,8 +80,6 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
         formData.append('timeLimit', timeLimit);
         formData.append('tag', tag);
         formData.append('file', selectedImage);
-
-        console.log('formData', formData)
 
         try {
             const response = await fetch('api/posts/addPost', {
@@ -164,13 +161,6 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
                         </select>
                     </div>
                 </div>
-                {/* <img className="img-fluid img-preview" src={image ? URL.createObjectURL(image) : story.image} />
-                <input type="file" className="form-control" id="imageUpload" name="file" max-size="10485760" hidden ref={imageRef} onChange={handleImage}/>
-                <div className = "choose-image" onClick={()=>imageRef.current.click()}>
-                    <span> Choose an Image</span>
-                    <RiImageEditFill size="40"/>
-                </div>
-                {imageSizeError && <p className="error-message profile-error">The file size is too large! Choose something that is smaller than 10 MB</p>} */}
                 <div className="main-modal-content">
                     <div className="form-main-content">
                         <div className="form-single-section">

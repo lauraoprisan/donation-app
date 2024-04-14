@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import useNavbarScrollEffect from '../../hooks/useNavbarScrollEffect';
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom';
 import { BiLogIn } from "react-icons/bi";
+import FilterContext from '../../context/FilterContext';
 
 
 const Navbar = () => {
   const scrolled = useNavbarScrollEffect();
   const {pathname} = useLocation()
+  const { setSelectedTag } = useContext(FilterContext);
 
   return (
     <>
@@ -35,7 +37,7 @@ const Navbar = () => {
                   </a>
                   )
                  }
-              <Link className="button action-button on-desktop-nav" to="/cazuri">
+              <Link className="button action-button on-desktop-nav" to="/cazuri" onClick={()=>setSelectedTag(null)}>
                 Vezi toate cazurile
               </Link>
             </div>

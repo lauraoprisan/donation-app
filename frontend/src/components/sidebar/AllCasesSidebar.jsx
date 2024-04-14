@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import { FaMapLocationDot } from 'react-icons/fa6'
 import { PiTagSimpleFill } from 'react-icons/pi'
+import FilterContext from '../../context/FilterContext';
 
 const AllCasesSidebar = () => {
+    const {selectedTag, setSelectedTag } = useContext(FilterContext);
+
+    const handleSelectTag = (e) => {
+        setSelectedTag(e.target.innerText === "Urgente" ? "Urgenta" : "Dorinta");
+    };
+
   return (
     <>
         <form  className="regions-form" action="">
@@ -36,9 +43,17 @@ const AllCasesSidebar = () => {
                 <PiTagSimpleFill />
                 <h3 className="on-desktop">Etichete</h3>
         </div>
-        <div className="tags-section">
-            <button className="sidebar-tag">Urgente</button>
-            <button className="sidebar-tag">Dorinte</button>
+        <div className="tags-section"> {/* use here event delegation in the future or even now for active tag button and also for setselecttag */}
+            <button
+                className={`sidebar-tag ${selectedTag === "Urgenta" ? "active-btn" : ""}`}
+                onClick={(e)=>handleSelectTag(e)}>
+                    Urgente
+            </button>
+            <button
+                className={`sidebar-tag ${selectedTag === "Dorinta" ? "active-btn" : ""}`}
+                onClick={(e)=>handleSelectTag(e)}>
+                    Dorinte
+            </button>
         </div>
     </>
   )

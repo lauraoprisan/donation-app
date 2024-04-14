@@ -17,7 +17,7 @@ const Homepage = () => {
             console.log("posts inside if", posts);
             const filteredPosts = posts.filter(post => post.tag === "Urgenta");
             const sortedPosts = filteredPosts.sort((a, b) => a.createdAt - b.createdAt);
-            const firstThreePosts = sortedPosts.slice(0,4)
+            const firstThreePosts = sortedPosts.slice(0,3)
             setPostsToShow(firstThreePosts);
             console.log("poststoshow", postsToShow);
         }

@@ -102,8 +102,11 @@ const SinglePost = ({post}) => {
             </div>
             <div className="post-info-snippet">
                 <span className="location">{post.location}</span>
-                <p>{post.needs}</p>
-                <button className="basic-button" onClick={handleOpenModal}>
+                {post.needs.length > 67 ? (
+                    <p>{post.needs.substring(0,67)}...</p>) : (
+                    <p>{post.needs}</p>
+                )}
+                <button className="basic-button see-more" onClick={handleOpenModal}>
                     <span>Vezi detalii</span>
                     <IoIosArrowForward />
                 </button>

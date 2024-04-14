@@ -18,8 +18,9 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
     const createPost = usePostStore((state) => state.createPost);
+    const savedPosts = usePostStore((state) => state.savedPosts);
 
-
+    console.log("saved posts", savedPosts)
     const [formDataEvidence, setFormDataEvidence] = useState({
         title:'',
         location: '',
@@ -81,7 +82,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
         formData.append('tag', tag);
         formData.append('file', selectedImage);
 
-        console.log('formData', formData.title)
+        console.log('formData', formData)
 
         try {
             const response = await fetch('api/posts/addPost', {
@@ -94,7 +95,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
                 setError(json.error);
             } else {
                 setError(null);
-                createPost({ ...formData});
+                createPost(...formData);
                 onClose();
                 setFormDataEvidence({
                     title: '',

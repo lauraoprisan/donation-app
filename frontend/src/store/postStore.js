@@ -17,6 +17,7 @@ const usePostStore = create((set) => ({
 	// 			return post;
 	// 		}),
 	// 	})),
+
 }));
 
 export default usePostStore;

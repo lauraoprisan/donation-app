@@ -10,7 +10,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
 
     const [error, setError] = useState(null)
     const formRef = useRef(null);
-    const renderRequests = true //false if case is resolved
+    const renderRequests = false //false if case is resolved
     const postIsAvailable =  post
     const [activeButton, setActiveButton] = useState(false)
 
@@ -84,22 +84,30 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
         setActiveButton(false)
     }
 
-    function autoGrowTextarea(textarea) {
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
 
-    }
+    const autoGrowTextarea = () => {
+        const textareas = document.querySelectorAll('textarea');
 
-    const handleAutoGrowTextarea = (e) => {
-        if (e.target.tagName.toLowerCase() === 'textarea') {
-            autoGrowTextarea(e.target);
-        }
+        textareas.forEach(textarea => {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        });
     };
+
+    setTimeout(()=>{
+        autoGrowTextarea()
+    },0)
+
+    useEffect(()=>{
+        autoGrowTextarea();
+    },[formData.personDescription, formData.needs]);
+
+
 
   return (
     <Modal isOpen={isOpen} onClose={handleOnClose}>
         <section className="post-modal-content create-post-modal">
-            <form onSubmit={handleUpdatePost} ref={formRef} onChange={handleAutoGrowTextarea}>
+            <form onSubmit={handleUpdatePost} ref={formRef}>
                 <div className="post-modal-header">
                     <input
                         type="text"

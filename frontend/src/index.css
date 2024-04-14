@@ -1056,9 +1056,19 @@ h2{
 
 }
 
+@media (min-width:868px){
+  .on-mobile-nav{
+    display:none;
+  }
+}
+
 @media (max-width:868px){
   .copyright{
     margin-left:0;
+  }
+
+  .on-desktop-nav{
+    display:none;
   }
 }
 

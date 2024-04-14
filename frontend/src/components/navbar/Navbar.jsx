@@ -2,6 +2,8 @@ import React from 'react'
 import useNavbarScrollEffect from '../../hooks/useNavbarScrollEffect';
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom';
+import { BiLogIn } from "react-icons/bi";
+
 
 const Navbar = () => {
   const scrolled = useNavbarScrollEffect();
@@ -10,7 +12,7 @@ const Navbar = () => {
   return (
     <>
           <nav className={`navbar-container ${pathname== "/" ? "homepage-nav" : "" } ${scrolled ? 'scrolled-navbar' : ""}`}>
-            <div className="left-items">
+            <div className="left-items on-desktop-nav">
               <a href="">Cum poti actiona</a>
             </div>
             <Link to="/" className="logo-link">
@@ -27,10 +29,13 @@ const Navbar = () => {
 
 
                   ):(
-                  <a href="">Autentificate</a>
+                  <a href="">
+                    <div className="on-mobile-nav"><BiLogIn color="black" size="25px"/></div>
+                    <span className="on-desktop-nav">Autentificate</span>
+                  </a>
                   )
                  }
-              <Link className="button action-button" to="/cazuri">
+              <Link className="button action-button on-desktop-nav" to="/cazuri">
                 Vezi toate cazurile
               </Link>
             </div>

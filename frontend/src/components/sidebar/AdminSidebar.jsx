@@ -15,9 +15,9 @@ const AdminSidebar = () => {
         <button className="action-button highlight-button" onClick={()=> setOpenCreatePostModal(true)}>
             Adauga un caz
         </button>
-        <form action="">
+        {/* <form action="">
             <input type="text" placeholder='cauta dupa titlu' />
-        </form>
+        </form> */}
         <button className="sidebar-button">
             <FaExclamation/>
             <span className="on-desktop">

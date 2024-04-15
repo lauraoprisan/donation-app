@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import Modal from './Modal'
 import { MdOutlineDescription } from 'react-icons/md'
 import { FaCalendarDay, FaLocationDot } from 'react-icons/fa6'
@@ -6,7 +6,7 @@ import { FaImage } from "react-icons/fa";
 import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
-import usePostStore from '../../store/postStore';
+import PostsContext from '../../context/PostsContext';
 
 const CreatePostModal = ({isOpen, onClose, post}) => {
 
@@ -17,10 +17,9 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
     const [activeButton, setActiveButton] = useState(false)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
-    const createPost = usePostStore((state) => state.createPost);
-    const savedPosts = usePostStore((state) => state.savedPosts);
+    const { addPost } = useContext(PostsContext);
+    const [postId, setPostId] = useState(null)
 
-    console.log("saved posts", savedPosts)
     const [formDataEvidence, setFormDataEvidence] = useState({
         title:'',
         location: '',
@@ -88,11 +87,21 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
             });
 
             const json = await response.json();
+            setPostId(json._id)
+
+            //add the post to the postscontext
+            const data = {
+                ...formDataEvidence,
+                id:postId
+            }
+            addPost(data)
+
+            // console.log("json response", json)
+            // console.log("json post id", postId)
             if (!response.ok) {
                 setError(json.error);
             } else {
                 setError(null);
-                createPost(...formData);
                 onClose();
                 setFormDataEvidence({
                     title: '',
@@ -104,6 +113,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
                     tag: '',
                     image: ''
                 });
+                setSelectedImage('')
                 setActiveButton(false);
             }
         } catch (error) {

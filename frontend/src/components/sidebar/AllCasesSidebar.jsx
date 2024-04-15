@@ -7,13 +7,17 @@ const AllCasesSidebar = () => {
     const {selectedTag, setSelectedTag } = useContext(FilterContext);
 
     const handleSelectTag = (e) => {
-        setSelectedTag(e.target.innerText === "Urgente" ? "Urgenta" : "Dorinta");
-        
+        if (e.target.classList.contains("active-btn")) {
+            e.target.classList.remove("active-btn");
+            setSelectedTag('')
+        } else {
+            setSelectedTag(e.target.innerText === "Urgente" ? "Urgenta" : "Dorinta");
+        }
     };
 
   return (
     <>
-        <form  className="regions-form" action="">
+        {/* <form  className="regions-form" action="">
             <div className="sidebar-subtitle">
                 <FaMapLocationDot />
                 <h3 className="on-desktop">Regiuni</h3>
@@ -25,21 +29,21 @@ const AllCasesSidebar = () => {
                 <option value="">Slanic</option>
                 <option value="">Dobrogea</option>
             </select>
-        </form>
+        </form> */}
         {/*this should be a component*/}
-        <div className="choiced-regions">
+        {/* <div className="choiced-regions">
             <div className='single-choice-region'>
                 <span>Toata tara</span>
             </div>
-            {/* <div className='single-choice-region'>
+            <div className='single-choice-region'>
                 <span>Vrancea</span>
                 <IoCloseSharp />
             </div>
             <div className='single-choice-region'>
                 <span>Dobrogea</span>
                 <IoCloseSharp />
-            </div> */}
-        </div>
+            </div>
+        </div> */}
         <div className="sidebar-subtitle">
                 <PiTagSimpleFill />
                 <h3 className="on-desktop">Etichete</h3>

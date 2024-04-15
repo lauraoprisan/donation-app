@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import Modal from './Modal'
 import { MdOutlineDescription } from 'react-icons/md'
 import { FaCalendarDay, FaLocationDot } from 'react-icons/fa6'
 import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
+import PostsContext from '../../context/PostsContext'
 
 const AdminPostModal = ({isOpen, onClose, post}) => {
 
@@ -13,6 +14,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     const renderRequests = false //false if case is resolved
     const postIsAvailable =  post
     const [activeButton, setActiveButton] = useState(false)
+    const {editPost } = useContext(PostsContext);
 
     const [formData, setFormData] = useState({
         title: postIsAvailable ? post.title : '',
@@ -61,6 +63,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
             } else {
                 setError(null);
                 onClose();
+                editPost(post._id, {...post})
                 setActiveButton(false)
             }
         } catch (error) {

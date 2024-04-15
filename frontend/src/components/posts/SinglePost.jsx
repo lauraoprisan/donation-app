@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
 import PostModal from '../modal/PostModal';
 import AdminPostModal from '../modal/AdminPostModal'
 import { IoIosArrowForward } from 'react-icons/io'
@@ -7,15 +7,20 @@ import { RiImageEditLine } from 'react-icons/ri';
 import { IoMdSave } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { FaBullseye } from 'react-icons/fa6';
+import { MdDeleteForever } from "react-icons/md";
+import PostsContext from '../../context/PostsContext';
+
 
 
 const SinglePost = ({post}) => {
     const [openModal, setOpenModal] = useState(false)
     const [openAdminModal, setOpenAdminModal] = useState(false)
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     const imageRef = useRef(null)
     const [error, setError] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
+    const { deletePost,editPost } = useContext(PostsContext);
 
     const handleOpenModal = () => {
         if(true){ //auth
@@ -59,11 +64,41 @@ const SinglePost = ({post}) => {
                 setError(json.error);
             } else {
                 setError(null);
+                editPost(post._id, {...post, image: selectedImage})
+                setSelectedImage('')
             }
         } catch (error) {
             console.error('Error:', error);
         }
     };
+
+    const handleDeletePost = async ()=>{
+        const data = {
+            id:post._id
+        }
+        try {
+            const response = await fetch('https://donation-app-api.vercel.app/api/posts/deletePost', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const json = await response.json();
+            if (!response.ok) {
+                setError(json.error);
+            } else {
+                setError(null);
+                deletePost(post._id)
+                setShowConfirmDelete(false);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+    }
+
 
 
   return (
@@ -72,11 +107,27 @@ const SinglePost = ({post}) => {
             <div className="img-post-container">
                 <img src={selectedImage ? URL.createObjectURL(selectedImage) : post.image} alt="" />
                 {post.tag && <button className="tag">{post.tag}</button> }
-                {true && ( //if case in waiting for user / admin
-                            <button className="case-in-waiting">
-                                <ImHourGlass/>
-                            </button>
+                {false && ( //if case in waiting for user / admin
+                    <button className="case-in-waiting">
+                        <ImHourGlass/>
+                    </button>
+                )}
+                {true && ( //if admin
+                    <>
+                        <button className="delete-case" onClick={()=>setShowConfirmDelete(true)}>
+                            <MdDeleteForever/>
+                        </button>
+                        {showConfirmDelete && (
+                            <div className="confirm-delete-container">
+                                <p>Sigur vrei sa stergi postarea?</p>
+                                <div className="confirm-delete-buttons">
+                                    <button className="confirm-del-button" onClick={handleDeletePost}>Da</button>
+                                    <button className="confirm-del-button" onClick={()=>setShowConfirmDelete(false)}>Nu</button>
+                                </div>
+                            </div>
                         )}
+                    </>
+                )}
                 {true && ( //if admin
                     <button className="edit-image-button">
                         { selectedImage ? (

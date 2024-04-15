@@ -26,9 +26,14 @@ app.use((req,res,next)=>{
 app.use(express.json())     //body-parser for raw json, and attaches data to the req object, to req.body
 app.use(express.urlencoded({extended:false}))   //for urlencoded
 
+//homepage for backend
+app.get("/", (req, res) => {
+    res.send("Welcome to the backend");
+});
+
 //routes
 app.use("/api/posts", postRoutes)
-app.use("api/status", userPostStatusRoutes)
+app.use("/api/status", userPostStatusRoutes)
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

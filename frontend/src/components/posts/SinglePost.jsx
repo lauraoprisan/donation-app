@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import {useLocation } from 'react-router-dom'
 import PostModal from '../modal/PostModal';
 import AdminPostModal from '../modal/AdminPostModal'
 import { IoIosArrowForward } from 'react-icons/io'
@@ -16,9 +17,18 @@ const SinglePost = ({post}) => {
     const [error, setError] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const {pathname} = useLocation()
 
+    //temporary hanlding for isAdmin till auth
+    if(pathname == "/admin"){
+        setIsAdmin(true)
+    } else {
+        setIsAdmin(false)
+    }
+    
     const handleOpenModal = () => {
-        if(true){ //auth
+        if(isAdmin){
             setOpenAdminModal(true)
         } else{
             setOpenModal(true)

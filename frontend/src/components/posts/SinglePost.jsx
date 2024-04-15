@@ -21,14 +21,8 @@ const SinglePost = ({post}) => {
     const {pathname} = useLocation()
 
     //temporary hanlding for isAdmin till auth
-    if(pathname == "/admin"){
-        setIsAdmin(true)
-    } else {
-        setIsAdmin(false)
-    }
-    
     const handleOpenModal = () => {
-        if(isAdmin){
+        if(pathname == "/admin"){
             setOpenAdminModal(true)
         } else{
             setOpenModal(true)

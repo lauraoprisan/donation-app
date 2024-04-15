@@ -23,8 +23,6 @@ Regarding UI:
 
 ## Observations
 
-This is the branch used for deployment.
-
 When creating or updating a post, the admin has to choose from a specific range of images (which are designed to work well together). For this reason, if some other images are added, the outcome can possibly be unexpected. This is a desired feature for this app in order to make the UI look good.
 
 You can download the images here: <a href="https://drive.google.com/drive/folders/1OZC4je_Qfav8OXw27hoc2jfTkIqiyb4w?usp=sharing" target="_blank">Drive Link</a>

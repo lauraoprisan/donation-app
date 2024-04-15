@@ -23,6 +23,7 @@ const SinglePost = ({post}) => {
     const [imageSizeError, setImageSizeError] = useState(false)
     const { deletePost,editPost } = useContext(PostsContext);
     const [isAdmin, setIsAdmin] = useState(false)
+    const confirmDeleteRef = useRef(null);
 
     const {pathname} = useLocation()
 
@@ -104,6 +105,17 @@ const SinglePost = ({post}) => {
 
     }
 
+    const checkClickOutside = (e)=>{
+        if(showConfirmDelete && !confirmDeleteRef.current?.contains(e.target)){
+            setShowConfirmDelete(false)
+        }
+    }
+
+    useEffect(()=>{
+        document.addEventListener('mouseDown', checkClickOutside)
+        return () =>document.removeEventListener('mousedown', checkClickOutside)
+    },[showConfirmDelete])
+
 
     return (
         <>
@@ -118,7 +130,7 @@ const SinglePost = ({post}) => {
                     )}
                     {pathname == "/admin" && ( //if admin
                         <>
-                            <button className="delete-case" onClick={()=>setShowConfirmDelete(true)}>
+                            <button className="delete-case" ref={confirmDeleteRef} onClick={()=>setShowConfirmDelete(true)}>
                                 <MdDeleteForever/>
                             </button>
                             {showConfirmDelete && (

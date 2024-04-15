@@ -105,58 +105,73 @@ const SinglePost = ({post}) => {
     }
 
 
-
-  return (
-    <>
-        <div className="single-post-container">
-            <div className="img-post-container">
-                <img src={selectedImage ? URL.createObjectURL(selectedImage) : post.image} alt="" />
-                {post.tag && <button className="tag">{post.tag}</button> }
-                {true && ( //if case in waiting for user / admin
-                            <button className="case-in-waiting">
-                                <ImHourGlass/>
+    return (
+        <>
+            <div className="single-post-container">
+                <div className="img-post-container">
+                    <img src={selectedImage ? URL.createObjectURL(selectedImage) : post.image} alt="" />
+                    {post.tag && <button className="tag">{post.tag}</button> }
+                    {false && ( //if case in waiting for user / admin
+                        <button className="case-in-waiting">
+                            <ImHourGlass/>
+                        </button>
+                    )}
+                    {true && ( //if admin
+                        <>
+                            <button className="delete-case" onClick={()=>setShowConfirmDelete(true)}>
+                                <MdDeleteForever/>
                             </button>
-                        )}
-                {true && ( //if admin
-                    <button className="edit-image-button">
-                        { selectedImage ? (
-                            <>
-                                <IoMdSave onClick={handleUpdateImage}/>  {/* add a context here so when this function is called, you add a dependency to getallposts */}
-                                <MdCancel onClick={()=>setSelectedImage(null)}/>
-                            </>
+                            {showConfirmDelete && (
+                                <div className="confirm-delete-container">
+                                    <p>Sigur vrei sa stergi postarea?</p>
+                                    <div className="confirm-delete-buttons">
+                                        <button className="confirm-del-button" onClick={handleDeletePost}>Da</button>
+                                        <button className="confirm-del-button" onClick={()=>setShowConfirmDelete(false)}>Nu</button>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    )}
+                    {true && ( //if admin
+                        <button className="edit-image-button">
+                            { selectedImage ? (
+                                <>
+                                    <IoMdSave onClick={handleUpdateImage}/>  {/* add a context here so when this function is called, you add a dependency to getallposts */}
+                                    <MdCancel onClick={()=>setSelectedImage(null)}/>
+                                </>
 
-                        ): (
-                            <RiImageEditLine onClick={()=>imageRef.current.click()}/>
-                        )}
-                        <input
-                            type="file"
-                            name="image"
-                            onChange={handleImage}
-                            max-size="10485760"
-                            hidden
-                            ref={imageRef}
-                            required
-                        />
+                            ): (
+                                <RiImageEditLine onClick={()=>imageRef.current.click()}/>
+                            )}
+                            <input
+                                type="file"
+                                name="image"
+                                onChange={handleImage}
+                                max-size="10485760"
+                                hidden
+                                ref={imageRef}
+                                required
+                            />
+                        </button>
+                    )}
+                </div>
+                <div className="post-info-snippet">
+                    <span className="location">{post.location}</span>
+                    {post.needs.length > 67 ? (
+                        <p>{post.needs.substring(0,67)}...</p>) : (
+                        <p>{post.needs}</p>
+                    )}
+                    <button className="basic-button see-more" onClick={handleOpenModal}>
+                        <span>Vezi detalii</span>
+                        <IoIosArrowForward />
                     </button>
-                )}
+                </div>
             </div>
-            <div className="post-info-snippet">
-                <span className="location">{post.location}</span>
-                {post.needs.length > 67 ? (
-                    <p>{post.needs.substring(0,67)}...</p>) : (
-                    <p>{post.needs}</p>
-                )}
-                <button className="basic-button see-more" onClick={handleOpenModal}>
-                    <span>Vezi detalii</span>
-                    <IoIosArrowForward />
-                </button>
-            </div>
-        </div>
-        <PostModal post={post} isOpen={openModal} onClose={() => setOpenModal(false)}/>
-        <AdminPostModal post={post} isOpen={openAdminModal} onClose={() => setOpenAdminModal(false)}/>
-    </>
+            <PostModal post={post} isOpen={openModal} onClose={() => setOpenModal(false)}/>
+            <AdminPostModal post={post} isOpen={openAdminModal} onClose={() => setOpenAdminModal(false)}/>
+        </>
 
-  )
-}
+      )
+    }
 
-export default SinglePost
+    export default SinglePost

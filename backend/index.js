@@ -14,7 +14,7 @@ const app = express()
 //for cors error
 app.use(cors(
     {
-        origin: ["http://localhost:4000"],
+        origin: ["http://localhost:3000"],
         methods: ["POST", "GET", "PUT", "DELETE"],
         credentials: true
     }

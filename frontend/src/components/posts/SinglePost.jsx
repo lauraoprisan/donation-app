@@ -49,7 +49,7 @@ const SinglePost = ({post}) => {
         }
 
         try {
-            const response = await fetch('https://donation-app-api.vercel.app/api/posts/updateImage', {
+            const response = await fetch('http://localhost:4000/api/posts/updateImage', {
                 method: 'PUT',
                 body: formData, // Use FormData for sending binary data
             });

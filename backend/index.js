@@ -14,7 +14,7 @@ const app = express()
 //for cors error
 app.use(cors(
     {
-        origin: ["http://localhost:3000"],
+        origin: ["https://donation-app-taupe.vercel.app"],
         methods: ["POST", "GET", "PUT", "DELETE"],
         credentials: true
     }

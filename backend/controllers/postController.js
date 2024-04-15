@@ -64,13 +64,10 @@ const deletePost = async (req, res) => {
 
     if(!post){
       return res.status(404).json({error: "No such post"})
+    } else{
+       await cloudinary.uploader.destroy(post.cloudinaryId);
     }
 
-    /*
-else{
-      // await cloudinary.uploader.destroy(casePost.cloudinaryId);
-    }
-    */
 
     res.status(200).json(post)
   } catch (err) {

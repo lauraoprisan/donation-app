@@ -931,7 +931,7 @@ h2{
   cursor:pointer;
 }
 
-.case-in-waiting{
+.case-in-waiting, .delete-case{
   position: absolute;
   top:10px;
   right:10px;
@@ -945,6 +945,44 @@ h2{
   align-items: center;
 }
 
+.case-in-waiting{
+  right:50px;
+  padding:7px;
+}
+
+.confirm-delete-container{
+  position: absolute;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+  top:50px;
+  right:10px;
+  width:300px;
+  height:100px;
+  background-color: rgb(245, 245, 245);
+  padding:5px;
+  border-radius:10px;
+  border:1px solid rgba(0, 0, 0, 0.135);
+
+}
+
+.confirm-delete-buttons{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  gap:30px;
+}
+
+.confirm-del-button{
+  padding:10px;
+  border-radius: 5px;
+}
+
+.confirm-del-button:hover{
+  background-color: rgba(170, 170, 170, 0.186);
+}
 /* /admin page*/
 
 /*  ^scroll customization */

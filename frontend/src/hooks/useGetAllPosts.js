@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import usePostStore from '../store/postStore';
+import React, { useEffect, useState, useContext } from 'react'
+import PostsContext from '../context/PostsContext';
 
 const useGetAllPosts = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [posts, setPosts] = useState(null);
-	const { savedPosts } = usePostStore();
+    const { contextPosts } = useContext(PostsContext);
 
     useEffect(() => {
         const getPosts = async () => {
@@ -25,7 +25,7 @@ const useGetAllPosts = () => {
         };
 
         getPosts();
-    }, [savedPosts]);
+    }, [contextPosts]);
 
     return { posts, isLoading };
 };

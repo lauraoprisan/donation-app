@@ -44,13 +44,14 @@ mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
         console.log("The app is connected to mongoDB")
         //listen for requests
-        app.listen(port, ()=>{
+        app.listen(port || 4000, ()=>{
             console.log(`Listening on port ${port}`)
         })
     })
     .catch((error)=>{
         console.log(error)
     })
+
 
     module.exports = app;
 

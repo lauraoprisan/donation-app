@@ -12,9 +12,13 @@ const userPostStatusRoutes = require('./routes/userPostStatusRoutes')
 const app = express()
 
 //for cors error
-// app.use(cors({
-//     credentials:true
-//   }))
+// app.use(cors(
+//     {
+//         origin: ["https://donation-app-taupe.vercel.app"],
+//         methods: ["POST", "GET", "PUT", "DELETE"],
+//         credentials: true
+//     }
+// ));
 
 
 //middleware
@@ -47,5 +51,7 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((error)=>{
         console.log(error)
     })
+
+    module.exports = app;
 
 

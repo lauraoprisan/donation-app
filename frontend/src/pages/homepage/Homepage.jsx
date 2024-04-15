@@ -101,7 +101,7 @@ const Homepage = () => {
                     Fii un erou
                 </h3>
                 <p>
-                Ofera o mana de ajutor celor aflati in nevoie.Fiecare gest conteaza si poate schimba vieti. Alatura-te noua si fii parte din schimbarea pe care o dorim in lume
+                Ofera o mana de ajutor celor aflati in nevoie. Fiecare gest conteaza si poate schimba vieti. Alatura-te noua si fii parte din schimbarea pe care o dorim in lume
                 </p>
             </div>
         </section>

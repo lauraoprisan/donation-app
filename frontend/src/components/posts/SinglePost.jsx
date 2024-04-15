@@ -111,10 +111,13 @@ const SinglePost = ({post}) => {
         }
     }
 
+    
     useEffect(()=>{
-        document.addEventListener('mouseDown', checkClickOutside)
-        return () =>document.removeEventListener('mousedown', checkClickOutside)
-    },[showConfirmDelete])
+        document.addEventListener('mousedown', checkClickOutside);
+        return () => document.removeEventListener('mousedown', checkClickOutside);
+    },[showConfirmDelete]);
+
+
 
 
     return (

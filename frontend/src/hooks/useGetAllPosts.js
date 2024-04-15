@@ -11,7 +11,7 @@ const useGetAllPosts = () => {
             setIsLoading(true);
 
             try {
-                const response = await fetch('/api/posts/');
+                const response = await fetch('https://donation-app-api.vercel.app/api/posts/');
                 const json = await response.json();
 
                 if (response.ok) {

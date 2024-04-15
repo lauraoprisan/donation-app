@@ -82,7 +82,7 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
         formData.append('file', selectedImage);
 
         try {
-            const response = await fetch('api/posts/addPost', {
+            const response = await fetch('https://donation-app-api.vercel.app/api/posts/addPost', {
                 method: 'POST',
                 body: formData,
             });

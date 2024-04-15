@@ -116,7 +116,7 @@ const SinglePost = ({post}) => {
                             <ImHourGlass/>
                         </button>
                     )}
-                    {true && ( //if admin
+                    {pathname == "/admin" && ( //if admin
                         <>
                             <button className="delete-case" onClick={()=>setShowConfirmDelete(true)}>
                                 <MdDeleteForever/>

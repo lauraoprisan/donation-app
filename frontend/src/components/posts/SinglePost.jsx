@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import {useLocation } from 'react-router-dom'
+import React, { useRef, useState, useContext } from 'react'
+import { useLocation } from 'react-router-dom'
 import PostModal from '../modal/PostModal';
 import AdminPostModal from '../modal/AdminPostModal'
 import { IoIosArrowForward } from 'react-icons/io'
@@ -8,16 +8,22 @@ import { RiImageEditLine } from 'react-icons/ri';
 import { IoMdSave } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { FaBullseye } from 'react-icons/fa6';
+import { MdDeleteForever } from "react-icons/md";
+import PostsContext from '../../context/PostsContext';
+
 
 
 const SinglePost = ({post}) => {
     const [openModal, setOpenModal] = useState(false)
     const [openAdminModal, setOpenAdminModal] = useState(false)
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     const imageRef = useRef(null)
     const [error, setError] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
+    const { deletePost,editPost } = useContext(PostsContext);
     const [isAdmin, setIsAdmin] = useState(false)
+
     const {pathname} = useLocation()
 
     //temporary hanlding for isAdmin till auth
@@ -63,11 +69,41 @@ const SinglePost = ({post}) => {
                 setError(json.error);
             } else {
                 setError(null);
+                editPost(post._id, {...post, image: selectedImage})
+                setSelectedImage('')
             }
         } catch (error) {
             console.error('Error:', error);
         }
     };
+
+    const handleDeletePost = async ()=>{
+        const data = {
+            id:post._id
+        }
+        try {
+            const response = await fetch('https://donation-app-api.vercel.app/api/posts/deletePost', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const json = await response.json();
+            if (!response.ok) {
+                setError(json.error);
+            } else {
+                setError(null);
+                deletePost(post._id)
+                setShowConfirmDelete(false);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+    }
+
 
 
   return (

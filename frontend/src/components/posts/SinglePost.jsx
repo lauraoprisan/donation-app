@@ -105,17 +105,17 @@ const SinglePost = ({post}) => {
 
     }
 
-    const checkClickOutside = (e)=>{
-        if(showConfirmDelete && !confirmDeleteRef.current?.contains(e.target)){
-            setShowConfirmDelete(false)
-        }
-    }
+    // const checkClickOutside = (e)=>{
+    //     if(showConfirmDelete && !confirmDeleteRef.current?.contains(e.target)){
+    //         setShowConfirmDelete(false)
+    //     }
+    // }
 
-    
-    useEffect(()=>{
-        document.addEventListener('mousedown', checkClickOutside);
-        return () => document.removeEventListener('mousedown', checkClickOutside);
-    },[showConfirmDelete]);
+
+    // useEffect(()=>{
+    //     document.addEventListener('mousedown', checkClickOutside);
+    //     return () => document.removeEventListener('mousedown', checkClickOutside);
+    // },[showConfirmDelete]);
 
 
 

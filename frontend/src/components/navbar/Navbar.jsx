@@ -33,7 +33,7 @@ const Navbar = () => {
                   ):(
                   <a href="">
                     <div className="on-mobile-nav"><BiLogIn color="black" size="25px"/></div>
-                    <span className="on-desktop-nav">Autentificate</span>
+                    <span className="on-desktop-nav">Autentifica-te</span>
                   </a>
                   )
                  }

@@ -8,6 +8,7 @@ const AllCasesSidebar = () => {
 
     const handleSelectTag = (e) => {
         setSelectedTag(e.target.innerText === "Urgente" ? "Urgenta" : "Dorinta");
+        
     };
 
   return (

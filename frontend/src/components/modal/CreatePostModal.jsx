@@ -18,7 +18,6 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
     const { addPost } = useContext(PostsContext);
-    const [postId, setPostId] = useState(null)
 
     const [formDataEvidence, setFormDataEvidence] = useState({
         title:'',
@@ -87,12 +86,13 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
             });
 
             const json = await response.json();
-            setPostId(json._id)
-
+            console.log(json)
             //add the post to the postscontext
+
             const data = {
                 ...formDataEvidence,
-                id:postId
+                image:json.image,
+                id:json._id
             }
             addPost(data)
 

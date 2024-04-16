@@ -4,21 +4,20 @@ import PostsContext from '../context/PostsContext';
 
 const useGetAllPosts = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [posts, setPosts] = useState(null);
-    const { contextPosts } = useContext(PostsContext);
+    const { posts, addPosts } = useContext(PostsContext);
 
     useEffect(() => {
         const getPosts = async () => {
             setIsLoading(true);
 
-            console.log("env.REACT_APP_API_URL",process.env.REACT_APP_API_URL)
             try {
                 const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/`);
                 const json = await response.json();
 
                 if (response.ok) {
-                    setPosts(json);
+                    addPosts([...json]);
                 }
+
             } catch (error) {
                 // Handle error
             } finally {
@@ -27,9 +26,9 @@ const useGetAllPosts = () => {
         };
 
         getPosts();
-    }, [contextPosts]);
+    }, []);
 
-    return { posts, isLoading };
+    return {isLoading, posts };
 };
 
 export default useGetAllPosts;

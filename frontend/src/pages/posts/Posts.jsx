@@ -2,12 +2,15 @@ import React, { useEffect, useState, useContext} from 'react'
 import useGetAllPosts from '../../hooks/useGetAllPosts';
 import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
+import PostsContext from '../../context/PostsContext';
 
 const Posts = () => {
-    const {posts, isLoading} = useGetAllPosts()
+    const {isLoading} = useGetAllPosts()
     const [postsToShow, setPostsToShow] = useState(null)
     const { selectedTag } = useContext(FilterContext);
+    const { posts} = useContext(PostsContext);
 
+    console.log("posts from context in posts page", posts)
     const selectTaggedPosts = (selectedTag) => {
         setPostsToShow(prevPostsToShow => prevPostsToShow.filter(post => post.tag === selectedTag));
     }
@@ -15,7 +18,7 @@ const Posts = () => {
     useEffect(() => {
         // updating postsToShow once posts data is fetched
         if (!isLoading && posts) {
-          setPostsToShow(posts);
+          setPostsToShow([...posts]);
           if(selectedTag){
             selectTaggedPosts(selectedTag)
             }

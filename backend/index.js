@@ -1,7 +1,9 @@
 require('dotenv').config()
 
 const express = require('express')
-const port = process.env.PORT
+const PORT = process.env.PORT
+const FRONTEND_URL = process.env.FRONTEND_URL
+const MONGO_URI = process.env.MONGO_URI
 const mongoose = require('mongoose')
 const cors = require("cors");
 
@@ -14,7 +16,7 @@ const app = express()
 //for cors error
 app.use(cors(
     {
-        origin: ["https://donation-app-taupe.vercel.app"],
+        origin: [FRONTEND_URL],
         methods: ["POST", "GET", "PUT", "DELETE"],
         credentials: true
     }
@@ -40,12 +42,13 @@ app.use("/api/posts", postRoutes)
 app.use("/api/status", userPostStatusRoutes)
 
 //connect to db
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(MONGO_URI)
     .then(()=>{
         console.log("The app is connected to mongoDB")
         //listen for requests
-        app.listen(port || 4000, ()=>{
-            console.log(`Listening on port ${port}`)
+        app.listen(PORT || 4000, ()=>{
+            console.log(`Listening on port ${PORT}`)
+            console.log(`App is running in ${process.env.NODE_ENV} mode`)
         })
     })
     .catch((error)=>{

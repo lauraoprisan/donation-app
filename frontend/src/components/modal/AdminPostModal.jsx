@@ -50,7 +50,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
         };
 
         try {
-            const response = await fetch('https://donation-app-api.vercel.app/api/posts/updatePost', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/updatePost`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)

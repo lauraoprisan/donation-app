@@ -903,10 +903,10 @@ h2{
 /* ^admin page*/
 .edit-image-button{
   position: absolute;
-  bottom:6px;
+  bottom:5px;
   right:0px;
-  background-color: #bfbfbf;
-  padding:2px;
+  background-color: #e8e8e8;
+  padding:3px;
   line-height:0;
 }
 

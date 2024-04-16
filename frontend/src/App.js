@@ -7,10 +7,10 @@ import AdminPage from './pages/admin/AdminPage';
 import AuthPage from './pages/auth/AuthPage';
 import { FilterProvider } from './context/FilterContext';
 import { PostsProvider } from './context/PostsContext';
-import env from "react-dotenv";
+
 
 function App() {
-  console.log(env)
+
   return (
     <div className="main-container">
       <PostsProvider>

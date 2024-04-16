@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import useGetAllPosts from '../../hooks/useGetAllPosts'
 import SinglePost from '../../components/posts/SinglePost'
+import PostsContext from '../../context/PostsContext'
 
 const AdminPage = () => {
-    const {posts, isLoading} = useGetAllPosts()
+    const { isLoading} = useGetAllPosts()
+    const {posts} =useContext(PostsContext)
+
   return (
     <section className="admin-section">
     <div className="content-container">

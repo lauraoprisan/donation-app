@@ -1,36 +1,41 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 const PostsContext = createContext({});
 
 export const PostsProvider = ({ children }) => {
-    const [contextPosts, setContextPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
+
+    console.log(posts)
+    const addPosts =  (postsFromDatabase) => {
+        setPosts(postsFromDatabase)
+    }
 
 
     const addPost = (newPost) => {
-        setContextPosts([...contextPosts, newPost]);
-        console.log("contextPosts from context", contextPosts)
+        setPosts(prevPosts => [newPost, ...prevPosts]);
     };
 
     const editPost = (postId, updatedPost) => {
-        const updatedPosts = contextPosts.map(post => {
-            if (post.id === postId) {
+        const updatedPosts = posts.map(post => {
+            if (post._id === postId) {
                 return { ...post, ...updatedPost };
             }
             return post;
         });
-        setContextPosts(updatedPosts);
+
+        console.log(updatedPosts)
+        setPosts(updatedPosts);
     };
 
 
     const deletePost = (postId) => {
-        const updatedPosts = contextPosts.filter(post => post.id !== postId);
-        setContextPosts(updatedPosts);
+        setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
     };
-
 
     return (
         <PostsContext.Provider value={{
-            contextPosts,
+            posts,
+            addPosts,
             addPost,
             editPost,
             deletePost

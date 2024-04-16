@@ -45,7 +45,13 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     const handleUpdatePost = async (e) => {
         e.preventDefault();
         const data = {
-            ...formData,
+            title,
+            location,
+            needs,
+            personDescription,
+            isOneTimeNeed,
+            timeLimit,
+            tag,
             id: post._id
         };
 
@@ -63,7 +69,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
             } else {
                 setError(null);
                 onClose();
-                editPost(post._id, {...post})
+                editPost(post._id, {...data})
                 setActiveButton(false)
             }
         } catch (error) {

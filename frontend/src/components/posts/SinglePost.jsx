@@ -70,7 +70,7 @@ const SinglePost = ({post}) => {
                 setError(json.error);
             } else {
                 setError(null);
-                editPost(post._id, {...post, image: selectedImage})
+                editPost(post._id, {...post, image: json.image})
                 setSelectedImage('')
             }
         } catch (error) {
@@ -116,7 +116,6 @@ const SinglePost = ({post}) => {
     //     document.addEventListener('mousedown', checkClickOutside);
     //     return () => document.removeEventListener('mousedown', checkClickOutside);
     // },[showConfirmDelete]);
-
 
 
 

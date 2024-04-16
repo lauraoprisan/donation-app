@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import PostModal from '../modal/PostModal';
 import AdminPostModal from '../modal/AdminPostModal'
@@ -78,7 +78,8 @@ const SinglePost = ({post}) => {
         }
     };
 
-    const handleDeletePost = async ()=>{
+    const handleDeletePost = async (e)=>{
+        e.stopPropagation()
         const data = {
             id:post._id
         }
@@ -105,17 +106,19 @@ const SinglePost = ({post}) => {
 
     }
 
-    // const checkClickOutside = (e)=>{
-    //     if(showConfirmDelete && !confirmDeleteRef.current?.contains(e.target)){
-    //         setShowConfirmDelete(false)
-    //     }
-    // }
+    const checkClickOutside = (e)=>{
+        console.group(e.target)
+        if(showConfirmDelete && !confirmDeleteRef.current?.contains(e.target) && e.target != confirmDeleteRef.current ){
+
+            setShowConfirmDelete(false)
+        }
+    }
 
 
-    // useEffect(()=>{
-    //     document.addEventListener('mousedown', checkClickOutside);
-    //     return () => document.removeEventListener('mousedown', checkClickOutside);
-    // },[showConfirmDelete]);
+    useEffect(()=>{
+        document.addEventListener('mousedown', checkClickOutside);
+        return () => document.removeEventListener('mousedown', checkClickOutside);
+    },[showConfirmDelete]);
 
 
 
@@ -132,11 +135,11 @@ const SinglePost = ({post}) => {
                     )}
                     {pathname == "/admin" && ( //if admin
                         <>
-                            <button className="delete-case" ref={confirmDeleteRef} onClick={()=>setShowConfirmDelete(true)}>
+                            <button className="delete-case" onClick={()=>setShowConfirmDelete(true)}>
                                 <MdDeleteForever/>
                             </button>
                             {showConfirmDelete && (
-                                <div className="confirm-delete-container">
+                                <div className="confirm-delete-container" ref={confirmDeleteRef}>
                                     <p>Sigur vrei sa stergi postarea?</p>
                                     <div className="confirm-delete-buttons">
                                         <button className="confirm-del-button" onClick={handleDeletePost}>Da</button>

@@ -60,7 +60,7 @@ const SinglePost = ({post}) => {
         }
 
         try {
-            const response = await fetch('https://donation-app-api.vercel.app/api/posts/updateImage', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/updateImage`, {
                 method: 'PUT',
                 body: formData, // Use FormData for sending binary data
             });
@@ -83,7 +83,7 @@ const SinglePost = ({post}) => {
             id:post._id
         }
         try {
-            const response = await fetch('https://donation-app-api.vercel.app/api/posts/deletePost', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/deletePost`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'

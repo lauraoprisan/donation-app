@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import PostsContext from '../context/PostsContext';
 
+
 const useGetAllPosts = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [posts, setPosts] = useState(null);
@@ -10,8 +11,9 @@ const useGetAllPosts = () => {
         const getPosts = async () => {
             setIsLoading(true);
 
+            console.log("env.REACT_APP_API_URL",process.env.REACT_APP_API_URL)
             try {
-                const response = await fetch('https://donation-app-api.vercel.app/api/posts/');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/`);
                 const json = await response.json();
 
                 if (response.ok) {

@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
+import { useSignup } from '../../hooks/useSignup'
+import { useLogin } from '../../hooks/useLogin'
 
 const AuthPage = () => {
     const [formData, setFormData] = useState({
         username:'',
         email:'',
-        password:'',
-        password2:'',
-        isAdmin:false
+        password:''
     })
 
-    const {username, email, password, password2, isAdmin} = formData
+    const {username, email, password} = formData
     const [isLogin, setIsLogin] = useState(false)
+    const {signup, errorSignup, isSignningup} = useSignup()
+    const {login, errorLogin, isLoggingin} = useLogin()
+
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -19,8 +22,14 @@ const AuthPage = () => {
         }) )
     }
 
-    const onSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        if(isLogin){
+            await login(email, password)
+        } else {
+            await signup(email, password, username)
+        }
+
     }
 
   return (
@@ -29,13 +38,13 @@ const AuthPage = () => {
             {/* <h2 className="auth-subtitle"> Hai sa ajutam Romania pas cu pas</h2> */}
             <h1>Autentificare</h1>
             {isLogin ?(
-                <p>Nu ai un cont? Creeaza-ti unul apasand <span className="change-login-signup" onClick={()=>setIsLogin(false)}>aici</span></p>
+                <p>Nu ai un cont? Creeaza-ti unul apasand <span className="change-login-signup" onClick={()=>setIsLogin(false)}>aici</span>.</p>
             ):(
-                <p>Ai deja un cont? Atunci schimba formularul apasand <span className="change-login-signup" onClick={()=>setIsLogin(true)}>aici</span></p>
+                <p>Ai deja un cont? Atunci schimba formularul apasand <span className="change-login-signup" onClick={()=>setIsLogin(true)}>aici</span>.</p>
             )}
 
 
-                <form onSubmit={onSubmit} className="auth-form">
+                <form onSubmit={handleSubmit} className="auth-form">
                     {!isLogin &&(
                         <div className="form-group">
                             <label for="username">Username</label>
@@ -71,32 +80,8 @@ const AuthPage = () => {
                             onChange={onChange}
                         />
                     </div>
-                    {!isLogin &&(
-                        <div className="form-group">
-                            <label for="password2">Confirmare parola</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password2"
-                                name="password2"
-                                value={password2}
-                                onChange={onChange}
-                            />
-                        </div>
-                    )}
                     <div className="form-group">
-                        <label for="isAdmin">Admin?</label>
-                        <input
-                            type="radio"
-                            className="form-control"
-                            id="isAdmin"
-                            name="isAdmin"
-                            value={true}
-                            onChange={onChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <button type="submit" className="action-button highlight-button">
+                        <button type="submit" className="action-button highlight-button" disabled={isSignningup || isLoggingin}>
                             {isLogin ? "Log in" : "Sign up"}
                         </button>
                     </div>

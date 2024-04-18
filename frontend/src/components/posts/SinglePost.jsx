@@ -10,6 +10,7 @@ import { MdCancel } from "react-icons/md";
 import { FaBullseye } from 'react-icons/fa6';
 import { MdDeleteForever } from "react-icons/md";
 import PostsContext from '../../context/PostsContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 
 
@@ -22,14 +23,14 @@ const SinglePost = ({post}) => {
     const [selectedImage, setSelectedImage] = useState(null)
     const [imageSizeError, setImageSizeError] = useState(false)
     const { deletePost,editPost } = useContext(PostsContext);
-    const [isAdmin, setIsAdmin] = useState(false)
     const confirmDeleteRef = useRef(null);
+    const { user } = useAuthContext()
 
     const {pathname} = useLocation()
 
     //temporary hanlding for isAdmin till auth
     const handleOpenModal = () => {
-        if(pathname == "/admin"){
+        if(user?.isAdmin){
             setOpenAdminModal(true)
         } else{
             setOpenModal(true)

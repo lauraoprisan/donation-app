@@ -19,8 +19,8 @@ const Navbar = () => {
   const [showOptionalNav, setShowOptionalNav] = useState(false);
 
   const renderGoToPostsButton = !user || !user?.isAdmin || user?.isAdmin && pathname== "/"
-  const renderAdminLink = user?.isAdmin && pathname!="/administrare"
-  const renderProfileLink = !user?.isAdmin && pathname!="/profil"
+  const renderAdminOptionalLink = user?.isAdmin && pathname!="/administrare"
+  const renderProfileOptionalLink = !user?.isAdmin && pathname!="/profil"
 
   const handleLogout = () => {
     logout()
@@ -40,9 +40,15 @@ const Navbar = () => {
             <div className="right-items">
                   <div className="on-mobile-nav">
                     {user ? (
+                      <Link to={user?.isAdmin ? "/administrare" : "/profil"} className="mobile-nav-link">
                         <CgProfile size="25px"/>
+                      </Link>
+
                     ): (
+                      <Link to="/autentificare" className="mobile-nav-link">
                         <BiLogIn size="25px"/>
+                      </Link>
+
                     )}
 
                   </div>
@@ -69,7 +75,7 @@ const Navbar = () => {
                               onMouseEnter={() => setShowOptionalNav(true)}
 
                             >
-                              {renderAdminLink && (
+                              {renderAdminOptionalLink && (
                               <Link to="/administrare">
                                   <button className="on-desktop-nav">
                                   Administrare
@@ -77,7 +83,7 @@ const Navbar = () => {
                               </Link>
                               )
                               }
-                             {renderProfileLink && (
+                             {renderProfileOptionalLink && (
                               <Link to="/profil">
                                   <button className="on-desktop-nav">
                                   Profil
@@ -102,11 +108,14 @@ const Navbar = () => {
 
 
                  {user && (
-                  <>
-                    <div className="on-mobile-nav">
-                      <BiLogOut size="26px"/>
-                    </div>
-                  </>
+                  // <Link to="/">
+                  //   <div className="on-mobile-nav" onClick={handleLogout}>
+                  //     <BiLogOut size="26px" />
+                  //   </div>
+                  // </Link>
+                    <Link to="/" className="on-mobile-nav mobile-nav-link" onClick={handleLogout} >
+                        <BiLogOut size="26px" />
+                    </Link>
 
                  )}
                  {renderGoToPostsButton&&(

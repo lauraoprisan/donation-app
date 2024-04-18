@@ -80,6 +80,9 @@ const AuthPage = () => {
                             onChange={onChange}
                         />
                     </div>
+                    
+                    {isLogin ? (errorLogin && <span>{errorLogin}</span>) : (errorSignup && <span>{errorSignup}</span>)}
+
                     <div className="form-group">
                         <button type="submit" className="action-button highlight-button" disabled={isSignningup || isLoggingin}>
                             {isLogin ? "Log in" : "Sign up"}

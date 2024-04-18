@@ -29,9 +29,9 @@ const Sidebar = () => {
                     {renderProfileSidebar && <ProfileSidebar/>}
                     {renderAdminSidebar && <AdminSidebar/>}
                     {user && (
-                        <Link to="/" className="sidebar-subtitle log-out-container">
-                        <BiLogOut color="black" size="22px" />
-                        <button className="on-desktop-sidebar logout-btn" onClick={handleLogout}>Log out</button>
+                        <Link to="/" className="sidebar-subtitle log-out-container" onClick={handleLogout}>
+                            <BiLogOut color="black" size="22px" />
+                            <button className="on-desktop-sidebar logout-btn" >Log out</button>
                         </Link>
                     )}
 

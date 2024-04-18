@@ -7,9 +7,9 @@ const MONGO_URI = process.env.MONGO_URI
 const mongoose = require('mongoose')
 const cors = require("cors");
 
-const postRoutes = require('./routes/postsRouter')
+const postRoutes = require('./routes/postsRoutes')
 const userPostStatusRoutes = require('./routes/userPostStatusRoutes')
-
+const userRoutes = require('./routes/userRoutes')
 //express app
 const app = express()
 
@@ -40,6 +40,7 @@ app.get("/", (req, res) => {
 //routes
 app.use("/api/posts", postRoutes)
 app.use("/api/status", userPostStatusRoutes)
+app.use('/api/user', userRoutes)
 
 //connect to db
 mongoose.connect(MONGO_URI)

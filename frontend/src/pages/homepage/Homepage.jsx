@@ -4,27 +4,29 @@ import { Link } from 'react-router-dom';
 import useGetAllPosts from '../../hooks/useGetAllPosts';
 import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
+import PostsContext from '../../context/PostsContext';
 
 
 const Homepage = () => {
-    const [openModal, setOpenModal] = useState(false)  /**i should use this in the single post component */
-    const {posts, isLoading} = useGetAllPosts();
+    const {isLoading} = useGetAllPosts()
+    const {posts} = useContext(PostsContext);
     const [postsToShow, setPostsToShow] = useState([]);
     const {setSelectedTag } = useContext(FilterContext);
 
-    useEffect(() => {
-        console.log(posts);
-        if (posts) {
-            console.log("posts inside if", posts);
-            const filteredPosts = posts.filter(post => post.tag === "Urgenta");
-            const sortedPosts = filteredPosts.sort((a, b) => a.createdAt - b.createdAt);
-            const firstThreePosts = sortedPosts.slice(0,3)
-            setPostsToShow(firstThreePosts);
-            console.log("poststoshow", postsToShow);
-        }
-    }, [isLoading]);
 
-    console.log("poststoshow",postsToShow)
+    useEffect(() => {
+        // updating postsToShow once posts data is fetched
+        if (!isLoading && posts) {
+            console.log(!isLoading)
+            console.log(posts)
+          const filteredPosts = posts.filter(post => post.tag === "Urgenta");
+          const sortedPosts = filteredPosts.sort((a, b) => a.createdAt - b.createdAt);
+          const firstThreePosts = sortedPosts.slice(0,3)
+          setPostsToShow(firstThreePosts)
+
+        }
+    }, [isLoading, posts]);
+
   return (
     <>
         <section className="hero-section">

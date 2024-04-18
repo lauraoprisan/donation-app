@@ -3,14 +3,16 @@ import useGetAllPosts from '../../hooks/useGetAllPosts';
 import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
 import PostsContext from '../../context/PostsContext';
+import { useAuthContext } from "../..//hooks/useAuthContext"
 
 const Posts = () => {
+    const {user} = useAuthContext()
     const {isLoading} = useGetAllPosts()
+    const { posts} = useContext(PostsContext);
     const [postsToShow, setPostsToShow] = useState(null)
     const { selectedTag } = useContext(FilterContext);
-    const { posts} = useContext(PostsContext);
 
-    console.log("posts from context in posts page", posts)
+
     const selectTaggedPosts = (selectedTag) => {
         setPostsToShow(prevPostsToShow => prevPostsToShow.filter(post => post.tag === selectedTag));
     }
@@ -29,7 +31,6 @@ const Posts = () => {
         <section className="cases-section">
             <div className="content-container">
                 <h1 className="title">Alege cate un caz si fa cuiva viata mai frumoasa</h1>
-
                 <div className="posts-container">
                     {isLoading && <span>Loading..</span>}
                     {!isLoading && postsToShow && (

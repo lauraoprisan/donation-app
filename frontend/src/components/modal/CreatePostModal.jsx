@@ -86,7 +86,6 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
             });
 
             const json = await response.json();
-            console.log(json)
             //add the post to the postscontext
 
             const data = {
@@ -96,8 +95,6 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
             }
             addPost(data)
 
-            // console.log("json response", json)
-            // console.log("json post id", postId)
             if (!response.ok) {
                 setError(json.error);
             } else {

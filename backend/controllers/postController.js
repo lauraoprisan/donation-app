@@ -1,7 +1,7 @@
 const cloudinary = require("../middleware/cloudinary");
 const mongoose = require('mongoose');
-const Post = require("../modals/PostModal");
-const UserPostStatus = require("../modals/UserPostStatusModal")
+const Post = require("../models/PostModel");
+const UserPostStatus = require("../models/UserPostStatusModel")
 
 
 
@@ -19,11 +19,8 @@ const getPosts = async (req, res) => {
 
 const addPost = async (req, res) => {
   try {
-console.log("adding post")
 
     // Upload image to cloudinary
-    console.log("req body",req.body)
-    console.log("req file",req.file)
     const result = await cloudinary.uploader.upload(req.file.path);
 
     //media is stored on cloudinary - the above request responds with url to media and the media id that you will need when deleting content
@@ -108,9 +105,6 @@ const updatePost = async (req, res) => {
 const updateImage = async (req, res) => {
   try {
     const postId = req.body.postId
-    // console.log("req body", req.body)
-    // console.log("req postId", req.body.postId)
-    // console.log("req file", req.file)
     const result = await cloudinary.uploader.upload(req.file.path);
     const post = await Post.findOneAndUpdate(
       {

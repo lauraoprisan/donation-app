@@ -13,7 +13,7 @@ A full stack web application dedicated to donations. The app provides details of
 ## Stage of the project (work in progress)
 
 Functionalities to be implemented next:
-- auth for users/admin
+- create "save case" functionality
 - create the status for each case and handle all the stages of the status
 - filter cases by region
 
@@ -27,6 +27,10 @@ When creating or updating a post, the admin has to choose from a specific range 
 
 You can download the images here: <a href="https://drive.google.com/drive/folders/1OZC4je_Qfav8OXw27hoc2jfTkIqiyb4w?usp=sharing" target="_blank">Drive Link</a>
 
-To access the admin page for now go to /admin
+To login as the admin use these credentials:
+- email: admin-demo@admin-demo.com
+- password: Admin123!
+
+
 
 

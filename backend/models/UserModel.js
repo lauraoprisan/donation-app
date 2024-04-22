@@ -23,14 +23,6 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         required:true
     },
-    savedPosts: [
-        {
-            post:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Post",
-              }
-        }
-    ],
     avatarCloudinaryId: {
         type: String,
         required:false
@@ -57,14 +49,14 @@ userSchema.statics.signup = async function(email, password, username) {
       throw Error('Email already in use')
     }
 
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password, salt)
+    const salt = await bcrypt.genSalt(10) //a generated suffix to be added to the password
+    const hash = await bcrypt.hash(password, salt) //hashing the password
 
     let isAdmin = false;
     if(email === "admin-demo@admin-demo.com" && password === "Admin123!"){
         isAdmin = true;
     }
-    
+
     const user = await this.create({ email, password: hash, username, isAdmin})
 
     return user
@@ -78,11 +70,13 @@ userSchema.statics.signup = async function(email, password, username) {
     }
 
     const user = await this.findOne({ email })
+
     if (!user) {
       throw Error('Incorrect email')
     }
 
     const match = await bcrypt.compare(password, user.password)
+
     if (!match) {
       throw Error('Incorrect password')
     }

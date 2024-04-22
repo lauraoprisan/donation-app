@@ -12,6 +12,7 @@ const Posts = () => {
     const [postsToShow, setPostsToShow] = useState(null)
     const { selectedTag } = useContext(FilterContext);
 
+    console.log(user)
 
     const selectTaggedPosts = (selectedTag) => {
         setPostsToShow(prevPostsToShow => prevPostsToShow.filter(post => post.tag === selectedTag));
@@ -35,7 +36,7 @@ const Posts = () => {
                     {isLoading && <span>Loading..</span>}
                     {!isLoading && postsToShow && (
                         postsToShow.map(post => (
-                            <SinglePost key={post.id} post={post}/>
+                            <SinglePost key={post._id} post={post}/>
                         ))
                     )}
                     {!isLoading && postsToShow && postsToShow.length==0 && <span>Nu sunt cazuri.</span>}

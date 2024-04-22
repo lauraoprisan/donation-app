@@ -7,11 +7,11 @@ const {
 
 
 
-// login route
+//auth routes
 router.post('/login', loginUser)
-
-// signup route
 router.post('/signup', signupUser)
+
+
 
 module.exports = router
 

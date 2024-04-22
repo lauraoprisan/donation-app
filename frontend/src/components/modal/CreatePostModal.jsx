@@ -7,9 +7,11 @@ import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
 import PostsContext from '../../context/PostsContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const CreatePostModal = ({isOpen, onClose, post}) => {
 
+    const {user} = useAuthContext()
     const [error, setError] = useState(null)
     const formRef = useRef(null);
     const imageRef = useRef(null)
@@ -83,6 +85,10 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/addPost`, {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                },
             });
 
             const json = await response.json();

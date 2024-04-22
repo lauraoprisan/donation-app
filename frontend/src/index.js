@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext'
 import { PostsProvider } from './context/PostsContext';
 import { FilterProvider } from './context/FilterContext';
+import { UserPostStatusProvider } from './context/UserPostStatusContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,11 +15,13 @@ root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <PostsProvider>
-        <FilterProvider>
-          <BrowserRouter>
-            <App/>
-          </BrowserRouter>
-        </FilterProvider>
+        <UserPostStatusProvider>
+          <FilterProvider>
+            <BrowserRouter>
+              <App/>
+            </BrowserRouter>
+          </FilterProvider>
+        </UserPostStatusProvider>
       </PostsProvider>
     </AuthContextProvider>
   </React.StrictMode>

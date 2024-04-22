@@ -4,8 +4,6 @@ const Post = require("../models/PostModel");
 const UserPostStatus = require("../models/UserPostStatusModel")
 
 
-
-
 const getPosts = async (req, res) => {
     try {
 
@@ -127,7 +125,6 @@ const updateImage = async (req, res) => {
      console.log(err);
   }
 }
-
 
 module.exports ={
   getPosts,

@@ -11,6 +11,10 @@ const userPostStatusSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
     },
+    isSaved: {
+        type: Boolean,
+        required:false
+    },
     isWaitingAdminResponse: {
         type: Boolean,
         required:false

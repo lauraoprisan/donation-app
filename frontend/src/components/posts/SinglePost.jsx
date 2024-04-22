@@ -64,6 +64,10 @@ const SinglePost = ({post}) => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/updateImage`, {
                 method: 'PUT',
                 body: formData, // Use FormData for sending binary data
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                },
             });
 
             const json = await response.json();
@@ -88,8 +92,9 @@ const SinglePost = ({post}) => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/deletePost`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
-                },
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                  },
                 body: JSON.stringify(data)
             });
 
@@ -150,11 +155,11 @@ const SinglePost = ({post}) => {
                             )}
                         </>
                     )}
-                    {true && ( //if admin
+                    {user?.isAdmin && (
                         <button className="edit-image-button">
                             { selectedImage ? (
                                 <>
-                                    <IoMdSave onClick={handleUpdateImage}/>  {/* add a context here so when this function is called, you add a dependency to getallposts */}
+                                    <IoMdSave onClick={handleUpdateImage}/>  
                                     <MdCancel onClick={()=>setSelectedImage(null)}/>
                                 </>
 

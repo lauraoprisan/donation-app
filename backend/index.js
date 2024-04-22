@@ -42,6 +42,7 @@ app.use("/api/posts", postRoutes)
 app.use("/api/status", userPostStatusRoutes)
 app.use('/api/user', userRoutes)
 
+
 //connect to db
 mongoose.connect(MONGO_URI)
     .then(()=>{

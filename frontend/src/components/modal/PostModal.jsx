@@ -5,9 +5,17 @@ import { FaCalendarDay, FaLocationDot } from 'react-icons/fa6'
 import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import useSavePost from '../../hooks/useSavePost'
+import PostsContext from '../../context/PostsContext'
 
 const PostModal = ({isOpen, onClose, post}) => {
     const { user } = useAuthContext()
+    const {handleSavePost, isUpdatingSave } = useSavePost()
+    // const isSaved = post.savedBy.some(userWhoLiked=>userWhoLiked._id === user._id)
+
+    const onSavePost = async()=>{
+        handleSavePost(post._id)
+    }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,7 +61,7 @@ const PostModal = ({isOpen, onClose, post}) => {
             </div>
             {user && (
                 <div className="modal-buttons">
-                    <button className="save-post-button">Salveaza</button>
+                    <button className="save-post-button" onClick={onSavePost}>{false ? "Elimina salvarea" : "Salveaza" }</button>
                     <button className="action-button highlight-button">Preia cazul</button>
                 </div>
             )}

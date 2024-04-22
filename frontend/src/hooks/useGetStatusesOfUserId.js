@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react'
-import PostsContext from '../context/PostsContext';
 import { useAuthContext } from './useAuthContext';
+import UserPostStatusContext from '../context/UserPostStatusContext';
 
 
-const useGetAllPosts = () => {
+const useGetStatusesOfUserId = () => {
     const {user} = useAuthContext()
     const [isLoading, setIsLoading] = useState(false);
-    const { posts, addPosts } = useContext(PostsContext);
+    const { addStatuses } = useContext(UserPostStatusContext);
 
     useEffect(() => {
-        const getPosts = async () => {
+        const getStatusesOfUserId = async () => {
             setIsLoading(true);
 
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/getStatusesOfUserId`, {
                     method: 'GET',
                     headers: {
                       'Content-Type': 'application/json',
@@ -23,21 +23,22 @@ const useGetAllPosts = () => {
 
                 const json = await response.json();
 
+                console.log("json from hook: ", json)
                 if (response.ok) {
-                    addPosts([...json]);
+                    addStatuses([...json]);
                 }
 
             } catch (error) {
-                // Handle error
+                console.log(error)
             } finally {
                 setIsLoading(false);
             }
         };
 
-        getPosts();
+        getStatusesOfUserId();
     }, [user]);
 
-    return {isLoading, posts };
+    return {isLoading };
 };
 
-export default useGetAllPosts;
+export default useGetStatusesOfUserId;

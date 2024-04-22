@@ -38,7 +38,7 @@ const postSchema = new mongoose.Schema({
     cloudinaryId: {
         type: String,
         required:false
-    }
+    },
 }, {timestamps: true})  //timestamps adds createdAt and lastUpdate
 
 module.exports = mongoose.model('Post', postSchema)

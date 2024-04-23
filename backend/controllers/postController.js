@@ -4,8 +4,6 @@ const Post = require("../models/PostModel");
 const UserPostStatus = require("../models/UserPostStatusModel")
 
 
-
-
 const getPosts = async (req, res) => {
     try {
 
@@ -65,8 +63,8 @@ const deletePost = async (req, res) => {
        await cloudinary.uploader.destroy(post.cloudinaryId);
     }
 
-
     res.status(200).json(post)
+    
   } catch (err) {
       res.status(400).json({err:err.message})
   }
@@ -127,7 +125,6 @@ const updateImage = async (req, res) => {
      console.log(err);
   }
 }
-
 
 module.exports ={
   getPosts,

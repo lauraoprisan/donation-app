@@ -6,9 +6,11 @@ import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
 import PostsContext from '../../context/PostsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 const AdminPostModal = ({isOpen, onClose, post}) => {
 
+    const {user} = useAuthContext()
     const [error, setError] = useState(null)
     const formRef = useRef(null);
     const renderRequests = false //false if case is resolved
@@ -58,7 +60,10 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/updatePost`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                  },
                 body: JSON.stringify(data)
             });
             const json = await response.json();

@@ -28,6 +28,7 @@ const SinglePost = ({post}) => {
 
     const {pathname} = useLocation()
 
+    // console.log("posts from profile page: ", post)
     //temporary hanlding for isAdmin till auth
     const handleOpenModal = () => {
         if(user?.isAdmin){
@@ -64,6 +65,9 @@ const SinglePost = ({post}) => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/updateImage`, {
                 method: 'PUT',
                 body: formData, // Use FormData for sending binary data
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                },
             });
 
             const json = await response.json();
@@ -88,8 +92,9 @@ const SinglePost = ({post}) => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/deletePost`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
-                },
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                  },
                 body: JSON.stringify(data)
             });
 
@@ -108,7 +113,7 @@ const SinglePost = ({post}) => {
     }
 
     const checkClickOutside = (e)=>{
-        console.group(e.target)
+        // console.group(e.target)
         if(showConfirmDelete && !confirmDeleteRef.current?.contains(e.target) && e.target != confirmDeleteRef.current ){
 
             setShowConfirmDelete(false)
@@ -150,11 +155,11 @@ const SinglePost = ({post}) => {
                             )}
                         </>
                     )}
-                    {true && ( //if admin
+                    {user?.isAdmin && (
                         <button className="edit-image-button">
                             { selectedImage ? (
                                 <>
-                                    <IoMdSave onClick={handleUpdateImage}/>  {/* add a context here so when this function is called, you add a dependency to getallposts */}
+                                    <IoMdSave onClick={handleUpdateImage}/>
                                     <MdCancel onClick={()=>setSelectedImage(null)}/>
                                 </>
 
@@ -175,7 +180,7 @@ const SinglePost = ({post}) => {
                 </div>
                 <div className="post-info-snippet">
                     <span className="location">{post.location}</span>
-                    {post.needs.length > 67 ? (
+                    {post.needs?.length > 67 ? (
                         <p>{post.needs.substring(0,67)}...</p>) : (
                         <p>{post.needs}</p>
                     )}

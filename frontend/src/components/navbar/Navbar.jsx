@@ -8,12 +8,13 @@ import { CgProfile } from "react-icons/cg";
 import FilterContext from '../../context/FilterContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useLogout } from '../../hooks/useLogout';
+import * as statusTypes from '../../statusTypes'
 
 
 const Navbar = () => {
   const scrolled = useNavbarScrollEffect();
   const {pathname} = useLocation()
-  const { setSelectedTag } = useContext(FilterContext);
+  const { setSelectedTag , setSelectedStatus} = useContext(FilterContext);
   const { user } = useAuthContext()
   const { logout } = useLogout()
   const [showOptionalNav, setShowOptionalNav] = useState(false);
@@ -24,6 +25,19 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout()
+  }
+
+  const resetSelections = ()=>{
+    setSelectedTag(null)
+    setSelectedStatus(null)
+  }
+
+  //set first posts to be seen in profile and admin page
+
+  const setDefaultPosts = ()=> {
+    if(!user?.isAdmin){
+      setSelectedStatus(statusTypes.SAVED)
+    }
   }
 
 
@@ -40,7 +54,7 @@ const Navbar = () => {
             <div className="right-items">
                   <div className="on-mobile-nav">
                     {user ? (
-                      <Link to={user?.isAdmin ? "/administrare" : "/profil"} className="mobile-nav-link">
+                      <Link to={user?.isAdmin ? "/administrare" : "/profil"} className="mobile-nav-link" onClick={setDefaultPosts}>
                         <CgProfile size="25px"/>
                       </Link>
 
@@ -76,7 +90,7 @@ const Navbar = () => {
 
                             >
                               {renderAdminOptionalLink && (
-                              <Link to="/administrare">
+                              <Link to="/administrare" onClick={setDefaultPosts}>
                                   <button className="on-desktop-nav">
                                   Administrare
                                 </button>
@@ -84,7 +98,7 @@ const Navbar = () => {
                               )
                               }
                              {renderProfileOptionalLink && (
-                              <Link to="/profil">
+                              <Link to="/profil" onClick={setDefaultPosts}>
                                   <button className="on-desktop-nav">
                                   Profil
                                 </button>
@@ -119,7 +133,7 @@ const Navbar = () => {
 
                  )}
                  {renderGoToPostsButton&&(
-                    <Link className="button action-button on-desktop-nav" to="/cazuri" onClick={()=>setSelectedTag(null)}>
+                    <Link className="button action-button on-desktop-nav" to="/cazuri" onClick={resetSelections}>
                       Vezi toate cazurile
                     </Link>
                  )}

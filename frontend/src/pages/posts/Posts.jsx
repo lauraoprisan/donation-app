@@ -4,10 +4,13 @@ import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
 import PostsContext from '../../context/PostsContext';
 import { useAuthContext } from "../..//hooks/useAuthContext"
+import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId';
+
 
 const Posts = () => {
     const {user} = useAuthContext()
     const {isLoading} = useGetAllPosts()
+    const {isLoadingStatus} = useGetStatusesOfUserId()
     const { posts} = useContext(PostsContext);
     const [postsToShow, setPostsToShow] = useState(null)
     const { selectedTag } = useContext(FilterContext);
@@ -27,6 +30,7 @@ const Posts = () => {
         }
     }, [isLoading, posts, selectedTag]);
 
+
     return (
         <section className="cases-section">
             <div className="content-container">
@@ -35,7 +39,7 @@ const Posts = () => {
                     {isLoading && <span>Loading..</span>}
                     {!isLoading && postsToShow && (
                         postsToShow.map(post => (
-                            <SinglePost key={post.id} post={post}/>
+                            <SinglePost key={post._id} post={post}/>
                         ))
                     )}
                     {!isLoading && postsToShow && postsToShow.length==0 && <span>Nu sunt cazuri.</span>}

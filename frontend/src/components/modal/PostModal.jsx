@@ -1,13 +1,46 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from './Modal'
 import { MdOutlineDescription } from 'react-icons/md'
 import { FaCalendarDay, FaLocationDot } from 'react-icons/fa6'
 import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import useSavePost from '../../hooks/useSavePost'
+import PostsContext from '../../context/PostsContext'
+import useUnsavePost from '../../hooks/useUnsavePost'
+import UserPostStatusContext from '../../context/UserPostStatusContext'
+import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId'
 
 const PostModal = ({isOpen, onClose, post}) => {
+
     const { user } = useAuthContext()
+    const {handleSavePost, isUpdatingSave } = useSavePost()
+    const {handleUnsavePost, isUpdatingUnsave } = useUnsavePost()
+    const {userPostStatuses} = useContext(UserPostStatusContext);
+    const [isSaved, setIsSaved] = useState(false)
+
+    // console.log("userPostStatuses from postmodal: ", userPostStatuses)
+
+    useEffect(()=>{
+        if (userPostStatuses){
+            setIsSaved(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && userPostStatus.isSaved))
+        }
+    }, [userPostStatuses, isOpen])
+
+    useEffect(()=>{
+        if(isOpen){
+            console.log("modal opened again")
+        }
+    }, [isOpen])
+
+    const onSavePost = async()=>{
+        if(isSaved){
+            await handleUnsavePost(post._id)
+        } else {
+            await handleSavePost(post._id, post)
+        }
+        onClose()
+    }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,7 +86,7 @@ const PostModal = ({isOpen, onClose, post}) => {
             </div>
             {user && (
                 <div className="modal-buttons">
-                    <button className="save-post-button">Salveaza</button>
+                    <button className="save-post-button" onClick={onSavePost}>{isSaved ? "Elimina salvarea" : "Salveaza" }</button>
                     <button className="action-button highlight-button">Preia cazul</button>
                 </div>
             )}

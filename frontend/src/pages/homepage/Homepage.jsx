@@ -5,6 +5,7 @@ import useGetAllPosts from '../../hooks/useGetAllPosts';
 import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
 import PostsContext from '../../context/PostsContext';
+import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId';
 
 
 const Homepage = () => {
@@ -12,6 +13,7 @@ const Homepage = () => {
     const {posts} = useContext(PostsContext);
     const [postsToShow, setPostsToShow] = useState([]);
     const {setSelectedTag } = useContext(FilterContext);
+    const {isLoadingStatus} = useGetStatusesOfUserId()
 
 
     useEffect(() => {
@@ -89,7 +91,7 @@ const Homepage = () => {
                     {isLoading && <span>Loading..</span>}
                     {!isLoading && postsToShow && (
                         postsToShow.map(post => (
-                            <SinglePost key={post.id} post={post}/>
+                            <SinglePost key={post._id} post={post}/>
                         ))
                     )}
                     {!isLoading && posts && posts.length==0 && <span>Nu sunt urgente.</span>}

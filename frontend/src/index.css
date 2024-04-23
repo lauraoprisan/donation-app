@@ -441,7 +441,7 @@ h2{
   color:rgb(120, 120, 120);
 }
 
-.sidebar-tag, .tag{
+.sidebar-tag, .tag, .sidebar-button{
   background-color: rgb(240, 240, 240);
   border-radius: 50px;
   padding:5px 10px;
@@ -603,7 +603,7 @@ h2{
   padding:10px 20px;
 }
 
-.sidebar-tag:hover{
+.sidebar-tag:hover, .sidebar-button:hover{
   background-color: #5a5a5a;
   color:white;
 }
@@ -1273,10 +1273,6 @@ h2{
     font-size:2.7rem;
   }
 
-  .sidebar-button{
-    min-width:0;    /*this is to reset button's min-width*/
-  }
-
 
 }
 
@@ -1285,6 +1281,10 @@ h2{
   /* .container{
     padding: 20px 10%;
   } */
+
+  .sidebar-button{
+    min-width:0;    /*this is to reset button's min-width*/
+  }
 
   .project-idea-content{
     flex-direction: column;

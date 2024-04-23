@@ -11,12 +11,14 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await User.login(email, password)
-    const {username, isAdmin} = user
+    const {username, isAdmin, _id} = user
+
+    console.log("user who logged in:", user)
 
     // create a token
     const token = createToken(user._id)
 
-    res.status(200).json({email, username, isAdmin, token})
+    res.status(200).json({email, username, isAdmin, token, _id})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
@@ -28,14 +30,18 @@ const signupUser = async (req, res) => {
 
   try {
     const user = await User.signup(email, password, username)
-    const isAdmin = user.isAdmin
+    const {isAdmin, _id} = user
+
+    console.log("user who signed up:", user)
+
     // create a token
     const token = createToken(user._id)
 
-    res.status(200).json({email, username, isAdmin, token})
+    res.status(200).json({email, username, isAdmin, token, _id})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
 }
+
 
 module.exports = { signupUser, loginUser }

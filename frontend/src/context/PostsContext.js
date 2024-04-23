@@ -5,7 +5,7 @@ const PostsContext = createContext({});
 export const PostsProvider = ({ children }) => {
     const [posts, setPosts] = useState(null);
 
-    console.log(posts)
+    // console.log(posts)
     const addPosts =  (postsFromDatabase) => {
         setPosts(postsFromDatabase)
     }

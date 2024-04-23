@@ -84,11 +84,10 @@ const CreatePostModal = ({isOpen, onClose, post}) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/addPost`, {
                 method: 'POST',
-                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`,
                 },
+                body: formData
             });
 
             const json = await response.json();

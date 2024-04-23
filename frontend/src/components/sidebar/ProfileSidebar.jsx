@@ -37,7 +37,7 @@ const ProfileSidebar = () => {
   return (
     <>
         <button
-            className={`sidebar-button`}
+            className={`sidebar-button active-btn`}
             id={statusTypes.SAVED}
             onClick={handleSelectStatus}
         >

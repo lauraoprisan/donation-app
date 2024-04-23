@@ -2,24 +2,23 @@ import { useContext, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import UserPostStatusContext from "../context/UserPostStatusContext";
 
-const useSavePost = () => {
-	const [isUpdatingSave, setIsUpdatingSave] = useState(false);
+const useUnsavePost = (postId) => {
+	const [isUpdatingUnsave, setIsUpdatingUnsave] = useState(false);
     const {user} = useAuthContext()
-    const {addStatus} = useContext(UserPostStatusContext)
-	// const [isSaved, setIsSaved] = useState(user?.savedPosts?.includes(postId));
+    const {deleteStatus} = useContext(UserPostStatusContext)
 
-	const handleSavePost = async (postId, post) => {
-		if (isUpdatingSave) return;
+	const handleUnsavePost = async (postId) => {
+		if (isUpdatingUnsave) return;
 		// if (!user) return showToast("Error", "You must be logged in to save a post", "error");
-		setIsUpdatingSave(true);
+		setIsUpdatingUnsave(true);
 
         const data={
             postId: postId
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/savePost`, {
-                method: 'POST',
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/unsavePost`, {
+                method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
                   'Authorization': `Bearer ${user.token}`,
@@ -28,19 +27,19 @@ const useSavePost = () => {
             });
 
             const json = await response.json();
-            console.log("json status to be edited", {...json, postId:post})
+            // console.log(json)
             if (response.ok) {
-                addStatus({...json, postId:post})
+                deleteStatus(postId)
             }
 
         } catch (error) {
             console.log(error)
         } finally {
-            setIsUpdatingSave(false);
+            setIsUpdatingUnsave(false);
         }
 	};
 
-	return { handleSavePost, isUpdatingSave };
+	return {handleUnsavePost, isUpdatingUnsave };
 };
 
-export default useSavePost;
+export default useUnsavePost;

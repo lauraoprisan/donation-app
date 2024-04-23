@@ -28,6 +28,7 @@ const SinglePost = ({post}) => {
 
     const {pathname} = useLocation()
 
+    // console.log("posts from profile page: ", post)
     //temporary hanlding for isAdmin till auth
     const handleOpenModal = () => {
         if(user?.isAdmin){
@@ -65,7 +66,6 @@ const SinglePost = ({post}) => {
                 method: 'PUT',
                 body: formData, // Use FormData for sending binary data
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`,
                 },
             });
@@ -113,7 +113,7 @@ const SinglePost = ({post}) => {
     }
 
     const checkClickOutside = (e)=>{
-        console.group(e.target)
+        // console.group(e.target)
         if(showConfirmDelete && !confirmDeleteRef.current?.contains(e.target) && e.target != confirmDeleteRef.current ){
 
             setShowConfirmDelete(false)
@@ -159,7 +159,7 @@ const SinglePost = ({post}) => {
                         <button className="edit-image-button">
                             { selectedImage ? (
                                 <>
-                                    <IoMdSave onClick={handleUpdateImage}/>  
+                                    <IoMdSave onClick={handleUpdateImage}/>
                                     <MdCancel onClick={()=>setSelectedImage(null)}/>
                                 </>
 
@@ -180,7 +180,7 @@ const SinglePost = ({post}) => {
                 </div>
                 <div className="post-info-snippet">
                     <span className="location">{post.location}</span>
-                    {post.needs.length > 67 ? (
+                    {post.needs?.length > 67 ? (
                         <p>{post.needs.substring(0,67)}...</p>) : (
                         <p>{post.needs}</p>
                     )}

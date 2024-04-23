@@ -4,15 +4,17 @@ import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
 import PostsContext from '../../context/PostsContext';
 import { useAuthContext } from "../..//hooks/useAuthContext"
+import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId';
+
 
 const Posts = () => {
     const {user} = useAuthContext()
     const {isLoading} = useGetAllPosts()
+    const {isLoadingStatus} = useGetStatusesOfUserId()
     const { posts} = useContext(PostsContext);
     const [postsToShow, setPostsToShow] = useState(null)
     const { selectedTag } = useContext(FilterContext);
 
-    console.log(user)
 
     const selectTaggedPosts = (selectedTag) => {
         setPostsToShow(prevPostsToShow => prevPostsToShow.filter(post => post.tag === selectedTag));
@@ -27,6 +29,7 @@ const Posts = () => {
             }
         }
     }, [isLoading, posts, selectedTag]);
+
 
     return (
         <section className="cases-section">

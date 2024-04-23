@@ -10,7 +10,7 @@ const getStatusesOfUserId = async(req,res) =>{
         const userPostStatuses = await UserPostStatus.find({userId:userId}).populate('postId').sort({createdAt: -1}).lean().exec();
 
         res.status(200).json(userPostStatuses)
-    
+
       } catch (err) {
         console.log(err);
       }
@@ -39,8 +39,26 @@ const savePost = async(req,res) => {
     }
   }
 
+  const unsavePost = async(req,res) => {
+    try {
+      const postId = req.body.postId
+      const userId = req.user._id
+
+      const userPostStatus = await UserPostStatus.findOneAndDelete({userId:userId, postId:postId});
+
+      if(!userPostStatus){
+        return res.status(404).json({error: "The saving of the post does not exist."})
+      }
+
+      res.status(200).json({ deletedPost: userPostStatus });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   module.exports ={
     getStatusesOfUserId,
     savePost,
+    unsavePost,
   }

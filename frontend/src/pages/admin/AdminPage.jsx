@@ -15,7 +15,7 @@ const AdminPage = () => {
             {isLoading && <span>Loading..</span>}
             {!isLoading && posts && (
                 posts.map(post => (
-                    <SinglePost key={post.id} post={post}/>
+                    <SinglePost key={post._id} post={post}/>
                 ))
             )}
             {!isLoading && posts && posts.length==0 && <span>Nu sunt cazuri.</span>}

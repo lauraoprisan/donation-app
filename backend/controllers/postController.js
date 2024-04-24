@@ -49,7 +49,7 @@ const addPost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
 
-    const postId = req.body.id
+    const postId = req.body.postId
 
     if(!mongoose.Types.ObjectId.isValid(postId)){
       return res.status(404).json({error: "No such post"})
@@ -64,7 +64,7 @@ const deletePost = async (req, res) => {
     }
 
     res.status(200).json(post)
-    
+
   } catch (err) {
       res.status(400).json({err:err.message})
   }

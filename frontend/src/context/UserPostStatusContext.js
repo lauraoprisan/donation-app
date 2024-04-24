@@ -5,7 +5,9 @@ const UserPostStatusContext = createContext({});
 export const UserPostStatusProvider = ({ children }) => {
     const [userPostStatuses, setUserPostStatuses] = useState(null);
 
-
+useEffect(()=>{
+    setUserPostStatuses(null)
+},[])
     const addStatuses = (statusesFromDatabase) => {
         setUserPostStatuses(statusesFromDatabase)
     }
@@ -16,16 +18,21 @@ export const UserPostStatusProvider = ({ children }) => {
 
     }
 
-    const editStatus = (postId, updatedStatus) => {
+    const editStatus = (statusId, updatedStatus) => {
+
         const updatedStatuses = userPostStatuses.map(userPostStatus=>{
-            if(userPostStatus.postId._id === postId){
-                console.log("yeah, update a status")
+            console.log("userPostStatus._id: ", userPostStatus._id)
+            console.log("statusId: ", statusId)
+            if(userPostStatus._id === statusId){
+                console.log("status match in context, attempt to update to waiting")
                 return {...userPostStatus, ...updatedStatus}
+
             }
+            console.log("updated the status")
             return userPostStatus
         })
         setUserPostStatuses(updatedStatuses)
-        // console.log("updatedStatuses editstatus context: ", updatedStatuses)
+        console.log("updated statuses: ", updatedStatuses)
     }
 
     const deleteStatus = (postId) => {
@@ -33,6 +40,7 @@ export const UserPostStatusProvider = ({ children }) => {
     };
 
     console.log("userPostStatuses from the context: ", userPostStatuses)
+
 
     return (
         <UserPostStatusContext.Provider value={{

@@ -39,7 +39,7 @@ const savePost = async(req,res) => {
     }
   }
 
-  const unsavePost = async(req,res) => {
+  const deleteStatus = async(req,res) => {
     try {
       const postId = req.body.postId
       const userId = req.user._id
@@ -49,7 +49,7 @@ const savePost = async(req,res) => {
       if(!userPostStatus){
         return res.status(404).json({error: "The saving of the post does not exist."})
       }
-
+      console.log("status deleted")
       res.status(200).json({ deletedPost: userPostStatus });
 
     } catch (error) {
@@ -57,8 +57,81 @@ const savePost = async(req,res) => {
     }
   }
 
+  const changeSavedToInWaitingStatus = async(req,res)=>{
+    console.log("trying to change status in waiting")
+    try {
+      const statusId = req.body.statusId
+
+      const userPostStatus = await UserPostStatus.findOneAndUpdate(
+        {
+            _id: statusId
+        },
+        {
+          $set: {
+            isSaved: false,
+            isWaitingAdminResponse: true,
+          },
+
+        },
+        {
+          new:true,
+        });
+
+        console.log("userPostStatus from change status backend: ", userPostStatus)
+        res.status(200).json(userPostStatus)
+
+    } catch (err) {
+       console.log(err);
+    }
+  }
+
+  const setUpWaitingStatus = async(req,res)=>{
+    try {
+      const postId = req.body.postId
+      const userId = req.user._id
+
+      const userPostStatus = await UserPostStatus.create({
+        userId,
+        postId,
+        isSaved:false,
+        isWaitingAdminResponse:true,
+        isReconfirmationRequired:false,
+        isInAction:false,
+        isCompleted:false,
+        hasDroppedOut:false
+      });
+
+      res.status(200).json(userPostStatus)
+
+    } catch (error) {
+      console.error(err);
+    }
+  }
+
+  const deleteAllStatusesOfPost = async (req, res) => {
+    try {
+        const postId = req.body.postId
+
+        const userPostStatus = await UserPostStatus.deleteMany({ postId: postId });
+
+        if (!userPostStatus || userPostStatus.deletedCount === 0) {
+            return res.status(404).json({ error: "No statuses found for the post" });
+        }
+
+        console.log("Statuses deleted:", userPostStatus.deletedCount);
+        res.status(200).json({ deletedCount: userPostStatus.deletedCount });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+
   module.exports ={
     getStatusesOfUserId,
     savePost,
-    unsavePost,
+    deleteStatus,
+    changeSavedToInWaitingStatus,
+    setUpWaitingStatus,
+    deleteAllStatusesOfPost,
   }

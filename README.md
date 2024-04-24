@@ -13,7 +13,6 @@ A full stack web application dedicated to donations. The app provides details of
 ## Stage of the project (work in progress)
 
 Functionalities to be implemented next:
-- create "save case" functionality
 - create the status for each case and handle all the stages of the status
 - filter cases by region
 

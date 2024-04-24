@@ -8,11 +8,17 @@ router.use(requireAuth)
 const {
     getStatusesOfUserId,
     savePost,
-    unsavePost
+    deleteStatus,
+    changeSavedToInWaitingStatus,
+    setUpWaitingStatus,
+    deleteAllStatusesOfPost
 } = require('../controllers/userPostStatusController')
 
 router.get('/getStatusesOfUserId', getStatusesOfUserId)
 router.post("/savePost", savePost)
-router.delete("/unsavePost", unsavePost)
+router.delete("/deleteStatus", deleteStatus)
+router.put('/changeSavedToInWaitingStatus', changeSavedToInWaitingStatus )
+router.post('/setUpWaitingStatus', setUpWaitingStatus) //if the post is not previously saved, create a new status
+router.delete('/deleteAllStatusesOfPost', deleteAllStatusesOfPost)
 
 module.exports = router

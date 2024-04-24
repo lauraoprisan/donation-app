@@ -6,41 +6,59 @@ import { BsLightningCharge } from 'react-icons/bs'
 import { GiBoomerang } from 'react-icons/gi'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import useSavePost from '../../hooks/useSavePost'
-import PostsContext from '../../context/PostsContext'
-import useUnsavePost from '../../hooks/useUnsavePost'
+import useDeleteStatus from '../../hooks/useDeleteStatus'
 import UserPostStatusContext from '../../context/UserPostStatusContext'
-import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId'
+import useChangeStatusToWaiting from '../../hooks/useChangeStatusToWaiting'
+import useCreateWaitingStatus from '../../hooks/useCreateWaitingStatus'
 
 const PostModal = ({isOpen, onClose, post}) => {
 
     const { user } = useAuthContext()
     const {handleSavePost, isUpdatingSave } = useSavePost()
-    const {handleUnsavePost, isUpdatingUnsave } = useUnsavePost()
+    const {handleDeleteStatus, isUpdatingDeleteStatus } = useDeleteStatus()
     const {userPostStatuses} = useContext(UserPostStatusContext);
     const [isSaved, setIsSaved] = useState(false)
-
+    const [isInWaiting, setIsInWaiting] = useState(false)
+    const {changeStatusToWaiting} = useChangeStatusToWaiting()
+    const {handleCreateWaitingStatus} = useCreateWaitingStatus()
     // console.log("userPostStatuses from postmodal: ", userPostStatuses)
 
     useEffect(()=>{
         if (userPostStatuses){
             setIsSaved(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && userPostStatus.isSaved))
+            setIsInWaiting(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && userPostStatus.isWaitingAdminResponse))
         }
     }, [userPostStatuses, isOpen])
 
-    useEffect(()=>{
-        if(isOpen){
-            console.log("modal opened again")
-        }
-    }, [isOpen])
+
 
     const onSavePost = async()=>{
         if(isSaved){
-            await handleUnsavePost(post._id)
+            await handleDeleteStatus(post._id)
         } else {
             await handleSavePost(post._id, post)
         }
         onClose()
     }
+
+    const handleReqToTakeCase = async()=>{
+        if(isSaved){
+           await changeStatusToWaiting(post._id, post)
+        } else {
+
+            if(isInWaiting){
+               await handleDeleteStatus(post._id)
+            } else {
+                await handleCreateWaitingStatus(post._id, post)
+            }
+        }
+
+
+        onClose()
+    }
+
+    console.log("userPostStatuses from post modal",userPostStatuses)
+    console.log("postId: ", post._id)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -86,8 +104,8 @@ const PostModal = ({isOpen, onClose, post}) => {
             </div>
             {user && (
                 <div className="modal-buttons">
-                    <button className="save-post-button" onClick={onSavePost}>{isSaved ? "Elimina salvarea" : "Salveaza" }</button>
-                    <button className="action-button highlight-button">Preia cazul</button>
+                    {!isInWaiting && <button className="save-post-button" onClick={onSavePost}>{isSaved ? "Elimina salvarea" : "Salveaza" }</button>}
+                    <button className={`action-button ${!isInWaiting ? "highlight-button" : ""}`} onClick={handleReqToTakeCase}>{isInWaiting ? "Renunta la caz" : "Preia cazul"}</button>
                 </div>
             )}
             {!user && (

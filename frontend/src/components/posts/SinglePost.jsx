@@ -11,6 +11,7 @@ import { FaBullseye } from 'react-icons/fa6';
 import { MdDeleteForever } from "react-icons/md";
 import PostsContext from '../../context/PostsContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import UserPostStatusContext from '../../context/UserPostStatusContext';
 
 
 
@@ -25,6 +26,7 @@ const SinglePost = ({post}) => {
     const { deletePost,editPost } = useContext(PostsContext);
     const confirmDeleteRef = useRef(null);
     const { user } = useAuthContext()
+    const {deleteStatus} = useContext(UserPostStatusContext);
 
     const {pathname} = useLocation()
 
@@ -86,8 +88,10 @@ const SinglePost = ({post}) => {
     const handleDeletePost = async (e)=>{
         e.stopPropagation()
         const data = {
-            id:post._id
+            postId:post._id
         }
+
+        //organize this better later!
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/deletePost`, {
                 method: 'DELETE',
@@ -104,6 +108,28 @@ const SinglePost = ({post}) => {
             } else {
                 setError(null);
                 deletePost(post._id)
+                setShowConfirmDelete(false);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/deleteAllStatusesOfPost`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                  },
+                body: JSON.stringify(data)
+            });
+
+            const json = await response.json();
+            if (!response.ok) {
+                setError(json.error);
+            } else {
+                setError(null);
+                deleteStatus(post._id)
                 setShowConfirmDelete(false);
             }
         } catch (error) {
@@ -139,7 +165,7 @@ const SinglePost = ({post}) => {
                             <ImHourGlass/>
                         </button>
                     )}
-                    {pathname == "/admin" && ( //if admin
+                    {pathname == "/administrare" && (
                         <>
                             <button className="delete-case" onClick={()=>setShowConfirmDelete(true)}>
                                 <MdDeleteForever/>

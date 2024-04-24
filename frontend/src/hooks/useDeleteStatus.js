@@ -2,22 +2,22 @@ import { useContext, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import UserPostStatusContext from "../context/UserPostStatusContext";
 
-const useUnsavePost = (postId) => {
-	const [isUpdatingUnsave, setIsUpdatingUnsave] = useState(false);
+const useDeleteStatus = (postId) => {
+	const [isUpdatingDeleteStatus, setIsUpdatingDeleteStatus] = useState(false);
     const {user} = useAuthContext()
     const {deleteStatus} = useContext(UserPostStatusContext)
 
-	const handleUnsavePost = async (postId) => {
-		if (isUpdatingUnsave) return;
+	const handleDeleteStatus = async (postId) => {
+		if (isUpdatingDeleteStatus) return;
 		// if (!user) return showToast("Error", "You must be logged in to save a post", "error");
-		setIsUpdatingUnsave(true);
+		setIsUpdatingDeleteStatus(true);
 
         const data={
             postId: postId
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/unsavePost`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/deleteStatus`, {
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
@@ -29,17 +29,17 @@ const useUnsavePost = (postId) => {
             const json = await response.json();
             // console.log(json)
             if (response.ok) {
-                deleteStatus(postId)
+                deleteStatus(postId) //in the userPostStatusContext
             }
 
         } catch (error) {
             console.log(error)
         } finally {
-            setIsUpdatingUnsave(false);
+            setIsUpdatingDeleteStatus(false);
         }
 	};
 
-	return {handleUnsavePost, isUpdatingUnsave };
+	return {handleDeleteStatus, isUpdatingDeleteStatus };
 };
 
-export default useUnsavePost;
+export default useDeleteStatus;

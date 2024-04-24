@@ -63,12 +63,13 @@ const ProfilePage = () => {
         <h1 className="title">Cazurile tale</h1>
             <div className="posts-container">
                 {isLoadingStatus && <span>Loading..</span>}
+                {!isLoadingStatus && postsToShow && postsToShow.length==0 && <span>Nu sunt cazuri {message}.</span>}
                     {!isLoadingStatus && postsToShow && (
                         postsToShow.map(post => (
                             <SinglePost key={post.postId._id} post={post.postId}/>
                         ))
                     )}
-                    {!isLoadingStatus && postsToShow && postsToShow.length==0 && <span>Nu sunt cazuri {message}.</span>}
+
             </div>
         </div>
     </section>

@@ -21,7 +21,7 @@ const useGetAllPosts = () => {
                 });
 
                 const json = await response.json();
-
+        
                 if (response.ok) {
                     addPosts([...json]);
                 }

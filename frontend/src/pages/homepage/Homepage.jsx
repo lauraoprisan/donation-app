@@ -6,6 +6,7 @@ import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
 import PostsContext from '../../context/PostsContext';
 import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 
 const Homepage = () => {
@@ -14,6 +15,7 @@ const Homepage = () => {
     const [postsToShow, setPostsToShow] = useState([]);
     const {setSelectedTag } = useContext(FilterContext);
     const {isLoadingStatus} = useGetStatusesOfUserId()
+    const { user } = useAuthContext()
 
 
     useEffect(() => {
@@ -38,7 +40,7 @@ const Homepage = () => {
                     <br/>
                     oriunde este nevoie de el
                 </h1>
-                <Link to="/cazuri" className="button hero-button">
+                <Link to={user?.isAdmin ? '/administrare' : '/cazuri'} className="button hero-button">
                     <button>
                         Gaseste strigatul de ajutor
                     </button>
@@ -77,7 +79,7 @@ const Homepage = () => {
                         <p>
                             Toti care apeleaza la noi au mare nevoie de ajutor si fiecare caz este important, dar unele neajunsuri pun in pericol in mod critic sanatatea
                         </p>
-                        <Link to="/cazuri" >
+                        <Link to={user?.isAdmin ? '/administrare' : '/cazuri'} >
                             <button className="basic-button" onClick={()=>setSelectedTag("Urgenta")}>
                                 <span>
                                     Vezi toate cazurile urgente

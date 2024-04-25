@@ -6,6 +6,7 @@ const requireAuth = require('../middleware/requireAuth')
 router.use(requireAuth)
 
 const {
+    getAllStatuses,
     getStatusesOfUserId,
     savePost,
     deleteStatus,
@@ -14,6 +15,7 @@ const {
     deleteAllStatusesOfPost
 } = require('../controllers/userPostStatusController')
 
+router.get('/getAllStatuses', getAllStatuses)
 router.get('/getStatusesOfUserId', getStatusesOfUserId)
 router.post("/savePost", savePost)
 router.delete("/deleteStatus", deleteStatus)

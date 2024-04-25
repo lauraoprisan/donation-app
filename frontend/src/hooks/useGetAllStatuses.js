@@ -5,22 +5,22 @@ import FilterContext from '../context/FilterContext';
 import * as statusTypes from '../statusTypes'
 
 
-const useGetStatusesOfUserId = () => {
+const useGetAllStatuses = () => {
     const {user} = useAuthContext()
     const [isLoadingStatus, setIsLoadingStatus] = useState(false);
-    const {resetStatuses, addStatuses } = useContext(UserPostStatusContext);
-    const { setSelectedStatus } = useContext(FilterContext);
+    const { resetStatuses, addStatuses } = useContext(UserPostStatusContext);
+    const {setSelectedStatus} = useContext(FilterContext)
 
-    useEffect(() => {
-        const getStatusesOfUserId = async () => {
+    useEffect(()=>{
+        const getAllStatuses = async () => {
             setIsLoadingStatus(true);
 
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/getStatusesOfUserId`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/getAllStatuses`, {
                     method: 'GET',
                     headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${user.token}`,
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`,
                     },
                 });
 
@@ -29,9 +29,7 @@ const useGetStatusesOfUserId = () => {
 
                 if (response.ok) {
                     resetStatuses()
-                    if(!user?.isAdmin){
-                        setSelectedStatus(statusTypes.SAVED) //for showing the saved one on profile reload
-                    }
+                    setSelectedStatus(null)
                     addStatuses([...json]);
                 }
 
@@ -42,10 +40,12 @@ const useGetStatusesOfUserId = () => {
             }
         };
 
-        getStatusesOfUserId();
-    }, [user]);
+        getAllStatuses()
+
+    }, [user])
+
 
     return {isLoadingStatus };
 };
 
-export default useGetStatusesOfUserId;
+export default useGetAllStatuses;

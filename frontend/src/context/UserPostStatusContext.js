@@ -5,17 +5,12 @@ const UserPostStatusContext = createContext({});
 export const UserPostStatusProvider = ({ children }) => {
     const [userPostStatuses, setUserPostStatuses] = useState(null);
 
-useEffect(()=>{
-    setUserPostStatuses(null)
-},[])
     const addStatuses = (statusesFromDatabase) => {
         setUserPostStatuses(statusesFromDatabase)
     }
 
-
     const addStatus = (statusToAdd) => {
         setUserPostStatuses(prevStatus => [statusToAdd, ...prevStatus])
-
     }
 
     const editStatus = (statusId, updatedStatus) => {
@@ -39,7 +34,9 @@ useEffect(()=>{
         setUserPostStatuses(prevStatuses => prevStatuses.filter(userPostStatus => userPostStatus.postId._id !== postId));
     };
 
-    console.log("userPostStatuses from the context: ", userPostStatuses)
+    const resetStatuses = ()=>{
+        setUserPostStatuses(null)
+    }
 
 
     return (
@@ -48,7 +45,8 @@ useEffect(()=>{
             addStatuses,
             addStatus,
             editStatus,
-            deleteStatus
+            deleteStatus,
+            resetStatuses
         }}>
             {children}
         </UserPostStatusContext.Provider>

@@ -6,12 +6,13 @@ import { FaExclamation } from "react-icons/fa6";
 import { PiPersonSimpleRunBold } from "react-icons/pi";
 import * as statusTypes from '../../statusTypes'
 import FilterContext from '../../context/FilterContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 
 
 const ProfileSidebar = () => {
     const {selectedStatus, setSelectedStatus } = useContext(FilterContext)
-
+console.log("selected status in profile sidebar: ", selectedStatus)
     const handleSelectStatus = (e) => {
 
       // Check if the clicked element or its parent has the 'sidebar-button' class
@@ -19,25 +20,24 @@ const ProfileSidebar = () => {
 
     if (button) {
         const id = button.id;
-        console.log(id);
 
         if(button.classList.contains("active-btn")){
             button.classList.remove("active-btn")
+            setSelectedStatus(null)
         } else {
             document.querySelectorAll('.sidebar-button').forEach(button => {
                 button.classList.remove("active-btn");
             });
             button.classList.add("active-btn")
+            setSelectedStatus(id);
         }
 
-        // Set selected status
-        setSelectedStatus(id);
     }
     };
   return (
     <>
         <button
-            className={`sidebar-button active-btn`}
+            className={`sidebar-button active-btn default-selected-button`}
             id={statusTypes.SAVED}
             onClick={handleSelectStatus}
         >
@@ -54,17 +54,6 @@ const ProfileSidebar = () => {
             <ImHourGlass/>
             <span className="on-desktop">
                 In asteptare
-            </span>
-        </button>
-        <button
-            className={`sidebar-button`}
-            id={statusTypes.IN_RECONFIRMATION}
-            onClick={handleSelectStatus}
-        >
-
-            <FaExclamation/>
-            <span className="on-desktop">
-                Reconfirma
             </span>
         </button>
         <button

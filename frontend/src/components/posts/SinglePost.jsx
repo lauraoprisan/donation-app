@@ -12,6 +12,7 @@ import { MdDeleteForever } from "react-icons/md";
 import PostsContext from '../../context/PostsContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import UserPostStatusContext from '../../context/UserPostStatusContext';
+import FilterContext from '../../context/FilterContext';
 
 
 
@@ -27,11 +28,10 @@ const SinglePost = ({post}) => {
     const confirmDeleteRef = useRef(null);
     const { user } = useAuthContext()
     const {deleteStatus} = useContext(UserPostStatusContext);
+    const {selectedStatus, setSelectedStatus} = useContext(FilterContext)
 
     const {pathname} = useLocation()
 
-    // console.log("posts from profile page: ", post)
-    //temporary hanlding for isAdmin till auth
     const handleOpenModal = () => {
         if(user?.isAdmin){
             setOpenAdminModal(true)

@@ -21,7 +21,6 @@ const PostModal = ({isOpen, onClose, post}) => {
     const [isInWaiting, setIsInWaiting] = useState(false)
     const {changeStatusToWaiting} = useChangeStatusToWaiting()
     const {handleCreateWaitingStatus} = useCreateWaitingStatus()
-    // console.log("userPostStatuses from postmodal: ", userPostStatuses)
 
     useEffect(()=>{
         if (userPostStatuses){
@@ -56,9 +55,6 @@ const PostModal = ({isOpen, onClose, post}) => {
 
         onClose()
     }
-
-    console.log("userPostStatuses from post modal",userPostStatuses)
-    console.log("postId: ", post._id)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

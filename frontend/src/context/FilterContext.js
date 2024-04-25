@@ -6,6 +6,11 @@ export const FilterProvider = ({ children }) => {
     const [selectedTag, setSelectedTag] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState(null)
 
+
+useEffect(()=>{
+    console.log("test selectedStatus changed in filtercontext")
+},[selectedStatus])
+
     return (
         <FilterContext.Provider value={{
             selectedTag,

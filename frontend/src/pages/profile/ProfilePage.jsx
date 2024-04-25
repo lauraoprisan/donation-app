@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { IoIosArrowForward } from 'react-icons/io'
-import PostModal from '../../components/modal/PostModal'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import useGetAllPosts from '../../hooks/useGetAllPosts'
 import SinglePost from '../../components/posts/SinglePost'
-import PostsContext from '../../context/PostsContext'
 import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId'
 import UserPostStatusContext from '../../context/UserPostStatusContext'
 import FilterContext from '../../context/FilterContext'
@@ -33,23 +29,22 @@ const ProfilePage = () => {
         message = "in asteptare";
         break;
       }
-      case statusTypes.IN_RECONFIRMATION: {
-        message = "care necesita reconfirmare";
-        break;
-      }
       case statusTypes.COMPLETED: {
         message = "completate";
         break;
       }
       default: {
-        message = null;
+        message = "selectate";
         break;
       }
     }
 
-    console.log("selectedStatus: ", selectedStatus)
+    // console.log("selectedStatus: ", selectedStatus)
 
     useEffect(() => {
+        if(!selectedStatus){
+          setPostsToShow([])
+        }
         if (!isLoadingStatus && userPostStatuses && selectedStatus) {
             const posts = userPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus])
             // console.log("filtered profile posts: ", posts)

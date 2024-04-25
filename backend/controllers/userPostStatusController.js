@@ -2,6 +2,30 @@ const mongoose = require('mongoose');
 const Post = require("../models/PostModel");
 const UserPostStatus = require("../models/UserPostStatusModel")
 
+
+const getAllStatuses = async (req,res) =>{
+    try {
+
+      const userPostStatuses = await UserPostStatus
+          .find()
+          .populate({
+              path: 'userId',
+              select: 'email _id username', // Specify the fields you want to include from the referenced document
+          })
+          .populate({
+              path: 'postId',
+              // Omitting the 'select' option will include all fields from the referenced document
+          })
+          .sort({ createdAt: -1 })
+          .lean()
+          .exec();
+
+      res.status(200).json(userPostStatuses)
+
+    } catch (err) {
+      console.log(err);
+    }
+}
 //get all the userPost statuses that have a specific userId
 const getStatusesOfUserId = async(req,res) =>{
     try {
@@ -58,7 +82,7 @@ const savePost = async(req,res) => {
   }
 
   const changeSavedToInWaitingStatus = async(req,res)=>{
-    console.log("trying to change status in waiting")
+
     try {
       const statusId = req.body.statusId
 
@@ -77,7 +101,7 @@ const savePost = async(req,res) => {
           new:true,
         });
 
-        console.log("userPostStatus from change status backend: ", userPostStatus)
+
         res.status(200).json(userPostStatus)
 
     } catch (err) {
@@ -118,7 +142,7 @@ const savePost = async(req,res) => {
             return res.status(404).json({ error: "No statuses found for the post" });
         }
 
-        console.log("Statuses deleted:", userPostStatus.deletedCount);
+      
         res.status(200).json({ deletedCount: userPostStatus.deletedCount });
     } catch (error) {
         console.log(error);
@@ -128,6 +152,7 @@ const savePost = async(req,res) => {
 
 
   module.exports ={
+    getAllStatuses,
     getStatusesOfUserId,
     savePost,
     deleteStatus,

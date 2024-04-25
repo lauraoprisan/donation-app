@@ -1093,6 +1093,7 @@ h2{
   display: flex;
   align-items: center;
   justify-content: center;
+  width:100%;
   /* width:40px;
   height:40px; */
 }
@@ -1242,9 +1243,6 @@ h2{
 }
 
 @media (min-width:868px){
-  .add-post-sidebar-btn svg{
-    display:none;
-  }
 
 }
 
@@ -1262,6 +1260,26 @@ h2{
   }
 
 
+
+
+
+}
+
+@media(min-width:769px){
+  .add-post-sidebar-btn svg{
+    display:none;
+  }
+
+}
+@media (max-width:769px){
+  /* .container{
+    padding: 20px 10%;
+  } */
+
+  .sidebar-button{
+    min-width:0;    /*this is to reset button's min-width*/
+  }
+
   .add-post-sidebar-btn{
     width:40px;
     height:40px;
@@ -1271,19 +1289,6 @@ h2{
   .add-post-sidebar-btn svg{
 
     font-size:2.7rem;
-  }
-
-
-}
-
-
-@media (max-width:769px){
-  /* .container{
-    padding: 20px 10%;
-  } */
-
-  .sidebar-button{
-    min-width:0;    /*this is to reset button's min-width*/
   }
 
   .project-idea-content{

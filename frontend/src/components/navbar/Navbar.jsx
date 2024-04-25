@@ -133,7 +133,7 @@ const Navbar = () => {
 
                  )}
                  {renderGoToPostsButton&&(
-                    <Link className="button action-button on-desktop-nav" to="/cazuri" onClick={resetSelections}>
+                    <Link className="button action-button on-desktop-nav" to={user?.isAdmin ? '/administrare' : '/cazuri'} onClick={resetSelections}>
                       Vezi toate cazurile
                     </Link>
                  )}

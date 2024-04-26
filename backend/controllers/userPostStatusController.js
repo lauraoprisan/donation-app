@@ -16,7 +16,7 @@ const getAllStatuses = async (req,res) =>{
               path: 'postId',
               // Omitting the 'select' option will include all fields from the referenced document
           })
-          .sort({ createdAt: -1 })
+          .sort({ createdAt: 1 })
           .lean()
           .exec();
 
@@ -81,10 +81,11 @@ const savePost = async(req,res) => {
     }
   }
 
-  const changeSavedToInWaitingStatus = async(req,res)=>{
+  const changeStatusToInWaiting = async(req,res)=>{
 
     try {
-      const statusId = req.body.statusId
+      const statusId = req.body._id
+
 
       const userPostStatus = await UserPostStatus.findOneAndUpdate(
         {
@@ -142,12 +143,59 @@ const savePost = async(req,res) => {
             return res.status(404).json({ error: "No statuses found for the post" });
         }
 
-      
+
         res.status(200).json({ deletedCount: userPostStatus.deletedCount });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Internal server error" });
     }
+};
+
+const changeStatusToInAction = async(req,res) => {
+  try {
+    const statusId = req.body._id
+
+    const userPostStatus = await UserPostStatus.findOneAndUpdate(
+      {
+          _id: statusId
+      },
+      {
+        $set: {
+          isWaitingAdminResponse: false,
+          isInAction:true
+        },
+
+      },
+      {
+        new:true,
+      });
+
+
+      res.status(200).json(userPostStatus)
+
+  } catch (err) {
+     console.log(err);
+  }
+}
+
+const changeStatusesToOnHoldExceptForUserId = async (req, res) => {
+  try {
+      const userId = req.body.userId;
+      const postId = req.body.postId;
+
+      const userPostStatuses = await UserPostStatus.updateMany(
+        { $and: [{ userId: { $ne: userId } }, { postId: postId }]}, // Use $ne to specify userId not equal to provided userId
+          { $set: { isOnHold: true } }, // Set the field isOnHold to true
+          { new: true } // Return the updated documents
+      );
+
+      console.log("change to hold controller fct", userPostStatuses)
+
+      res.status(200).json(userPostStatuses);
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "An error occurred while updating user post statuses." });
+  }
 };
 
 
@@ -156,7 +204,9 @@ const savePost = async(req,res) => {
     getStatusesOfUserId,
     savePost,
     deleteStatus,
-    changeSavedToInWaitingStatus,
+    changeStatusToInWaiting,
     setUpWaitingStatus,
     deleteAllStatusesOfPost,
+    changeStatusToInAction,
+    changeStatusesToOnHoldExceptForUserId
   }

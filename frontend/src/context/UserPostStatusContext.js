@@ -16,18 +16,23 @@ export const UserPostStatusProvider = ({ children }) => {
     const editStatus = (statusId, updatedStatus) => {
 
         const updatedStatuses = userPostStatuses.map(userPostStatus=>{
-            console.log("userPostStatus._id: ", userPostStatus._id)
-            console.log("statusId: ", statusId)
             if(userPostStatus._id === statusId){
-                console.log("status match in context, attempt to update to waiting")
                 return {...userPostStatus, ...updatedStatus}
-
             }
-            console.log("updated the status")
             return userPostStatus
         })
         setUserPostStatuses(updatedStatuses)
-        console.log("updated statuses: ", updatedStatuses)
+
+    }
+
+    const editStatuses = (postId, userId, updatedStatus) => {
+        const updatedStatuses = userPostStatuses.map(userPostStatus=>{
+            if(userPostStatus.postId === postId && userPostStatus.userId !==userId ){
+                return {...userPostStatus, ...updatedStatus}
+            }
+            return userPostStatus
+        })
+        setUserPostStatuses(updatedStatuses)
     }
 
     const deleteStatus = (postId) => {
@@ -38,6 +43,7 @@ export const UserPostStatusProvider = ({ children }) => {
         setUserPostStatuses(null)
     }
 
+    console.log("userPostStatuses: ", userPostStatuses)
 
     return (
         <UserPostStatusContext.Provider value={{
@@ -46,7 +52,8 @@ export const UserPostStatusProvider = ({ children }) => {
             addStatus,
             editStatus,
             deleteStatus,
-            resetStatuses
+            resetStatuses,
+            editStatuses
         }}>
             {children}
         </UserPostStatusContext.Provider>

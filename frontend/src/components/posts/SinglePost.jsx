@@ -7,16 +7,18 @@ import { ImHourGlass } from 'react-icons/im';
 import { RiImageEditLine } from 'react-icons/ri';
 import { IoMdSave } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
+import { HiHand } from "react-icons/hi";
 import { FaBullseye } from 'react-icons/fa6';
 import { MdDeleteForever } from "react-icons/md";
 import PostsContext from '../../context/PostsContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import UserPostStatusContext from '../../context/UserPostStatusContext';
 import FilterContext from '../../context/FilterContext';
+import * as statusTypes from '../../statusTypes'
 
 
 
-const SinglePost = ({post}) => {
+const SinglePost = ({post, isOnHold}) => {
     const [openModal, setOpenModal] = useState(false)
     const [openAdminModal, setOpenAdminModal] = useState(false)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
@@ -158,8 +160,13 @@ const SinglePost = ({post}) => {
         <>
             <div className="single-post-container">
                 <div className="img-post-container">
-                    <img src={selectedImage ? URL.createObjectURL(selectedImage) : post.image} alt="" />
-                    {post.tag && <button className="tag">{post.tag}</button> }
+                    <img src={selectedImage ? URL.createObjectURL(selectedImage) : post.image} alt=""  className={`${!user?.isAdmin && isOnHold ? `post-on-hold-img-edit` : ``}`}/>
+                    {post.tag && <button className={`tag ${!user?.isAdmin && isOnHold ? `post-on-hold`: ``}`}>{post.tag}</button> }
+                    {!user?.isAdmin && isOnHold && (
+                        <div className="on-hold-info">
+                            <HiHand/>
+                        </div>
+                    )}
                     {false && ( //if case in waiting for user / admin
                         <button className="case-in-waiting">
                             <ImHourGlass/>
@@ -204,7 +211,7 @@ const SinglePost = ({post}) => {
                         </button>
                     )}
                 </div>
-                <div className="post-info-snippet">
+                <div className={`post-info-snippet ${!user?.isAdmin && isOnHold ? `post-on-hold`: ``}`}>
                     <span className="location">{post.location}</span>
                     {post.needs?.length > 67 ? (
                         <p>{post.needs.substring(0,67)}...</p>) : (

@@ -43,10 +43,12 @@ const AdminPage = () => {
 //     console.log("selectedStatus", selectedStatus)
 // },[selectedStatus])
 
+console.log("selectedTag: ", selectedTag)
+console.log("selectedStatus: ", selectedStatus)
 useEffect(() => {
     if (!isLoading && !selectedStatus && posts){
-        if(selectedTag){
-            setPostsToShow([...posts].filter(post=>post.tag===selectedTag))
+        if(selectedStatus){
+            setPostsToShow([...posts].filter(post=>post.tag===selectedStatus))
         } else {
             setPostsToShow([...posts])
         }

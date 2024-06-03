@@ -43,7 +43,7 @@ const ProfilePage = () => {
     }
 
     // console.log("selectedStatus: ", selectedStatus)
-
+console.log(userPostStatuses)
     useEffect(() => {
         if(!selectedStatus){
           setStatusesToShow([])

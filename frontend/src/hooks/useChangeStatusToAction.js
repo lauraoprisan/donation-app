@@ -41,7 +41,8 @@ const useChangeStatusToAction = () => {
 
             console.log("json received: ", json)
             if (response.ok) {
-                 editStatus(currentStatus._id, {[statusTypes.IN_WAITING]:false, [statusTypes.IN_WAITING]:true})
+                console.log("test - proceed to edit the status to in action")
+                 await editStatus(currentStatus._id, {[statusTypes.IN_WAITING]:false, [statusTypes.IN_ACTION]:true})
             }
 
         } catch (error) {

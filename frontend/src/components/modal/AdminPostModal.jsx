@@ -39,25 +39,24 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     const {title, location, needs, personDescription, isOneTimeNeed, timeLimit, tag, image} = formData
 
     useEffect(()=>{
-        if(selectedStatus === statusTypes.IN_WAITING){
-            const filteredUserRequests = userPostStatuses.filter(userPostStatus => userPostStatus.postId._id === post._id && userPostStatus[selectedStatus]);
 
-            console.log("filteredUserRequests," , filteredUserRequests)
+        const filteredUserRequests = userPostStatuses?.filter(userPostStatus => userPostStatus.postId._id === post._id && (userPostStatus[statusTypes.IN_WAITING] || userPostStatus[statusTypes.IN_ACTION]));
 
-            console.log(filteredUserRequests.slice(0,3).map(userPostStatus=>userPostStatus.userId))
 
-            if(filteredUserRequests.length>3){
-                setUserRequests(filteredUserRequests.slice(0,3).map(userPostStatus=>userPostStatus.userId))
-            } else {
-                setUserRequests(filteredUserRequests.map(userPostStatus=>userPostStatus.userId))
-            }
+        // console.log(filteredUserRequests.slice(0,3).map(userPostStatus=>({userId: userPostStatus.userId, [statusTypes.IN_WAITING]: userPostStatus[statusTypes.IN_WAITING], [statusTypes.IN_ACTION]: userPostStatus[statusTypes.IN_ACTION]})))
+
+        if(filteredUserRequests?.length>3){
+            setUserRequests(filteredUserRequests.slice(0,3).map(userPostStatus=>({userId: userPostStatus.userId, [statusTypes.IN_WAITING]: userPostStatus[statusTypes.IN_WAITING], [statusTypes.IN_ACTION]: userPostStatus[statusTypes.IN_ACTION]})))
+        } else {
+            setUserRequests(filteredUserRequests?.map(userPostStatus=>({userId: userPostStatus.userId, [statusTypes.IN_WAITING]: userPostStatus[statusTypes.IN_WAITING], [statusTypes.IN_ACTION]: userPostStatus[statusTypes.IN_ACTION]})))
         }
+
 
     },[isOpen])
 
     useEffect(() => {
         console.log("userRequests: ", userRequests);
-    }, [userRequests]);
+    }, [userRequests, isOpen]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -73,6 +72,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     };
 
     const handleUpdatePost = async (e) => {
+        console.log("handleUpdatePost triggered")
         e.preventDefault();
         const data = {
             title,
@@ -149,7 +149,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
   return (
     <Modal isOpen={isOpen} onClose={handleOnClose}>
         <section className="post-modal-content create-post-modal">
-            <form onSubmit={handleUpdatePost} ref={formRef}>
+            <form  ref={formRef}>
                 <div className="post-modal-header">
                     <input
                         type="text"
@@ -247,7 +247,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
                     <span>{error}</span>
                     {true ? ( //do not show if case is solved
                         <div className="modal-buttons">
-                        <button className={`action-button ${activeButton? "highlight-button" : "disabled-button"}`} disabled={!activeButton}>
+                        <button className={`action-button ${activeButton? "highlight-button" : "disabled-button"}`} disabled={!activeButton} onClick={handleUpdatePost}>
                              Salveaza modificarile
                         </button>
                     </div>

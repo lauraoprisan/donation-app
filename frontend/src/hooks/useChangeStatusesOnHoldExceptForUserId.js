@@ -41,9 +41,9 @@ const useChangeStatusesOnHoldExceptForUserId = () => {
             const json = await response.json();
 
             // console.log("json received: ", json)
-            if (response.ok) {
-                 editStatuses(postId, userId, {[statusTypes.ON_HOLD]:true})
-            }
+            // if (response.ok) {
+            //      await editStatuses(postId, userId, {[statusTypes.ON_HOLD]:true})
+            // }
 
         } catch (error) {
             console.log(error)

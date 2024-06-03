@@ -10,6 +10,7 @@ import useDeleteStatus from '../../hooks/useDeleteStatus'
 import UserPostStatusContext from '../../context/UserPostStatusContext'
 import useChangeStatusToWaiting from '../../hooks/useChangeStatusToWaiting'
 import useCreateWaitingStatus from '../../hooks/useCreateWaitingStatus'
+import * as statusTypes from '../../statusTypes'
 
 const PostModal = ({isOpen, onClose, post}) => {
 
@@ -18,14 +19,14 @@ const PostModal = ({isOpen, onClose, post}) => {
     const {handleDeleteStatus, isUpdatingDeleteStatus } = useDeleteStatus()
     const {userPostStatuses} = useContext(UserPostStatusContext);
     const [isSaved, setIsSaved] = useState(false)
-    const [isInWaiting, setIsInWaiting] = useState(false)
+    const [canAbandonCase, setCanAbandonCase] = useState(false)
     const {changeStatusToWaiting} = useChangeStatusToWaiting()
     const {handleCreateWaitingStatus} = useCreateWaitingStatus()
 
     useEffect(()=>{
         if (userPostStatuses){
             setIsSaved(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && userPostStatus.isSaved))
-            setIsInWaiting(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && userPostStatus.isWaitingAdminResponse))
+            setCanAbandonCase(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && (userPostStatus[statusTypes.IN_WAITING] || userPostStatus[statusTypes.IN_ACTION] || (userPostStatus[statusTypes.ON_HOLD] && !userPostStatus[statusTypes.SAVED]))))
         }
     }, [userPostStatuses, isOpen])
 
@@ -45,7 +46,7 @@ const PostModal = ({isOpen, onClose, post}) => {
            await changeStatusToWaiting(post._id, post)
         } else {
 
-            if(isInWaiting){
+            if(canAbandonCase){
                await handleDeleteStatus(post._id)
             } else {
                 await handleCreateWaitingStatus(post._id, post)
@@ -100,8 +101,8 @@ const PostModal = ({isOpen, onClose, post}) => {
             </div>
             {user && (
                 <div className="modal-buttons">
-                    {!isInWaiting && <button className="save-post-button" onClick={onSavePost}>{isSaved ? "Elimina salvarea" : "Salveaza" }</button>}
-                    <button className={`action-button ${!isInWaiting ? "highlight-button" : ""}`} onClick={handleReqToTakeCase}>{isInWaiting ? "Renunta la caz" : "Preia cazul"}</button>
+                    {!canAbandonCase && <button className="save-post-button" onClick={onSavePost}>{isSaved ? "Elimina salvarea" : "Salveaza" }</button>}
+                    <button className={`action-button ${!canAbandonCase ? "highlight-button" : ""}`} onClick={handleReqToTakeCase}>{canAbandonCase ? "Renunta la caz" : "Preia cazul"}</button>
                 </div>
             )}
             {!user && (

@@ -7,16 +7,23 @@ import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
 import PostsContext from '../../context/PostsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import UserPostStatusContext from '../../context/UserPostStatusContext'
+import * as statusTypes from '../../statusTypes'
+import FilterContext from '../../context/FilterContext'
+import UserRequest from '../posts/UserRequest'
 
 const AdminPostModal = ({isOpen, onClose, post}) => {
 
     const {user} = useAuthContext()
     const [error, setError] = useState(null)
     const formRef = useRef(null);
-    const renderRequests = false //false if case is resolved
+    const renderRequests = true //false if case is resolved or if there are no requests
     const postIsAvailable =  post
     const [activeButton, setActiveButton] = useState(false)
     const {editPost } = useContext(PostsContext);
+    const { userPostStatuses} = useContext(UserPostStatusContext)
+    const { selectedStatus, setSelectedStatus } = useContext(FilterContext);
+    const [userRequests, setUserRequests] = useState(null)
 
     const [formData, setFormData] = useState({
         title: postIsAvailable ? post.title : '',
@@ -30,6 +37,26 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     })
 
     const {title, location, needs, personDescription, isOneTimeNeed, timeLimit, tag, image} = formData
+
+    useEffect(()=>{
+
+        const filteredUserRequests = userPostStatuses?.filter(userPostStatus => userPostStatus.postId._id === post._id && (userPostStatus[statusTypes.IN_WAITING] || userPostStatus[statusTypes.IN_ACTION]));
+
+
+        // console.log(filteredUserRequests.slice(0,3).map(userPostStatus=>({userId: userPostStatus.userId, [statusTypes.IN_WAITING]: userPostStatus[statusTypes.IN_WAITING], [statusTypes.IN_ACTION]: userPostStatus[statusTypes.IN_ACTION]})))
+
+        if(filteredUserRequests?.length>3){
+            setUserRequests(filteredUserRequests.slice(0,3).map(userPostStatus=>({userId: userPostStatus.userId, [statusTypes.IN_WAITING]: userPostStatus[statusTypes.IN_WAITING], [statusTypes.IN_ACTION]: userPostStatus[statusTypes.IN_ACTION]})))
+        } else {
+            setUserRequests(filteredUserRequests?.map(userPostStatus=>({userId: userPostStatus.userId, [statusTypes.IN_WAITING]: userPostStatus[statusTypes.IN_WAITING], [statusTypes.IN_ACTION]: userPostStatus[statusTypes.IN_ACTION]})))
+        }
+
+
+    },[isOpen])
+
+    useEffect(() => {
+        console.log("userRequests: ", userRequests);
+    }, [userRequests, isOpen]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -45,6 +72,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     };
 
     const handleUpdatePost = async (e) => {
+        console.log("handleUpdatePost triggered")
         e.preventDefault();
         const data = {
             title,
@@ -121,7 +149,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
   return (
     <Modal isOpen={isOpen} onClose={handleOnClose}>
         <section className="post-modal-content create-post-modal">
-            <form onSubmit={handleUpdatePost} ref={formRef}>
+            <form  ref={formRef}>
                 <div className="post-modal-header">
                     <input
                         type="text"
@@ -219,7 +247,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
                     <span>{error}</span>
                     {true ? ( //do not show if case is solved
                         <div className="modal-buttons">
-                        <button className={`action-button ${activeButton? "highlight-button" : "disabled-button"}`} disabled={!activeButton}>
+                        <button className={`action-button ${activeButton? "highlight-button" : "disabled-button"}`} disabled={!activeButton} onClick={handleUpdatePost}>
                              Salveaza modificarile
                         </button>
                     </div>
@@ -228,43 +256,18 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
                     )}
                     </div>
                     {renderRequests &&( //do not show if case is solved or modal opened from sidebar to create the post
-                    <div className="right-column-content">
-                    <h4>Cereri de preluare</h4>
-                    {/* put this div below into a component */}
-                    {[1, 2, 3,].map((num, index) => (
-                    <div key={index} className="user-request">
-                        <span>
-                            username
-                        </span>
-                        <div className='decision-buttons-container'>
-                            <button className="">Accepta</button>
-                            <button className="">Refuza</button>
+                        <div className="right-column-content">
+                            <h4>Cereri de preluare</h4>
+                            {/* put this div below into a component */}
+                            {userRequests && (
+                                userRequests.map((userReq)=>(
+                                    <UserRequest key={userReq._id} userInfo={userReq} postId={post._id} onClose={onClose}/>
+                                ))
+                            )}
+                            {/* <div className="right-column-bottom">
+                                <button className={`action-button ${false ? "disabled-button": "" }`} disabled={false}>Caz rezolvat</button>
+                            </div> */}
                         </div>
-                        {false && (
-                            <div>
-                                <span>
-                                    Asteptare reconfirmare
-                                </span>
-                            </div>
-                        )}
-                        {false && (
-                            <div>
-                                <span>
-                                    In actiune
-                                </span>
-                            </div>
-                        )}
-                    </div>
-                    ))}
-                    {/* put this div above into a component */}
-
-                    <div className="right-column-bottom">
-                        <div>
-                            {/* Legenda */}
-                        </div>
-                        <button className={`action-button ${false ? "disabled-button": "" }`} disabled={false}>Caz rezolvat</button>
-                    </div>
-                </div>
                     )}
                 </div>
 

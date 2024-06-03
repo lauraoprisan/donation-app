@@ -43,16 +43,25 @@ const AdminPage = () => {
 //     console.log("selectedStatus", selectedStatus)
 // },[selectedStatus])
 
+console.log("selectedTag: ", selectedTag)
+console.log("selectedStatus: ", selectedStatus)
 useEffect(() => {
     if (!isLoading && !selectedStatus && posts){
-        if(selectedTag){
-            setPostsToShow([...posts].filter(post=>post.tag===selectedTag))
+        if(selectedStatus){
+            setPostsToShow([...posts].filter(post=>post.tag===selectedStatus))
         } else {
             setPostsToShow([...posts])
         }
 
     } else if(!isLoadingStatus && selectedStatus && userPostStatuses){
-        const filteredPosts = userPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus]);
+        let filteredPosts
+        if(selectedStatus === statusTypes.IN_WAITING){
+            console.log("selected in waiting posts")
+            filteredPosts = userPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus] && !userPostStatus[statusTypes.ON_HOLD]);
+        } else{
+            filteredPosts = userPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus]);
+        }
+
 
         const uniquePostsSet = new Set();
         const uniquePosts = [];
@@ -70,7 +79,7 @@ useEffect(() => {
 
 }, [isLoading, isLoadingStatus, selectedStatus, userPostStatuses, posts, selectedTag]);
 
-    console.log("postsToshow in adminpage: ", postsToShow)
+    // console.log("postsToshow in adminpage: ", postsToShow)
 
   return (
     <section className="admin-section">

@@ -19,7 +19,7 @@ const userPostStatusSchema = new mongoose.Schema({
         type: Boolean,
         required:false
     },
-    isReconfirmationRequired: {
+    isOnHold: {
         type: Boolean,
         required:false
     },

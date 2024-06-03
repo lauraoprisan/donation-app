@@ -1,18 +1,20 @@
 import React, {useState, useContext } from 'react'
 import { useAuthContext } from './useAuthContext';
 import UserPostStatusContext from '../context/UserPostStatusContext';
+import * as statusTypes from '../statusTypes'
 
-const useChangeStatusToWaiting = () => {
+const useChangeStatusToAction = () => {
     const {user} = useAuthContext()
     const [isLoadingStatus, setIsLoadingStatus] = useState(false);
     const {userPostStatuses, editStatus } = useContext(UserPostStatusContext);
     const [error, setError] = useState(null)
 
 
-    const changeStatusToWaiting = async (postId, post) => {
+    const changeStatusToAction= async (postId, userId) => {
         setIsLoadingStatus(true);
 
-        const currentStatus = userPostStatuses.find(userPostStatus => userPostStatus.postId._id === postId)
+        const currentStatus = userPostStatuses.find(userPostStatus => userPostStatus.postId._id === postId && userPostStatus.userId._id === userId)
+
 
         if(!currentStatus){
             setError("Nu s-a gasit un status pentru acest caz salvat.")
@@ -25,7 +27,7 @@ const useChangeStatusToWaiting = () => {
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/changeStatusToInWaiting`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/status/changeStatusToInAction`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,7 +41,8 @@ const useChangeStatusToWaiting = () => {
 
             console.log("json received: ", json)
             if (response.ok) {
-                editStatus(currentStatus._id, {...json, postId:post})
+                console.log("test - proceed to edit the status to in action")
+                 await editStatus(currentStatus._id, {[statusTypes.IN_WAITING]:false, [statusTypes.IN_ACTION]:true})
             }
 
         } catch (error) {
@@ -50,7 +53,7 @@ const useChangeStatusToWaiting = () => {
     };
 
 
-    return {isLoadingStatus, changeStatusToWaiting};
+    return {isLoadingStatus, changeStatusToAction};
 };
 
-export default useChangeStatusToWaiting;
+export default useChangeStatusToAction;

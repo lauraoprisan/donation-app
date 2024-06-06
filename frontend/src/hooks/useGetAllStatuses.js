@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useAuthContext } from './useAuthContext';
-import UserPostStatusContext from '../context/UserPostStatusContext';
 import FilterContext from '../context/FilterContext';
 import * as statusTypes from '../statusTypes'
+import AllUserPostStatusContext from '../context/AllUserPostStatusContext';
 
 
 const useGetAllStatuses = () => {
     const {user} = useAuthContext()
     const [isLoadingStatus, setIsLoadingStatus] = useState(false);
-    const { resetStatuses, addStatuses } = useContext(UserPostStatusContext);
+    const {addStatuses} = useContext(AllUserPostStatusContext);
     const {setSelectedStatus} = useContext(FilterContext)
 
     useEffect(()=>{
@@ -28,7 +28,6 @@ const useGetAllStatuses = () => {
 
 
                 if (response.ok) {
-                    resetStatuses()
                     setSelectedStatus(null)
                     addStatuses([...json]);
                 }

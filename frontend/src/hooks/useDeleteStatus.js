@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import UserPostStatusContext from "../context/UserPostStatusContext";
+import AllUserPostStatusContext from "../context/AllUserPostStatusContext";
 
 const useDeleteStatus = (postId) => {
 	const [isUpdatingDeleteStatus, setIsUpdatingDeleteStatus] = useState(false);
     const {user} = useAuthContext()
-    const {deleteStatus} = useContext(UserPostStatusContext)
+    const { deleteStatus: deleteStatusAsUser } = useContext(UserPostStatusContext);
+    const { deleteStatus: deleteStatusAsAdmin } = useContext(AllUserPostStatusContext);
 
 	const handleDeleteStatus = async (postId) => {
 		if (isUpdatingDeleteStatus) return;
@@ -29,7 +31,13 @@ const useDeleteStatus = (postId) => {
             const json = await response.json();
             // console.log(json)
             if (response.ok) {
-                deleteStatus(postId) //in the userPostStatusContext
+                console.log("response ok")
+                if(user?.isAdmin){
+                    deleteStatusAsAdmin(postId) //in the allUserPostStatusContext
+                } else {
+                    deleteStatusAsUser(postId) //in the userPostStatusContext
+                }
+
             }
 
         } catch (error) {

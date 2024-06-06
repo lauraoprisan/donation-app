@@ -1,19 +1,19 @@
 import React, {useState, useContext } from 'react'
 import { useAuthContext } from './useAuthContext';
-import UserPostStatusContext from '../context/UserPostStatusContext';
 import * as statusTypes from '../statusTypes'
+import AllUserPostStatusContext from '../context/AllUserPostStatusContext';
 
 const useChangeStatusesOnHoldExceptForUserId = () => {
     const {user} = useAuthContext()
     const [isLoadingStatus, setIsLoadingStatus] = useState(false);
-    const {userPostStatuses, editStatuses } = useContext(UserPostStatusContext);
+    const {allUserPostStatuses, editStatuses } = useContext(AllUserPostStatusContext);
     const [error, setError] = useState(null)
 
 
     const changeStatusesOnHoldExceptForUserId= async (postId, userId) => {
         setIsLoadingStatus(true);
 
-        const currentStatus = userPostStatuses.find(userPostStatus => userPostStatus.postId._id === postId && userPostStatus.userId._id === userId)
+        const currentStatus = allUserPostStatuses.find(userPostStatus => userPostStatus.postId._id === postId && userPostStatus.userId._id === userId)
 
 
         if(!currentStatus){
@@ -40,7 +40,10 @@ const useChangeStatusesOnHoldExceptForUserId = () => {
 
             const json = await response.json();
 
-            // console.log("json received: ", json)
+            console.log("json received: ", json)
+
+            // this below is commented out because it uses a previous, eronated varsion of the allUserPostStatus in the allUserPostStatus'  context.. and so when trying to change status as an admin to "in action", the update doesn't work in the end
+
             // if (response.ok) {
             //      await editStatuses(postId, userId, {[statusTypes.ON_HOLD]:true})
             // }

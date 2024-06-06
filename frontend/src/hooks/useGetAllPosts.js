@@ -21,15 +21,16 @@ const useGetAllPosts = () => {
                 });
 
                 const json = await response.json();
-        
+
                 if (response.ok) {
                     addPosts([...json]);
                 }
 
             } catch (error) {
-                // Handle error
+                console.log(error)
             } finally {
                 setIsLoading(false);
+                console.log("getPosts called")
             }
         };
 

@@ -8,6 +8,7 @@ import { AuthContextProvider } from './context/AuthContext'
 import { PostsProvider } from './context/PostsContext';
 import { FilterProvider } from './context/FilterContext';
 import { UserPostStatusProvider } from './context/UserPostStatusContext';
+import { AllUserPostStatusProvider } from './context/AllUserPostStatusContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,13 +16,15 @@ root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <PostsProvider>
-        <UserPostStatusProvider>
-          <FilterProvider>
-            <BrowserRouter>
-              <App/>
-            </BrowserRouter>
-          </FilterProvider>
-        </UserPostStatusProvider>
+        <AllUserPostStatusProvider>
+          <UserPostStatusProvider>
+            <FilterProvider>
+              <BrowserRouter>
+                <App/>
+              </BrowserRouter>
+            </FilterProvider>
+          </UserPostStatusProvider>
+        </AllUserPostStatusProvider>
       </PostsProvider>
     </AuthContextProvider>
   </React.StrictMode>

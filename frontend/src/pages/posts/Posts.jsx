@@ -2,16 +2,10 @@ import React, { useEffect, useState, useContext} from 'react'
 import useGetAllPosts from '../../hooks/useGetAllPosts';
 import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
-import PostsContext from '../../context/PostsContext';
-import { useAuthContext } from "../..//hooks/useAuthContext"
-import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId';
 
 
 const Posts = () => {
-    const {user} = useAuthContext()
-    const {isLoading} = useGetAllPosts()
-    const {isLoadingStatus} = useGetStatusesOfUserId()
-    const { posts} = useContext(PostsContext);
+    const {isLoading, posts} = useGetAllPosts()
     const [postsToShow, setPostsToShow] = useState(null)
     const { selectedTag } = useContext(FilterContext);
 

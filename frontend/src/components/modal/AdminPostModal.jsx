@@ -54,9 +54,6 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
 
     },[isOpen])
 
-    // useEffect(() => {
-    //     console.log("userRequests: ", userRequests);
-    // }, [userRequests, isOpen]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -72,7 +69,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     };
 
     const handleUpdatePost = async (e) => {
-        console.log("handleUpdatePost triggered")
+
         e.preventDefault();
         const data = {
             title,

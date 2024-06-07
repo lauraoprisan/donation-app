@@ -8,18 +8,14 @@ export const UserPostStatusProvider = ({ children }) => {
 
 
     const addStatuses = (statusesFromDatabase) => {
-        console.log("addStatuses called context status")
         setUserPostStatuses(statusesFromDatabase)
     }
 
     const addStatus = (statusToAdd) => {
-        console.log("addStatus called context status")
         setUserPostStatuses(prevStatus => [statusToAdd, ...prevStatus])
     }
 
     const editStatus = (statusId, updatedStatus) => {
-        console.log("editStatus called context status")
-        console.log("status context: ", updatedStatus)
         setUserPostStatuses ( prevStatuses => prevStatuses.map(userPostStatus=>{
             if(userPostStatus._id === statusId){
                 return {...userPostStatus, ...updatedStatus}
@@ -41,7 +37,6 @@ export const UserPostStatusProvider = ({ children }) => {
     // }
 
     const deleteStatus = (postId) => {
-        console.log("deleteStatus called context status")
         setUserPostStatuses(prevStatuses => prevStatuses.filter(userPostStatus => userPostStatus.postId._id !== postId));
     };
 
@@ -50,7 +45,6 @@ export const UserPostStatusProvider = ({ children }) => {
     //     setUserPostStatuses(null)
     // }
 
-    console.log("userPostStatuses", userPostStatuses)
 
     return (
         <UserPostStatusContext.Provider value={{

@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import UserPostStatusContext from "../context/UserPostStatusContext";
+import AllUserPostStatusContext from "../context/AllUserPostStatusContext";
 
 const useCreateWaitingStatus = () => {
 	const [isUpdatingWaitingStatus, setIsUpdatingWaitingStatus] = useState(false);
     const {user} = useAuthContext()
-    const {addStatus} = useContext(UserPostStatusContext)
+    const {addStatus: addStatusToOwnUser} = useContext(UserPostStatusContext)
+    const {addStatus: addStatusToAllUserStatus} = useContext(AllUserPostStatusContext)
 
 	const handleCreateWaitingStatus = async (postId, post) => {
 		if (isUpdatingWaitingStatus) return;
@@ -29,7 +31,9 @@ const useCreateWaitingStatus = () => {
             const json = await response.json();
 
             if (response.ok) {
-                addStatus({...json, postId:post})
+                addStatusToOwnUser({...json, postId:post})
+
+                addStatusToAllUserStatus({...json, postId:post, userId:{_id:user._id, email:user.email, username:user.username}})git
             }
 
         } catch (error) {

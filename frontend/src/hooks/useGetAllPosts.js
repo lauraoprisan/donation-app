@@ -30,7 +30,6 @@ const useGetAllPosts = () => {
                 console.log(error)
             } finally {
                 setIsLoading(false);
-                console.log("getPosts called")
             }
         };
 

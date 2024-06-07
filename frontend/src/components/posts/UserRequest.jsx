@@ -6,8 +6,6 @@ import UserPostStatusContext from '../../context/UserPostStatusContext'
 const UserRequest = ({userInfo, postId, onClose}) => {
     const {changeStatusToAction} = useChangeStatusToAction()
     const {changeStatusesOnHoldExceptForUserId} = useChangeStatusesOnHoldExceptForUserId()
-    console.log("userInfo - userid: ", userInfo.userId._id)
-    console.log("test - postid", postId)
 
     const handleAcceptRequest = async (e) => {
         e.preventDefault()

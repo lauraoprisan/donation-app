@@ -11,7 +11,9 @@ const useGetAllStatuses = () => {
     const {addStatuses} = useContext(AllUserPostStatusContext);
     const {setSelectedStatus} = useContext(FilterContext)
 
+
     useEffect(()=>{
+
         const getAllStatuses = async () => {
             setIsLoadingStatus(true);
 
@@ -28,8 +30,13 @@ const useGetAllStatuses = () => {
 
 
                 if (response.ok) {
-                    setSelectedStatus(null)
-                    addStatuses([...json]);
+                    if(user?.isAdmin){
+                        setSelectedStatus(null)
+                    }
+                        addStatuses([...json]);
+
+
+
                 }
 
             } catch (error) {

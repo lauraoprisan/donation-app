@@ -7,6 +7,8 @@ import FilterContext from '../../context/FilterContext'
 import { HiHand } from "react-icons/hi";
 import * as statusTypes from '../../statusTypes'
 
+
+
 const ProfilePage = () => {
 
     const {user} = useAuthContext()
@@ -15,6 +17,7 @@ const ProfilePage = () => {
     const { selectedStatus } = useContext(FilterContext);
     const [statusesToShow, setStatusesToShow] = useState(null)
     const [existsHoldOnCase, setExistsHoldOnCase] = useState(false)
+    const { setSelectedStatus } = useContext(FilterContext);
 
 
 
@@ -42,8 +45,8 @@ const ProfilePage = () => {
       }
     }
 
-    // console.log("selectedStatus: ", selectedStatus)
-console.log(userPostStatuses)
+
+
     useEffect(() => {
         if(!selectedStatus){
           setStatusesToShow([])
@@ -60,6 +63,10 @@ console.log(userPostStatuses)
             }
         }
     }, [isLoadingStatus, userPostStatuses,selectedStatus,user]);
+
+    useEffect(()=>{
+      setSelectedStatus(statusTypes.SAVED)
+    },[])
 
   return (
     <section className="profile-section">

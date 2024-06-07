@@ -12,7 +12,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 
 const ProfileSidebar = () => {
     const {selectedStatus, setSelectedStatus } = useContext(FilterContext)
-console.log("selected status in profile sidebar: ", selectedStatus)
+
     const handleSelectStatus = (e) => {
 
       // Check if the clicked element or its parent has the 'sidebar-button' class

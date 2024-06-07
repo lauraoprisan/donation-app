@@ -37,7 +37,6 @@ const useChangeStatusToWaiting = () => {
 
             const json = await response.json();
 
-            console.log("json received: ", json)
             if (response.ok) {
                 editStatus(currentStatus._id, {...json, postId:post})
             }

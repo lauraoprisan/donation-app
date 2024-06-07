@@ -33,7 +33,7 @@ const SinglePost = ({post, isOnHold}) => {
     const { user } = useAuthContext()
     const {selectedStatus, setSelectedStatus} = useContext(FilterContext)
     const  {deleteStatus} = useContext(AllUserPostStatusContext);
-    console.log("id of post: ", post._id)
+
 
     const {pathname} = useLocation()
 

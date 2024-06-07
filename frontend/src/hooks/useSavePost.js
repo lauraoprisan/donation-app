@@ -1,14 +1,17 @@
 import { useContext, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import UserPostStatusContext from "../context/UserPostStatusContext";
+import AllUserPostStatusContext from "../context/AllUserPostStatusContext";
 
 const useSavePost = () => {
 	const [isUpdatingSave, setIsUpdatingSave] = useState(false);
     const {user} = useAuthContext()
-    const {addStatus} = useContext(UserPostStatusContext)
+    const {addStatus: addStatusToOwnUser} = useContext(UserPostStatusContext)
+    const {addStatus: addStatusToAllUserStatus} = useContext(AllUserPostStatusContext)
 	// const [isSaved, setIsSaved] = useState(user?.savedPosts?.includes(postId));
 
 	const handleSavePost = async (postId, post) => {
+
 		if (isUpdatingSave) return;
 		// if (!user) return showToast("Error", "You must be logged in to save a post", "error");
 		setIsUpdatingSave(true);
@@ -28,9 +31,11 @@ const useSavePost = () => {
             });
 
             const json = await response.json();
-            console.log("json status to be edited", {...json, postId:post})
+
             if (response.ok) {
-                addStatus({...json, postId:post})
+                addStatusToOwnUser({...json, postId:post})
+
+                addStatusToAllUserStatus({...json, postId:post, userId:{_id:user._id, email:user.email, username:user.username}})
             }
 
         } catch (error) {
@@ -38,6 +43,7 @@ const useSavePost = () => {
         } finally {
             setIsUpdatingSave(false);
         }
+
 	};
 
 	return { handleSavePost, isUpdatingSave };

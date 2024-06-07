@@ -14,7 +14,6 @@ const useChangeStatusToAction = () => {
         setIsLoadingStatus(true);
 
         const currentStatus = allUserPostStatuses.find(userPostStatus => userPostStatus.postId._id === postId && userPostStatus.userId._id === userId)
-        console.log("current status", currentStatus)
 
 
         if(!currentStatus){
@@ -40,9 +39,8 @@ const useChangeStatusToAction = () => {
 
             const json = await response.json();
 
-            console.log("json received: ", json)
             if (response.ok) {
-                console.log("test - proceed to edit the status to in action")
+
                  await editStatus(currentStatus._id, {[statusTypes.IN_WAITING]:false, [statusTypes.IN_ACTION]:true})
             }
 

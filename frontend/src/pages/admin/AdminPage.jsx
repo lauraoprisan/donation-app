@@ -17,6 +17,7 @@ const AdminPage = () => {
     const [postsToShow, setPostsToShow] = useState(null)
     const {selectedTag, selectedStatus, setSelectedStatus } = useContext(FilterContext);
 
+
     let message;
     switch(selectedStatus) {
       case statusTypes.IN_ACTION: {
@@ -37,13 +38,7 @@ const AdminPage = () => {
       }
     }
 
-// useEffect(()=>{
-//     console.log("status has changed in admin page")
-//     console.log("selectedStatus", selectedStatus)
-// },[selectedStatus])
 
-console.log("selectedTag: ", selectedTag)
-console.log("selectedStatus: ", selectedStatus)
 useEffect(() => {
     if (!isLoading && !selectedStatus && posts){
         // if(selectedStatus){
@@ -52,15 +47,14 @@ useEffect(() => {
         //     setPostsToShow([...posts])
         // }
         setPostsToShow([...posts])
-    } else if(!isLoadingStatus && selectedStatus && allUserPostStatuses){
+    } else if( !isLoading && !isLoadingStatus && selectedStatus && allUserPostStatuses ){
         let filteredPosts
         if(selectedStatus === statusTypes.IN_WAITING){ //only show the in waiting cases that are not on hold
-            console.log("selected in waiting posts")
             filteredPosts = allUserPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus] && !userPostStatus[statusTypes.ON_HOLD]);
-            console.log("selected in waiting posts", filteredPosts)
         } else{
             filteredPosts = allUserPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus]);
         }
+
 
 
         const uniquePostsSet = new Set();
@@ -79,9 +73,6 @@ useEffect(() => {
 
 }, [isLoading, isLoadingStatus, selectedStatus, allUserPostStatuses, posts, selectedTag]);
 
-useEffect(()=>console.log("allUserPostStatus changed", allUserPostStatuses),[allUserPostStatuses])
-
-    // console.log("postsToshow in adminpage: ", postsToShow)
 
   return (
     <section className="admin-section">

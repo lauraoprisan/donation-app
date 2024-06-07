@@ -40,8 +40,6 @@ const useChangeStatusesOnHoldExceptForUserId = () => {
 
             const json = await response.json();
 
-            console.log("json received: ", json)
-
             // this below is commented out because it uses a previous, eronated varsion of the allUserPostStatus in the allUserPostStatus'  context.. and so when trying to change status as an admin to "in action", the update doesn't work in the end
 
             // if (response.ok) {

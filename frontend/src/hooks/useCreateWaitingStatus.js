@@ -33,7 +33,7 @@ const useCreateWaitingStatus = () => {
             if (response.ok) {
                 addStatusToOwnUser({...json, postId:post})
 
-                addStatusToAllUserStatus({...json, postId:post, userId:{_id:user._id, email:user.email, username:user.username}})git
+                addStatusToAllUserStatus({...json, postId:post, userId:{_id:user._id, email:user.email, username:user.username}})
             }
 
         } catch (error) {

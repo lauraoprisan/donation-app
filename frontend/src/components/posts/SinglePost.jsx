@@ -15,6 +15,8 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import UserPostStatusContext from '../../context/UserPostStatusContext';
 import FilterContext from '../../context/FilterContext';
 import * as statusTypes from '../../statusTypes'
+import useDeleteStatus from '../../hooks/useDeleteStatus';
+import AllUserPostStatusContext from '../../context/AllUserPostStatusContext';
 
 
 
@@ -29,8 +31,9 @@ const SinglePost = ({post, isOnHold}) => {
     const { deletePost,editPost } = useContext(PostsContext);
     const confirmDeleteRef = useRef(null);
     const { user } = useAuthContext()
-    const {deleteStatus} = useContext(UserPostStatusContext);
     const {selectedStatus, setSelectedStatus} = useContext(FilterContext)
+    const  {deleteStatus} = useContext(AllUserPostStatusContext);
+
 
     const {pathname} = useLocation()
 

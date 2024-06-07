@@ -2,21 +2,21 @@ import React, { useContext, useEffect, useState } from 'react'
 import useGetAllPosts from '../../hooks/useGetAllPosts'
 import SinglePost from '../../components/posts/SinglePost'
 import PostsContext from '../../context/PostsContext'
-import UserPostStatusContext from '../../context/UserPostStatusContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import FilterContext from '../../context/FilterContext'
 import * as statusTypes from '../../statusTypes'
 import useGetAllStatuses from '../../hooks/useGetAllStatuses'
+import AllUserPostStatusContext from '../../context/AllUserPostStatusContext'
 
 const AdminPage = () => {
     const {user} = useAuthContext()
     const { isLoading} = useGetAllPosts()
     const {isLoadingStatus} = useGetAllStatuses()
-    const { userPostStatuses} = useContext(UserPostStatusContext)
+    const { allUserPostStatuses} = useContext(AllUserPostStatusContext)
     const {posts} =useContext(PostsContext)
-    const { selectedStatus, setSelectedStatus } = useContext(FilterContext);
     const [postsToShow, setPostsToShow] = useState(null)
-    const { selectedTag } = useContext(FilterContext);
+    const {selectedTag, selectedStatus, setSelectedStatus } = useContext(FilterContext);
+
 
     let message;
     switch(selectedStatus) {
@@ -38,29 +38,23 @@ const AdminPage = () => {
       }
     }
 
-// useEffect(()=>{
-//     console.log("status has changed in admin page")
-//     console.log("selectedStatus", selectedStatus)
-// },[selectedStatus])
 
-console.log("selectedTag: ", selectedTag)
-console.log("selectedStatus: ", selectedStatus)
 useEffect(() => {
     if (!isLoading && !selectedStatus && posts){
-        if(selectedStatus){
-            setPostsToShow([...posts].filter(post=>post.tag===selectedStatus))
-        } else {
-            setPostsToShow([...posts])
+        // if(selectedStatus){
+        //     setPostsToShow([...posts].filter(post=>post.tag===selectedStatus))
+        // } else {
+        //     setPostsToShow([...posts])
+        // }
+        setPostsToShow([...posts])
+    } else if( !isLoading && !isLoadingStatus && selectedStatus && allUserPostStatuses ){
+        let filteredPosts
+        if(selectedStatus === statusTypes.IN_WAITING){ //only show the in waiting cases that are not on hold
+            filteredPosts = allUserPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus] && !userPostStatus[statusTypes.ON_HOLD]);
+        } else{
+            filteredPosts = allUserPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus]);
         }
 
-    } else if(!isLoadingStatus && selectedStatus && userPostStatuses){
-        let filteredPosts
-        if(selectedStatus === statusTypes.IN_WAITING){
-            console.log("selected in waiting posts")
-            filteredPosts = userPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus] && !userPostStatus[statusTypes.ON_HOLD]);
-        } else{
-            filteredPosts = userPostStatuses.filter(userPostStatus => userPostStatus[selectedStatus]);
-        }
 
 
         const uniquePostsSet = new Set();
@@ -77,9 +71,8 @@ useEffect(() => {
         setPostsToShow([...uniquePosts]);
     }
 
-}, [isLoading, isLoadingStatus, selectedStatus, userPostStatuses, posts, selectedTag]);
+}, [isLoading, isLoadingStatus, selectedStatus, allUserPostStatuses, posts, selectedTag]);
 
-    // console.log("postsToshow in adminpage: ", postsToShow)
 
   return (
     <section className="admin-section">

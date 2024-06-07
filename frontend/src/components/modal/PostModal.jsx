@@ -28,7 +28,7 @@ const PostModal = ({isOpen, onClose, post}) => {
             setIsSaved(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && userPostStatus.isSaved))
             setCanAbandonCase(userPostStatuses?.some(userPostStatus => userPostStatus.postId._id == post._id && (userPostStatus[statusTypes.IN_WAITING] || userPostStatus[statusTypes.IN_ACTION] || (userPostStatus[statusTypes.ON_HOLD] && !userPostStatus[statusTypes.SAVED]))))
         }
-    }, [userPostStatuses, isOpen])
+    }, [userPostStatuses, isOpen, user])
 
 
 

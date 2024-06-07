@@ -1,19 +1,19 @@
 import React, {useState, useContext } from 'react'
 import { useAuthContext } from './useAuthContext';
-import UserPostStatusContext from '../context/UserPostStatusContext';
 import * as statusTypes from '../statusTypes'
+import AllUserPostStatusContext from '../context/AllUserPostStatusContext';
 
 const useChangeStatusToAction = () => {
     const {user} = useAuthContext()
     const [isLoadingStatus, setIsLoadingStatus] = useState(false);
-    const {userPostStatuses, editStatus } = useContext(UserPostStatusContext);
+    const {allUserPostStatuses, editStatus } = useContext(AllUserPostStatusContext);
     const [error, setError] = useState(null)
 
 
     const changeStatusToAction= async (postId, userId) => {
         setIsLoadingStatus(true);
 
-        const currentStatus = userPostStatuses.find(userPostStatus => userPostStatus.postId._id === postId && userPostStatus.userId._id === userId)
+        const currentStatus = allUserPostStatuses.find(userPostStatus => userPostStatus.postId._id === postId && userPostStatus.userId._id === userId)
 
 
         if(!currentStatus){
@@ -39,9 +39,8 @@ const useChangeStatusToAction = () => {
 
             const json = await response.json();
 
-            console.log("json received: ", json)
             if (response.ok) {
-                console.log("test - proceed to edit the status to in action")
+
                  await editStatus(currentStatus._id, {[statusTypes.IN_WAITING]:false, [statusTypes.IN_ACTION]:true})
             }
 

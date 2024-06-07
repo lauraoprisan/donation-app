@@ -5,7 +5,7 @@ const UserPostStatus = require("../models/UserPostStatusModel")
 
 const getAllStatuses = async (req,res) =>{
     try {
-
+     
       const userPostStatuses = await UserPostStatus
           .find()
           .populate({

@@ -7,9 +7,9 @@ import { GiBoomerang } from 'react-icons/gi'
 import { CgSelectR } from 'react-icons/cg'
 import PostsContext from '../../context/PostsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import UserPostStatusContext from '../../context/UserPostStatusContext'
 import * as statusTypes from '../../statusTypes'
 import FilterContext from '../../context/FilterContext'
+import AllUserPostStatusContext from '../../context/AllUserPostStatusContext'
 import UserRequest from '../posts/UserRequest'
 
 const AdminPostModal = ({isOpen, onClose, post}) => {
@@ -21,7 +21,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     const postIsAvailable =  post
     const [activeButton, setActiveButton] = useState(false)
     const {editPost } = useContext(PostsContext);
-    const { userPostStatuses} = useContext(UserPostStatusContext)
+    const { allUserPostStatuses} = useContext(AllUserPostStatusContext)
     const { selectedStatus, setSelectedStatus } = useContext(FilterContext);
     const [userRequests, setUserRequests] = useState(null)
 
@@ -40,7 +40,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
 
     useEffect(()=>{
 
-        const filteredUserRequests = userPostStatuses?.filter(userPostStatus => userPostStatus.postId._id === post._id && (userPostStatus[statusTypes.IN_WAITING] || userPostStatus[statusTypes.IN_ACTION]));
+        const filteredUserRequests = allUserPostStatuses?.filter(userPostStatus => userPostStatus.postId._id === post._id && (userPostStatus[statusTypes.IN_WAITING] || userPostStatus[statusTypes.IN_ACTION]));
 
 
         // console.log(filteredUserRequests.slice(0,3).map(userPostStatus=>({userId: userPostStatus.userId, [statusTypes.IN_WAITING]: userPostStatus[statusTypes.IN_WAITING], [statusTypes.IN_ACTION]: userPostStatus[statusTypes.IN_ACTION]})))
@@ -54,9 +54,6 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
 
     },[isOpen])
 
-    useEffect(() => {
-        console.log("userRequests: ", userRequests);
-    }, [userRequests, isOpen]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -72,7 +69,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
     };
 
     const handleUpdatePost = async (e) => {
-        console.log("handleUpdatePost triggered")
+
         e.preventDefault();
         const data = {
             title,
@@ -261,7 +258,7 @@ const AdminPostModal = ({isOpen, onClose, post}) => {
                             {/* put this div below into a component */}
                             {userRequests && (
                                 userRequests.map((userReq)=>(
-                                    <UserRequest key={userReq._id} userInfo={userReq} postId={post._id} onClose={onClose}/>
+                                    <UserRequest key={userReq.userId._id} userInfo={userReq} postId={post._id} onClose={onClose}/>
                                 ))
                             )}
                             {/* <div className="right-column-bottom">

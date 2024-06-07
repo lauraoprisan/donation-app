@@ -47,7 +47,7 @@ const AuthPage = () => {
                 <form onSubmit={handleSubmit} className="auth-form">
                     {!isLogin &&(
                         <div className="form-group">
-                            <label for="username">Username</label>
+                            <label htmlFor="username">Username</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -59,7 +59,7 @@ const AuthPage = () => {
                         </div>
                     )}
                     <div className="form-group">
-                        <label for="email">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             type="email"
                             className="form-control"
@@ -70,7 +70,7 @@ const AuthPage = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label for="password">Parola</label>
+                        <label htmlFor="password">Parola</label>
                         <input
                             type="password"
                             className="form-control"
@@ -80,7 +80,7 @@ const AuthPage = () => {
                             onChange={onChange}
                         />
                     </div>
-                    
+
                     {isLogin ? (errorLogin && <span>{errorLogin}</span>) : (errorSignup && <span>{errorSignup}</span>)}
 
                     <div className="form-group">

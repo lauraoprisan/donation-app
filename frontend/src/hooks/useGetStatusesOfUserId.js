@@ -12,6 +12,7 @@ const useGetStatusesOfUserId = () => {
     const { setSelectedStatus } = useContext(FilterContext);
 
     useEffect(() => {
+        console.log("useGetStatusesOfUserId called")
         const getStatusesOfUserId = async () => {
             setIsLoadingStatus(true);
 
@@ -28,11 +29,9 @@ const useGetStatusesOfUserId = () => {
 
 
                 if (response.ok) {
-                    resetStatuses()
-                    if(!user?.isAdmin){
-                        setSelectedStatus(statusTypes.SAVED) //for showing the saved one on profile reload
-                    }
                     addStatuses([...json]);
+                    // setSelectedStatus(statusTypes.SAVED) //for showing the saved one on profile reload
+
                 }
 
             } catch (error) {

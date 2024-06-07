@@ -5,7 +5,6 @@ import useGetAllPosts from '../../hooks/useGetAllPosts';
 import SinglePost from '../../components/posts/SinglePost';
 import FilterContext from '../../context/FilterContext';
 import PostsContext from '../../context/PostsContext';
-import useGetStatusesOfUserId from '../../hooks/useGetStatusesOfUserId';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 
@@ -14,15 +13,13 @@ const Homepage = () => {
     const {posts} = useContext(PostsContext);
     const [postsToShow, setPostsToShow] = useState([]);
     const {setSelectedTag } = useContext(FilterContext);
-    const {isLoadingStatus} = useGetStatusesOfUserId()
     const { user } = useAuthContext()
 
 
     useEffect(() => {
         // updating postsToShow once posts data is fetched
         if (!isLoading && posts) {
-            console.log(!isLoading)
-            console.log(posts)
+
           const filteredPosts = posts.filter(post => post.tag === "Urgenta");
           const sortedPosts = filteredPosts.sort((a, b) => a.createdAt - b.createdAt);
           const firstThreePosts = sortedPosts.slice(0,3)

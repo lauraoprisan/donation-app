@@ -65,19 +65,18 @@ const Posts = () => {
         <section className="cases-section">
             <div className="content-container">
                 <h1 className="title">Alege cate un caz si fa cuiva viata mai frumoasa</h1>
-                <div className="posts-container">
-                    {isLoading && <span>Loading..</span>}
+                {isLoading && <span>Loading..</span>}
 
-                    {!isLoading && postsToShow && postsToShow.length==0 && <span>Nu sunt cazuri.</span>}
-
-                    {!isLoading && postsToShow && postsToShow.length!=0 && (
-                        postsToShow.map(post => (
-                            <SinglePost key={post._id} post={post}/>
-                        ))
-                    )}
+                {!isLoading && postsToShow && postsToShow.length==0 && <span>Nu sunt cazuri.</span>}
+                {!isLoading && postsToShow && postsToShow.length!=0 && (
+                <ul className="posts-container">
 
 
-                </div>
+                        {postsToShow.map(post =>
+                        <SinglePost key={post._id} post={post}/>)}
+                </ul>
+                )}
+
             </div>
         </section>
     )

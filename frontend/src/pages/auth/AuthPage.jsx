@@ -10,7 +10,7 @@ const AuthPage = () => {
     })
 
     const {username, email, password} = formData
-    const [isLogin, setIsLogin] = useState(false)
+    const [isLogin, setIsLogin] = useState(true)
     const {signup, errorSignup, isSignningup} = useSignup()
     const {login, errorLogin, isLoggingin} = useLogin()
 

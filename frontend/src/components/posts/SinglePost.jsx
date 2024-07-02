@@ -161,7 +161,7 @@ const SinglePost = ({post, isOnHold}) => {
 
     return (
         <>
-            <div className="single-post-container">
+            <li className="single-post-container">
                 <div className="img-post-container">
                     <img src={selectedImage ? URL.createObjectURL(selectedImage) : post.image} alt=""  className={`${!user?.isAdmin && isOnHold ? `post-on-hold-img-edit` : ``}`}/>
                     {post.tag && <button className={`tag ${!user?.isAdmin && isOnHold ? `post-on-hold`: ``}`}>{post.tag}</button> }
@@ -225,7 +225,7 @@ const SinglePost = ({post, isOnHold}) => {
                         <IoIosArrowForward />
                     </button>
                 </div>
-            </div>
+            </li>
             <PostModal post={post} isOpen={openModal} onClose={() => setOpenModal(false)}/>
             <AdminPostModal post={post} isOpen={openAdminModal} onClose={() => setOpenAdminModal(false)}/>
         </>

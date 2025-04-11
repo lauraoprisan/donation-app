@@ -1,9 +1,8 @@
 
 
-# Donation MERN App: <a href="https://donation-app-taupe.vercel.app/" target="_blank">Visit Here</a>
-<a href="https://donation-app-taupe.vercel.app/" target="_blank">
+# Donation MERN App
 <img src="https://github.com/lauraoprisan/lauraoprisan/blob/main/media/donation-app.gif" width="100%" alt="Donation APP"/>
-</a>
+
 A full stack web application dedicated to donations. The app provides details of the people’s needs throughout Romania so that they can receive help regardless of where they are. The software is designed to have normal users who can select the cases they want to help if they are logged in (or save them for later) and at least one admin who can post, update and delete those cases. The cases can be filtered by tags and location. The cases also have a state which can vary from “needs confirmation” to “solved” or “dropped out”.
 
 
